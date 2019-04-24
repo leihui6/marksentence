@@ -38,8 +38,8 @@
 
 # 样例 & 如何使用
 打开一个音频文件
-![](./Samples/use00.png)
-![](./Samples/use01.png)
+![](./samples/use00.png)
+![](./samples/use01.png)
 
 # 开发日志
 - 2019年4月21日 
@@ -54,5 +54,5 @@
 	- 完善必要功能
 
 # 赞助（我还能说啥子，太感谢你啦5555 祝你早日杀托）
-![](./Samples/pay_ali.png)
-![](./Samples/pay_wechat.png)
+![](./samples/pay_ali.png)
+![](./samples/pay_wechat.png)
