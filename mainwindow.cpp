@@ -5,6 +5,9 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
+    this->setWindowTitle("MarkSentence");
+    this->setWindowFlags(0);
+    this->setFixedSize(965,715);
     ui->setupUi(this);
 
     // Init constant variable
@@ -31,6 +34,8 @@ void MainWindow::on_button_save_clicked()
     createOneMark();
     ui->text_type->clear();
     ui->text_note->clear();
+    saveMarkIntoFile();
+    updateListWidget(false);
 }
 
 QString MainWindow::GetPlainContent(QPlainTextEdit * plainText)
@@ -58,17 +63,17 @@ QString MainWindow::GetFormatTime(qint64 time)
     h = time/3600;
     m = (time-h*3600)/60;
     s = time-h*3600-m*60;
-    return QString("%1:%2:%3").arg(h).arg(m).arg(s);
+    return QString("%1:%2").arg(m).arg(s);
 }
 
-QString MainWindow::GetFormatMark(QJsonObject &json)
+QString MainWindow::GetFormatMark(const QJsonObject &json)
 {
     QString mark;
     QString beg_point = GetFormatTime(json["beg_point"].toInt());
     QString end_point = GetFormatTime(json["end_point"].toInt());
     mark = "["+beg_point +"-"+end_point+"]\t";
-    mark += m_level_value[m_level_index] + "\t";
-    mark += m_sort_value[m_sort_index];
+    mark += m_level_value[json["level_index"].toInt()] + "\t";
+    mark += m_sort_value[json["sort_index"].toInt()];
     return mark;
 }
 
@@ -88,6 +93,8 @@ void MainWindow::loadConstant()
 
     m_level_value =level_value.split(",");
     m_sort_value = sort_value.split(",");
+    m_level_index = 0;
+    m_sort_index = 0;
 
     // Init Music Widget & Config
     m_music = new QMediaPlayer;
@@ -95,9 +102,6 @@ void MainWindow::loadConstant()
     m_beg_point = 0;
     m_end_point = 0;
     m_mark_index = -1;
-
-    // Init Bind Event
-    ui->button_play->setShortcut(Qt::Key_Enter);
 }
 
 void MainWindow::loadListWidget()
@@ -134,13 +138,12 @@ void MainWindow::loadControl(bool status)
     }
 }
 
+
 void MainWindow::createOneMark()
 {
     QJsonObject curr_seg;
     m_type_content = GetPlainContent(ui->text_type);
     m_note_content = GetPlainContent(ui->text_note);
-    m_level_index = ui->combox_level->currentIndex();
-    m_sort_index = ui->combox_sort->currentIndex();
 
     curr_seg.insert("type", m_type_content);
     curr_seg.insert("note", m_note_content);
@@ -149,17 +152,68 @@ void MainWindow::createOneMark()
     curr_seg.insert("level_index", m_level_index);
     curr_seg.insert("sort_index", m_sort_index);
 
-    // Frist need to do
     m_mark_vec.push_back(curr_seg);
+}
 
-    // Update the ListWidget
-    QListWidgetItem * item = new QListWidgetItem;
-    item->setText(GetFormatMark(curr_seg));
-    ui->listWidget->addItem(item);
+void MainWindow::saveMarkIntoFile()
+{
+    QJsonObject save_json;
+    int index = 0;
+    for (QVector<QJsonObject>::iterator it =  m_mark_vec.begin(); it !=  m_mark_vec.end();++it,++index){
+        save_json.insert(QString(index),*it);
+    }
+    qDebug() << save_json;
+    QJsonDocument jsonDoc(save_json);
+
+    // For OverRide Data
+    m_file_object.close();
+    m_file_object.open(QIODevice::ReadWrite|QIODevice::Truncate);
+    m_file_object.write(jsonDoc.toJson());
+}
+
+void MainWindow::loadJsonContent()
+{
+    QByteArray data = m_file_object.readAll();
+
+    // qDebug() << data;
+    QJsonParseError e;
+    QJsonDocument jsonDoc = QJsonDocument::fromJson(data, &e);
+
+    if(e.error == QJsonParseError::NoError && !jsonDoc.isNull())
+    {
+        qDebug() <<"doc=\n"<< jsonDoc;
+    }
+    QJsonObject json = jsonDoc.object();
+
+    print (json.size());
+    QStringList keys = json.keys();
+
+    QJsonObject curr_json_seg;
+    for (QJsonObject::iterator it=json.begin();it != json.end();++it){
+        curr_json_seg = it.value().toObject();
+        qDebug() << it.value().toObject();
+        m_mark_vec.push_back(curr_json_seg);
+    }
+    print(m_mark_vec.size());
+}
+
+void MainWindow::updateListWidget(bool add,const QJsonObject &json)
+{
+    if (add == false){
+        ui->listWidget->clear();
+        for (QVector<QJsonObject>::iterator it=m_mark_vec.begin();
+             it != m_mark_vec.end();++it){
+            ui->listWidget->addItem(new QListWidgetItem(GetFormatMark(*it)));
+        }
+    }
+    else{
+        ui->listWidget->addItem(new QListWidgetItem(GetFormatMark(json)));
+    }
 }
 
 void MainWindow::loadComboxItems()
 {
+    // Load Current Select Value
     for (int i = 0;i < m_level_value.size();i++){
         ui->combox_level->addItem(m_level_value[i]);
     }
@@ -169,15 +223,53 @@ void MainWindow::loadComboxItems()
         ui->combox_sort->addItem(m_sort_value[i]);
     }
     ui->combox_sort->setCurrentIndex(0);
+
+    // Load Sort Select Value
+    for (int i = 0;i < m_level_value.size();i++){
+        ui->combox_sort_level->addItem(m_level_value[i]);
+    }
+    ui->combox_sort_level->setCurrentIndex(0);
+
+    for (int i = 0;i < m_sort_value.size();i++){
+        ui->combox_sort_sort->addItem(m_sort_value[i]);
+    }
+    ui->combox_sort_sort->setCurrentIndex(0);
 }
 
 void MainWindow::on_actionopen_triggered()
 {
-    m_filepath = QFileDialog::getOpenFileName(this,"Open File",QString(),"*mp3 ");
+    QString temp = QFileDialog::getOpenFileName(this,"Open File",QString(),"*mp3 ");
+    if (temp.indexOf(".mp3") == -1){
+        return;
+    }
+    m_filepath = temp;
     m_filebase = QFileInfo(m_filepath).baseName();
+
     m_music->setMedia(QUrl::fromLocalFile(m_filepath));
     ui->label_info->setText(m_filebase);
     loadControl(true);
+    loadJsonFile();
+    updateListWidget(false);
+}
+void MainWindow::loadJsonFile()
+{
+    m_file_name = m_filebase;
+    m_file_name = "./"+m_file_name.trimmed()+".json";
+    print(m_file_name);
+    m_file_object.setFileName(m_file_name);
+
+    // !Exist
+    if (!m_file_object.exists()){
+        print("Create New File");
+        m_file_object.open(QIODevice::ReadWrite | QIODevice::Text);
+    }
+    // Exist, Append
+    else{
+        print("FILE OK!");
+        m_file_object.open(QIODevice::ReadWrite | QIODevice::Text);
+        loadJsonContent();
+    }
+    //file.close();
 }
 
 void MainWindow::on_button_play_clicked()
@@ -222,7 +314,7 @@ void MainWindow::on_media_updateDuration(qint64 duration)
     ui->horizon_music->setPageStep(duration/10);
     m_total_time = duration;
     m_end_point = m_total_time;
-    ui->label_totle_time->setText("/"+GetFormatTime(m_total_time));
+    ui->label_totle_time->setText("/ "+GetFormatTime(m_total_time));
 }
 
 void MainWindow::set_media_position(qint64 duration)
@@ -293,7 +385,6 @@ void MainWindow::on_listWidget_itemDoubleClicked(QListWidgetItem *item)
     // Fill the Content
     SetPlainContent();
 
-
     // Set the player state
     // Just Play What is selected
     m_music->setPosition(m_beg_point);
@@ -327,14 +418,14 @@ void MainWindow::on_button_delete_clicked()
     // ListWidget is just a Windows to Show. Dont Care!
     m_mark_vec.erase(m_mark_vec.begin() + m_mark_index);
     // Refresh the ListWidget
-    ui->listWidget->clear();
-    for (QVector<QJsonObject>::iterator it=m_mark_vec.begin(); it != m_mark_vec.end();it++){
-        ui->listWidget->addItem(new QListWidgetItem(GetFormatMark(*it)));
-    }
+    updateListWidget(false);
     ui->button_delete->setEnabled(false);
 
     // For safety
     m_mark_index = -1;
+
+    // Save to File
+    saveMarkIntoFile();
 }
 
 void MainWindow::on_listWidget_itemClicked(QListWidgetItem *item)
@@ -342,4 +433,52 @@ void MainWindow::on_listWidget_itemClicked(QListWidgetItem *item)
     m_mark_index = ui->listWidget->currentRow();
     // Activate Button of Delete
     ui->button_delete->setEnabled(true);
+}
+
+void MainWindow::on_combox_sort_level_activated(int index)
+{
+    QVector<int> later_show;
+    size_t i = 0;
+    ui->listWidget->clear();
+    // 加载满足条件的item
+    for (QVector<QJsonObject>::iterator it=m_mark_vec.begin(); it!=m_mark_vec.end();++it,++i){
+        if ((*it)["level_index"].toInt() == index){
+            updateListWidget(true,*it);
+        }else{
+            later_show.push_back(i);
+        }
+    }
+    // 加载剩余不满足条件的item
+    for (QVector<int>::iterator it=later_show.begin(); it!=later_show.end();++it){
+        updateListWidget(true,m_mark_vec.at(*it));
+    }
+}
+
+void MainWindow::on_combox_sort_sort_activated(int index)
+{
+    QVector<int> later_show;
+    size_t i = 0;
+    ui->listWidget->clear();
+    // 加载满足条件的item
+    for (QVector<QJsonObject>::iterator it=m_mark_vec.begin(); it!=m_mark_vec.end();++it,++i){
+        if ((*it)["sort_index"].toInt() == index){
+            updateListWidget(true,*it);
+        }else{
+            later_show.push_back(i);
+        }
+    }
+    // 加载剩余不满足条件的item
+    for (QVector<int>::iterator it=later_show.begin(); it!=later_show.end();++it){
+        updateListWidget(true,m_mark_vec.at(*it));
+    }
+}
+
+void MainWindow::on_howToUse_triggered()
+{
+    QDesktopServices::openUrl(QUrl("https://github.com/Gltina/MarkSencent"));
+}
+
+void MainWindow::on_about_triggered()
+{
+    QDesktopServices::openUrl(QUrl("https://github.com/Gltina/MarkSencent"));
 }

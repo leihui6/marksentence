@@ -13,7 +13,10 @@
 #include <QListWidget>
 #include <QListWidgetItem>
 #include <QVector>
-
+#include <QFile>
+#include <QJsonDocument>
+#include <QVariant>
+#include <QDesktopServices>
 
 namespace Ui {
 class MainWindow;
@@ -64,17 +67,29 @@ private slots:
 
     void on_listWidget_itemClicked(QListWidgetItem *item);
 
+    void on_combox_sort_level_activated(int index);
+
+    void on_combox_sort_sort_activated(int index);
+
+    void on_howToUse_triggered();
+
+    void on_about_triggered();
+
 private:
     void loadConnect();
     void loadComboxItems();
     void loadConstant();
     void loadListWidget();
     void loadControl(bool status);
+    void loadJsonFile();
     void createOneMark();
+    void saveMarkIntoFile();
+    void loadJsonContent();
+    void updateListWidget(bool add,const QJsonObject &json = QJsonObject());
     QString GetPlainContent(QPlainTextEdit * plainText);
     void SetPlainContent();
     QString GetFormatTime(qint64 time);
-    QString GetFormatMark(QJsonObject & json);
+    QString GetFormatMark(const QJsonObject & json);
 private:
     // For Playing Music
     QMediaPlayer * m_music;
@@ -95,6 +110,8 @@ private:
     // For Marks
     QVector<QJsonObject> m_mark_vec;
     int m_mark_index;
+    QFile m_file_object;
+    QString m_file_name;
 
 private:
     // Use for testing
