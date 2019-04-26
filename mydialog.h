@@ -7,6 +7,13 @@
 #include <QDebug>
 #include <QProcess>
 #include <QFileDialog>
+#include <QNetworkAccessManager>
+#include <QNetworkReply>
+#include <QDir>
+#include <QFile>
+#include <QVector>
+
+class QNetworkReply;
 
 namespace Ui {
 class Dialog;
@@ -30,12 +37,23 @@ private slots:
 
     void on_btn_cancel_clicked();
 
+    void downloadBeg();
+
+    void downloadIng(qint64 bytesRead, qint64 bytesTotal);
+
+    void downloadFin();
 private:
+    void loadConnect();
+
     void loadCombox();
+
+    void loadConstant();
 
     void generateUrl();
 
     void loadRemotePath();
+
+    void createDir(QString dir);
 private:
     QStringList m_section_list;
     QStringList m_detail_list;
@@ -47,6 +65,10 @@ private:
     int m_section_index;
     int m_detail_index;
 
+    QNetworkAccessManager * m_download_object;
+    QNetworkReply * m_download_reply;
+    QFile * m_save_object;
+    QString m_saveDir;
 private:
     Ui::Dialog *ui;
 };

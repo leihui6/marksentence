@@ -46,12 +46,6 @@ private slots:
 
     void on_button_stop_clicked();
 
-    void on_media_updatePosition(qint64 duration);
-
-    void on_media_updateDuration(qint64 duration);
-
-    void on_media_stateChanged();
-
     void set_media_position(qint64 duration);
 
     void on_button_back_clicked();
@@ -91,6 +85,12 @@ private slots:
     void on_onlineFile_triggered();
     
 private:
+    void on_media_updatePosition(qint64 duration);
+
+    void on_media_updateDuration(qint64 duration);
+
+    void on_media_stateChanged();
+
     void loadConnect();
     void loadComboxItems();
     void loadConstant();

@@ -154,6 +154,12 @@
         <height>25</height>
        </size>
       </property>
+      <property name="font">
+       <font>
+        <family>Times New Roman</family>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
      </widget>
      <widget class="QComboBox" name="combox_sort_sort">
       <property name="geometry">
@@ -169,6 +175,12 @@
         <width>0</width>
         <height>25</height>
        </size>
+      </property>
+      <property name="font">
+       <font>
+        <family>Times New Roman</family>
+        <pointsize>12</pointsize>
+       </font>
       </property>
       <property name="iconSize">
        <size>
@@ -218,6 +230,12 @@
        <height>25</height>
       </size>
      </property>
+     <property name="font">
+      <font>
+       <family>Times New Roman</family>
+       <pointsize>12</pointsize>
+      </font>
+     </property>
     </widget>
     <widget class="QComboBox" name="combox_sort">
      <property name="geometry">
@@ -233,6 +251,12 @@
        <width>0</width>
        <height>25</height>
       </size>
+     </property>
+     <property name="font">
+      <font>
+       <family>Times New Roman</family>
+       <pointsize>12</pointsize>
+      </font>
      </property>
      <property name="styleSheet">
       <string notr="true">QCombox_sort{

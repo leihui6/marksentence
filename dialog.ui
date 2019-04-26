@@ -13,36 +13,6 @@
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
-  <widget class="QComboBox" name="combox_detail">
-   <property name="geometry">
-    <rect>
-     <x>250</x>
-     <y>80</y>
-     <width>101</width>
-     <height>31</height>
-    </rect>
-   </property>
-  </widget>
-  <widget class="QComboBox" name="combox_section">
-   <property name="geometry">
-    <rect>
-     <x>140</x>
-     <y>80</y>
-     <width>101</width>
-     <height>31</height>
-    </rect>
-   </property>
-  </widget>
-  <widget class="QComboBox" name="combox_TPO">
-   <property name="geometry">
-    <rect>
-     <x>30</x>
-     <y>80</y>
-     <width>101</width>
-     <height>31</height>
-    </rect>
-   </property>
-  </widget>
   <widget class="QWidget" name="horizontalLayoutWidget">
    <property name="geometry">
     <rect>
@@ -52,34 +22,52 @@
      <height>41</height>
     </rect>
    </property>
-   <layout class="QHBoxLayout" name="horizontalLayout">
-    <item>
+   <layout class="QGridLayout" name="gridLayout_2">
+    <item row="0" column="0">
      <widget class="QLabel" name="label_TPO">
+      <property name="font">
+       <font>
+        <family>Times New Roman</family>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
       <property name="text">
        <string>TPO</string>
       </property>
       <property name="alignment">
-       <set>Qt::AlignCenter</set>
+       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
       </property>
      </widget>
     </item>
-    <item>
+    <item row="0" column="1">
      <widget class="QLabel" name="label_2_section">
+      <property name="font">
+       <font>
+        <family>Times New Roman</family>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
       <property name="text">
        <string>Section</string>
       </property>
       <property name="alignment">
-       <set>Qt::AlignCenter</set>
+       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
       </property>
      </widget>
     </item>
-    <item>
+    <item row="0" column="2">
      <widget class="QLabel" name="label_3_detail">
+      <property name="font">
+       <font>
+        <family>Times New Roman</family>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
       <property name="text">
        <string>Detail</string>
       </property>
       <property name="alignment">
-       <set>Qt::AlignCenter</set>
+       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
       </property>
      </widget>
     </item>
@@ -91,7 +79,7 @@
      <x>200</x>
      <y>180</y>
      <width>160</width>
-     <height>41</height>
+     <height>42</height>
     </rect>
    </property>
    <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -102,6 +90,30 @@
         <width>0</width>
         <height>40</height>
        </size>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton{
+	background-color:rgba(100,225,100,30);
+	border-style:outset;
+	border-width:4px;           
+	border-radius:10px;
+	border-color:rgba(255,255,255,30);
+	font:Time New Roams bold 10px;
+	color:rgba(0,0,0,100);
+	padding:6px;
+}    
+QPushButton:pressed{     
+	background-color:rgba(100,255,100,200);    
+	border-color:rgba(255,255,255,30);   
+	border-style:inset;    
+	color:rgba(0,0,0,100);    
+}    
+
+QPushButton:hover{    
+	background-color:rgba(100,255,100,100);    
+	border-color:rgba(255,255,255,200);    
+	color:rgba(0,0,0,200);    
+}</string>
       </property>
       <property name="text">
        <string>确认</string>
@@ -116,8 +128,111 @@
         <height>40</height>
        </size>
       </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton{
+	background-color:rgba(100,225,100,30);
+	border-style:outset;
+	border-width:4px;           
+	border-radius:10px;
+	border-color:rgba(255,255,255,30);
+	font:Time New Roams bold 10px;
+	color:rgba(0,0,0,100);
+	padding:6px;
+}    
+QPushButton:pressed{     
+	background-color:rgba(100,255,100,200);    
+	border-color:rgba(255,255,255,30);   
+	border-style:inset;    
+	color:rgba(0,0,0,100);    
+}    
+
+QPushButton:hover{    
+	background-color:rgba(100,255,100,100);    
+	border-color:rgba(255,255,255,200);    
+	color:rgba(0,0,0,200);    
+}</string>
+      </property>
       <property name="text">
        <string>取消</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QProgressBar" name="progressBar">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>130</y>
+     <width>321</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Times New Roman</family>
+     <pointsize>12</pointsize>
+    </font>
+   </property>
+   <property name="value">
+    <number>24</number>
+   </property>
+  </widget>
+  <widget class="QWidget" name="horizontalLayoutWidget_3">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>70</y>
+     <width>321</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="0" column="0">
+     <widget class="QComboBox" name="combox_TPO">
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>30</height>
+       </size>
+      </property>
+      <property name="font">
+       <font>
+        <family>Times New Roman</family>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="1">
+     <widget class="QComboBox" name="combox_section">
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>30</height>
+       </size>
+      </property>
+      <property name="font">
+       <font>
+        <family>Times New Roman</family>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="2">
+     <widget class="QComboBox" name="combox_detail">
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>30</height>
+       </size>
+      </property>
+      <property name="font">
+       <font>
+        <family>Times New Roman</family>
+        <pointsize>12</pointsize>
+       </font>
       </property>
      </widget>
     </item>
