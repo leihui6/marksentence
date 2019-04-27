@@ -10,7 +10,7 @@ Special for TOEFL
 
 下载地址
 -------------------------------------------------------------------------------
-解压后双击 `"MarkSentences v.1.0.exe"` 即可
+解压后双击 `"MarkSentence v.1.0.exe"` 即可
 
 [点我下载](http://39.97.115.128:8000/SHATOEFL/MarkSentence.zip)
 
@@ -65,5 +65,4 @@ Special for TOEFL
 听说你想请我喝雪冰
 --------------------------------------------------------------------------------
 ![](./samples/pay_ali.png)
-
 ![](./samples/pay_wechat.png)
