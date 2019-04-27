@@ -10,9 +10,9 @@ Special for TOEFL
 
 下载地址
 -------------------------------------------------------------------------------
-解压后双击 `"MarkSentences v1.0.exe"` 即可
+解压后双击 `"MarkSentences v.1.0.exe"` 即可
 
-[https://pan.baidu.com/s/1Xy000Oc1_aLGF4DYhGHsmA（百度云提取码 vrfh ）](https://pan.baidu.com/s/1Xy000Oc1_aLGF4DYhGHsmA)
+[点我下载](http://39.97.115.128:8000/SHATOEFL/MarkSentence.zip)
 
 快捷键
 -------------------------------------------------------------------------------

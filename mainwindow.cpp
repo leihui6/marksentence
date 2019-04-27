@@ -94,7 +94,7 @@ void MainWindow::loadConstant()
 {
     // 初始化下拉菜单的选项
     QString level_value = "Easy,Midd,Hard",
-            sort_value = "None,Unfamiliar Words,Too Long,Garmmar";
+            sort_value = "None,Unfamiliar Words,Too Long,Garmmar,Speak Fast";
     m_level_value =level_value.split(",");
     m_sort_value = sort_value.split(",");
     m_level_index = 0;
