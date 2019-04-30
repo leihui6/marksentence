@@ -1,5 +1,5 @@
-﻿#include "mydialog.h"
-#include "ui_dialog.h"
+﻿#include "loaddialog.h"
+#include "ui_loaddialog.h"
 
 Dialog::Dialog(QWidget *parent) :
     QDialog(parent),
@@ -212,7 +212,6 @@ void Dialog::on_combox_TPO_activated(int index)
 void Dialog::on_combox_detail_activated(int index)
 {
     m_detail_index = index;
-
 }
 
 void Dialog::on_btn_cancel_clicked()
@@ -220,6 +219,5 @@ void Dialog::on_btn_cancel_clicked()
     if (m_save_object->isOpen()){
         m_save_object->close();
     }
-
     this->reject();
 }

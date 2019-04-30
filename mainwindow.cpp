@@ -1,11 +1,13 @@
 ﻿#include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "ui_dialog.h"
+#include "ui_loaddialog.h"
+#include "ui_logindialog.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
-    dialog(new Ui::Dialog),
+    ui_dialog(new Ui::Dialog),
+    ui_login_dialog(new Ui::LoginDialog),
     m_music()
 {
     this->setWindowTitle("MarkSentence");
@@ -591,7 +593,14 @@ void MainWindow::closeEvent(QCloseEvent *event){
 
 void MainWindow::on_onlineFile_triggered()
 {
-    pDislog = new Dialog(this);
-    pDislog->setParent(this);
-    pDislog->show();
+    m_loadDialog = new Dialog(this);
+    m_loadDialog->setParent(this);
+    m_loadDialog->show();
+}
+
+void MainWindow::on_syncMarks_triggered()
+{
+    m_loginDialog = new LoginDialog(this);
+    m_loginDialog->setParent(this);
+    m_loginDialog->show();
 }

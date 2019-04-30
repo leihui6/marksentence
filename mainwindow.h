@@ -22,11 +22,14 @@
 #include <QMessageBox>
 #include <QTextCodec>
 #include <QCloseEvent>
-#include "mydialog.h"
+#include "loaddialog.h"
+#include "logindialog.h"
 
 namespace Ui {
 class MainWindow;
 class Dialog;
+class LoginDialog;
+
 }
 
 class MainWindow : public QMainWindow
@@ -84,6 +87,8 @@ private slots:
 
     void on_onlineFile_triggered();
     
+    void on_syncMarks_triggered();
+
 private:
     void on_media_updatePosition(qint64 duration);
 
@@ -143,12 +148,14 @@ private:
     QString m_log_name;
 
 
-public://新打开的窗口
-    Dialog * pDislog;
+private://新打开的窗口
+    Dialog * m_loadDialog;
+    LoginDialog * m_loginDialog;
 
 private:
-    Ui::MainWindow *ui;
-    Ui::Dialog *dialog;
+    Ui::MainWindow * ui;
+    Ui::Dialog * ui_dialog;
+    Ui::LoginDialog * ui_login_dialog;
 };
 
 #endif // MAINWINDOW_H
