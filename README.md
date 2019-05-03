@@ -23,8 +23,8 @@
 	- 保存当前标记： `Enter`
 	- 播放：`F1`
 - 使用示例
-	- ![在线下载](./samples/use_download.gif)
-	- ![精听的基本操作](./samples/use_listening.gif)
+	- ![在线下载](./samples/download.gif)
+	- ![精听的基本操作](./samples/listening.gif)
 
 ## Project status
 ![](https://img.shields.io/appveyor/ci/gruntjs/grunt.svg)
