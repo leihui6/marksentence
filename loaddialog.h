@@ -1,5 +1,5 @@
-﻿#ifndef DIALOG_H
-#define DIALOG_H
+﻿#ifndef LOADDIALOG_H
+#define LOADDIALOG_H
 
 #include <QDialog>
 #include <QStringList>
@@ -16,16 +16,16 @@
 class QNetworkReply;
 
 namespace Ui {
-class Dialog;
+class loadDialog;
 }
 
-class Dialog : public QDialog
+class loadDialog : public QDialog
 {
     Q_OBJECT
 
 public:
-    explicit Dialog(QWidget *parent = 0);
-    ~Dialog();
+    explicit loadDialog(QWidget *parent = 0);
+    ~loadDialog();
 private slots:
     void on_combox_section_activated(int index);
 
@@ -37,12 +37,14 @@ private slots:
 
     void on_btn_cancel_clicked();
 
-    void downloadBeg();
+    void on_downloadBeg();
 
-    void downloadIng(qint64 bytesRead, qint64 bytesTotal);
+    void on_downloadIng(qint64 bytesRead, qint64 bytesTotal);
 
-    void downloadFin();
+    void on_downloadFin();
 private:
+    void closeEvent(QCloseEvent * event);
+
     void loadConnect();
 
     void loadCombox();
@@ -66,11 +68,11 @@ private:
     int m_detail_index;
 
     QNetworkAccessManager * m_download_object;
-    QNetworkReply * m_download_reply;
+    QNetworkReply * m_download_reply; // 临时创建
     QFile * m_save_object;
     QString m_saveDir;
 private:
-    Ui::Dialog *ui;
+    Ui::loadDialog * ui;
 };
 
-#endif // DIALOG_H
+#endif // LOADDIALOG_H

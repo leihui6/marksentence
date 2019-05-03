@@ -1,42 +1,44 @@
 ﻿#include "loaddialog.h"
 #include "ui_loaddialog.h"
 
-Dialog::Dialog(QWidget *parent) :
+loadDialog::loadDialog(QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::Dialog),
+    ui(new Ui::loadDialog),
     m_save_object(new QFile),
     m_download_object(new QNetworkAccessManager)
-
 {
     ui->setupUi(this);
     this->setWindowTitle("TPO Listening Download Tool");
-
+    this->setAttribute(Qt::WA_DeleteOnClose,true);
     loadCombox();
     loadRemotePath();
     loadConstant();
 }
 
-Dialog::~Dialog()
+loadDialog::~loadDialog()
 {
+    // add
     delete ui;
 }
 
-void Dialog::loadCombox()
+void loadDialog::loadCombox()
 {
     // 初始化选中
     m_tpo_index = 0;
     m_section_index = 0;
     m_detail_index = 0;
 
-    // 设置TPO序号
+    // 设置最大TPO序号
     const int TPO_size = 54;
 
+    // 加载下拉菜单选项
+    // 加载TPO序号
     for (int i = m_tpo_index+1;i != TPO_size+1;i++){
         ui->combox_TPO->addItem(QString("%1").arg(i));
     }
     ui->combox_TPO->setCurrentIndex(0);
 
-    // 设置section
+    // 加载section
     QString section = "Listening,Speaking,Writing";
     m_section_list = section.split(",");
     for (int i = 0;i < m_section_list.size();i++){
@@ -44,7 +46,8 @@ void Dialog::loadCombox()
     }
     ui->combox_section->setCurrentIndex(0);
 
-    // 设置section下的听力内容
+    // 加载听力section中得detail
+    // 在选择的时候还会更进一步判断当前section有哪些detail
     QString detail = "C1,L1,L2,C2,L3,L4";
     m_detail_list = detail.split(",");
     for (int i = 0;i < m_detail_list.size();i++){
@@ -53,31 +56,33 @@ void Dialog::loadCombox()
     ui->combox_detail->setCurrentIndex(0);
 }
 
-void Dialog::loadConstant(){
+void loadDialog::loadConstant(){
     ui->progressBar->setValue(0);
     ui->progressBar->setVisible(false);
 
+    // 设置下载目录
     m_saveDir = "TPO";
-    QDir tempDir;
-    if(!tempDir.exists(m_saveDir))
-    {
-        tempDir.mkpath(m_saveDir);
-    }
+    createDir(m_saveDir);
 }
 
-void Dialog::createDir(QString dir){
+void loadDialog::createDir(QString dir){
     QDir tempDir;
     if(!tempDir.exists(dir))
     {
         tempDir.mkpath(dir);
     }
+    else {
+        // ..
+    }
 }
 
-void Dialog::generateUrl()
+void loadDialog::generateUrl()
 {
-       // 因为服务器上的tpo是分文件夹的
+       // 因为服务器上的tpo是按照序号划分的
+        // 也就是说 /TPO/tpo序号/内容.mp3
        QString publicTitle = QString("tpo%1/tpo%2_").arg(m_tpo_index+1).arg(m_tpo_index+1);
        QString postfix;
+
        if(m_section_index == 0){
            postfix = QString("listening%1_passage").arg(m_detail_index+1);
        }
@@ -89,17 +94,20 @@ void Dialog::generateUrl()
            postfix = QString("writing1_passage");
        }
        m_filename = publicTitle+postfix;
-
 }
 
-void Dialog::loadRemotePath()
+void loadDialog::loadRemotePath()
 {
-    // 写入远端服务器IP
-    // python -m SimpleHTTPServer
-    m_remotepath = "http://39.97.115.128:8000/TPO/";
+    //  服务器IP
+    // 防止IP被爬
+    QString ip = "h#t#t#p:/#/3#9.#9#7.1#15.1#2#8";
+    QString port = "8000";
+    QString path = "/TPO/";
+    ip.replace(QString("#"),QString(""));
+    m_remotepath = ip+":"+port+path;
 }
 
-void Dialog::on_combox_section_activated(int index)
+void loadDialog::on_combox_section_activated(int index)
 {
     m_detail_list.clear();
     ui->combox_detail->clear();
@@ -128,30 +136,29 @@ void Dialog::on_combox_section_activated(int index)
     ui->combox_detail->setCurrentIndex(0);
 }
 
-void Dialog::loadConnect(){
+void loadDialog::loadConnect(){
     connect((QObject *)m_download_reply,SIGNAL(readyRead()),
-            this,SLOT(downloadBeg()));
+            this,SLOT(on_downloadBeg()));
     connect((QObject *)m_download_reply,SIGNAL(downloadProgress(qint64 ,qint64)),
-            this,SLOT(downloadIng(qint64 ,qint64)));
+            this,SLOT(on_downloadIng(qint64 ,qint64)));
     connect((QObject *)m_download_reply,SIGNAL(finished()),
-            this,SLOT(downloadFin()));
+            this,SLOT(on_downloadFin()));
 }
 
-void Dialog::downloadBeg()
+void loadDialog::on_downloadBeg()
 {
-    //qDebug() << "start to download";
     ui->progressBar->setVisible(true);
 }
 
-void Dialog::downloadIng(qint64 bytesRead, qint64 bytesTotal)
+void loadDialog::on_downloadIng(qint64 bytesRead, qint64 bytesTotal)
 {
-    //qDebug() << bytesRead << ":"<<bytesTotal;
+    qDebug() << bytesRead << ":"<<bytesTotal;
     m_save_object->write(m_download_reply->readAll());
     ui->progressBar->setMaximum(bytesTotal);
     ui->progressBar->setValue(bytesRead);
 }
 
-void Dialog::downloadFin()
+void loadDialog::on_downloadFin()
 {
     //qDebug() << "download finished";
     ui->progressBar->setVisible(true);
@@ -165,17 +172,22 @@ void Dialog::downloadFin()
     QProcess::startDetached("explorer "+path);
 }
 
-void Dialog::on_btn_comfirm_clicked()
+void loadDialog::on_btn_comfirm_clicked()
 {
     m_tpo_index = ui->combox_TPO->currentIndex();
     m_section_index = ui->combox_section->currentIndex();
     m_detail_index = ui->combox_detail->currentIndex();
     // 生成m_filename
-    // 生成远程获取路径
+    // 生成远程获取url
     generateUrl();
     QString pathstr = m_remotepath+m_filename+".mp3";
+    // qDebug()<<"download from:"<<pathstr;
 
-    // 获取本地保存路径
+    /*
+     *  需要判断url是否有效
+    */
+
+    // 获取本地保存路径以及保存名称
     createDir(QString("TPO\\TPO%1").arg(m_tpo_index+1));
     QString local_save;
     local_save = QString("TPO\\TPO%1\\TPO_%2_%3_%4").
@@ -185,6 +197,7 @@ void Dialog::on_btn_comfirm_clicked()
     //qDebug() << local_save;
     m_savePath = QFileDialog::getSaveFileName(this,("Save"),local_save,tr("*.mp3"));
 
+    // 用户没有选择路径
     if(m_savePath.isEmpty()){
         return;
     }
@@ -204,20 +217,29 @@ void Dialog::on_btn_comfirm_clicked()
     loadConnect();
 }
 
-void Dialog::on_combox_TPO_activated(int index)
+void loadDialog::on_combox_TPO_activated(int index)
 {
     m_tpo_index = index;
 }
 
-void Dialog::on_combox_detail_activated(int index)
+void loadDialog::on_combox_detail_activated(int index)
 {
     m_detail_index = index;
 }
 
-void Dialog::on_btn_cancel_clicked()
+void loadDialog::on_btn_cancel_clicked()
 {
     if (m_save_object->isOpen()){
         m_save_object->close();
     }
     this->reject();
 }
+
+void loadDialog::closeEvent(QCloseEvent *event)
+{
+    if (m_save_object->isOpen()){
+        m_save_object->close();
+    }
+    this->reject();
+}
+

@@ -1,0 +1,24 @@
+<RCC>
+    <qresource prefix="/icon">
+        <file>icon/about.png</file>
+        <file>icon/exit.png</file>
+        <file>icon/file_local.png</file>
+        <file>icon/file_online.png</file>
+        <file>icon/how.png</file>
+        <file>icon/main_title.png</file>
+        <file>icon/playing.png</file>
+        <file>icon/tool_title.png</file>
+        <file>icon/pause.png</file>
+        <file>icon/play.png</file>
+        <file>icon/backward.png</file>
+        <file>icon/clear.png</file>
+        <file>icon/delete.png</file>
+        <file>icon/end_point.png</file>
+        <file>icon/forward.png</file>
+        <file>icon/save.png</file>
+        <file>icon/start_point.png</file>
+        <file>icon/stop.png</file>
+        <file>icon/cancel.png</file>
+        <file>icon/confirm.png</file>
+    </qresource>
+</RCC>

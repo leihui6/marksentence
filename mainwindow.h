@@ -22,14 +22,13 @@
 #include <QMessageBox>
 #include <QTextCodec>
 #include <QCloseEvent>
+#include <QTableWidget>
+#include <QtAlgorithms>
+
 #include "loaddialog.h"
-#include "logindialog.h"
 
 namespace Ui {
-class MainWindow;
-class Dialog;
-class LoginDialog;
-
+    class MainWindow;
 }
 
 class MainWindow : public QMainWindow
@@ -42,8 +41,6 @@ public:
 
 private slots:
     void on_button_save_clicked();
-
-    void on_actionopen_triggered();
 
     void on_button_play_clicked();
 
@@ -63,16 +60,6 @@ private slots:
 
     void on_button_clear_end_point_clicked();
 
-    void on_listWidget_itemDoubleClicked(QListWidgetItem *item);
-
-    void on_listWidget_itemClicked(QListWidgetItem *item);
-
-    void on_button_delete_clicked();
-
-    void on_combox_sort_level_activated(int index);
-
-    void on_combox_sort_sort_activated(int index);
-
     void on_howToUse_triggered();
 
     void on_about_triggered();
@@ -86,14 +73,20 @@ private slots:
     void closeEvent(QCloseEvent *event);
 
     void on_onlineFile_triggered();
-    
-    void on_syncMarks_triggered();
+
+    void on_tableWidget_cellDoubleClicked(int row, int column);
+
+    void on_localFile_triggered();
+
+    void on_clickHeader(int col);
+
+    void on_showMenu(const QPoint pos);
+
+    void on_deleteItem();
 
 private:
     void on_media_updatePosition(qint64 duration);
-
     void on_media_updateDuration(qint64 duration);
-
     void on_media_stateChanged();
 
     void loadConnect();
@@ -103,21 +96,23 @@ private:
     void loadJsonFile();
     void loadFileDir();
     void loadFileLog();
+    void loadTableWidget();
     void createOneMark();
     void saveMarkIntoFile();
     void loadJsonContent();
-    void updateListWidget(bool add,const QJsonObject &json = QJsonObject());
-
-    void music_play(qint64 point);
-    void music_after_stop();
-    void log_write(QString info);
+    void updateTableWidget(QVector<int> &index_vec = QVector<int>());
+    void sortby(const QString sort_key,QVector<int> & result);
+    void musicPlay(qint64 point);
+    void musicAfterStop();
+    void logWrite(QString info);
     void fileOpenIsFailed(QString title,QString content);
-
-    QString GetPlainContent(QPlainTextEdit * plainText);
-    void SetPlainContent();
-    QString GetFormatTime(qint64 time);
-    QString GetFormatMark(const QJsonObject & json);
-private:
+    void setPlainContent();
+    void clearText();
+    QString getPlainContent(QPlainTextEdit * plainText);
+    QString getFormatTime(qint64 time);
+    QString getFormatMark(const QJsonObject & json);
+    QString getFormatContent(const QJsonObject & json, int index);
+private: // 参数
     // 用于音乐播放
     QMediaPlayer m_music;
     bool m_play;
@@ -135,10 +130,10 @@ private:
     int m_sort_index;
     QString m_filepath;
     QString m_filebase;
+    int m_click_row;
 
     // 用于标记
     QVector<QJsonObject> m_mark_vec;
-    int m_mark_index;
     QFile m_file_object;
     QString m_file_name;
     QString m_file_saveDir;
@@ -147,15 +142,11 @@ private:
     QFile m_log_object;
     QString m_log_name;
 
-
-private://新打开的窗口
-    Dialog * m_loadDialog;
-    LoginDialog * m_loginDialog;
+private: //新打开的窗口
+    loadDialog * m_loadDialog;
 
 private:
     Ui::MainWindow * ui;
-    Ui::Dialog * ui_dialog;
-    Ui::LoginDialog * ui_login_dialog;
 };
 
 #endif // MAINWINDOW_H

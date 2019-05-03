@@ -11,7 +11,7 @@ QT       += network
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-TARGET = untitled
+TARGET = marksentence
 TEMPLATE = app
 
 # The following define makes your compiler emit warnings if you use
@@ -29,15 +29,15 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         main.cpp \
         mainwindow.cpp \
-    logindialog.cpp \
     loaddialog.cpp
 
 HEADERS += \
         mainwindow.h \
-    logindialog.h \
     loaddialog.h
 
 FORMS += \
         mainwindow.ui \
-    logindialog.ui \
     loaddialog.ui
+
+RESOURCES += \
+    icon.qrc

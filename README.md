@@ -7,8 +7,8 @@
 
 ## Getting Started 
 - Windows
-	- [MarkSentence V1.0.zip](https://github.com/Gltina/MarkSencent/releases/download/V1.0/MarkSentence.zip)
-	- [太慢请点击这儿，从阿里云下载 MarkSentence V1.0.zip](http://39.97.115.128:8000/SHATOEFL/MarkSentence.zip)
+	- [MarkSentence V0.9.1.zip](https://github.com/Gltina/MarkSencent/releases/download/V1.0/MarkSentence.V0.9.1.zip)
+	- [太慢请点击这儿，从阿里云下载 MarkSentence V0.9.1.zip](http://39.97.115.128:8000/SHATOEFL/MarkSentence V0.9.1.zip)
 
 ## Compiling from source
 ### Prerequisites
@@ -21,6 +21,7 @@
 	- 设置断点：`[` , `]`
 	- 取消断点：`shift` + `[` , `]`
 	- 保存当前标记： `Enter`
+	- 播放：`F1`
 - 使用示例
 	- ![在线下载](./samples/use_download.gif)
 	- ![精听的基本操作](./samples/use_listening.gif)
@@ -30,11 +31,14 @@
 
 更多请查看[项目日志](log/README.md)
 
-## Contributing
+## Contribute
 关于英语精听有什么方法，如何有计划的复习英语的听力... 所有的这些问题欢迎讨论
 
 ## Support
 ptsph\*foxmail.com(*->@) 
+
+## Thanks 
+[iconfont](https://www.iconfont.cn/home/index)
 
 ## License
 [GNU GPL3.0](https://github.com/Gltina/MarkSencent/blob/master/LICENSE)

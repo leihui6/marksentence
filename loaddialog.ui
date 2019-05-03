@@ -1,17 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Dialog</class>
- <widget class="QDialog" name="Dialog">
+ <class>loadDialog</class>
+ <widget class="QDialog" name="loadDialog">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>376</width>
-    <height>162</height>
+    <width>277</width>
+    <height>160</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Dialog</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="icon.qrc">
+    <normaloff>:/icon/icon/tool_title.png</normaloff>:/icon/icon/tool_title.png</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout_3">
    <item row="0" column="0">
@@ -28,7 +32,7 @@
         <string>TPO</string>
        </property>
        <property name="alignment">
-        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+        <set>Qt::AlignCenter</set>
        </property>
       </widget>
      </item>
@@ -44,7 +48,7 @@
         <string>Section</string>
        </property>
        <property name="alignment">
-        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+        <set>Qt::AlignCenter</set>
        </property>
       </widget>
      </item>
@@ -60,7 +64,7 @@
         <string>Detail</string>
        </property>
        <property name="alignment">
-        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+        <set>Qt::AlignCenter</set>
        </property>
       </widget>
      </item>
@@ -128,6 +132,18 @@
          <pointsize>12</pointsize>
         </font>
        </property>
+       <property name="styleSheet">
+        <string notr="true">QProgressBar{
+        border: none;  
+        text-align: center;
+        background: rgb(255, 255, 255);
+        border-radius:6px;
+} 
+QProgressBar::chunk {
+        background: rgb(30,144,255); 
+        border-radius:6px;
+}</string>
+       </property>
        <property name="value">
         <number>24</number>
        </property>
@@ -168,7 +184,17 @@ QPushButton:hover{
 }</string>
          </property>
          <property name="text">
-          <string>确认</string>
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="icon.qrc">
+           <normaloff>:/icon/icon/confirm.png</normaloff>:/icon/icon/confirm.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>32</width>
+           <height>32</height>
+          </size>
          </property>
         </widget>
        </item>
@@ -205,7 +231,17 @@ QPushButton:hover{
 }</string>
          </property>
          <property name="text">
-          <string>取消</string>
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="icon.qrc">
+           <normaloff>:/icon/icon/cancel.png</normaloff>:/icon/icon/cancel.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>32</width>
+           <height>32</height>
+          </size>
          </property>
         </widget>
        </item>
@@ -215,6 +251,8 @@ QPushButton:hover{
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="icon.qrc"/>
+ </resources>
  <connections/>
 </ui>
