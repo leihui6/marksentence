@@ -7,8 +7,8 @@
 
 ## Getting Started 
 - Windows
-	- [MarkSentence V0.9.1.zip](https://github.com/Gltina/MarkSencent/releases/download/V1.0/MarkSentence.V0.9.1.zip)
-	- [太慢请点击这儿，从阿里云下载 MarkSentence V0.9.1.zip](http://39.97.115.128:8000/SHATOEFL/MarkSentence V0.9.1.zip)
+	- [MarkSentenceV0.9.1.zip](https://github.com/Gltina/MarkSencent/releases/download/V1.0/MarkSentence.V0.9.1.zip)
+	- [(阿里服务器)MarkSentence V0.9.1.zip](http://39.97.115.128:8000/SHATOEFL/MarkSentenceV0.9.1.zip)
 
 ## Compiling from source
 ### Prerequisites
