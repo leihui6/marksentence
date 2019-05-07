@@ -7,18 +7,20 @@
     <x>0</x>
     <y>0</y>
     <width>715</width>
-    <height>436</height>
+    <height>442</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="icon.qrc">
+   <iconset>
     <normaloff>:/icon/icon/main_title.png</normaloff>:/icon/icon/main_title.png</iconset>
   </property>
   <property name="styleSheet">
-   <string notr="true"/>
+   <string notr="true">QMainWindow {
+	border: 0px;
+}</string>
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout_2">
@@ -34,6 +36,12 @@
             <pointsize>16</pointsize>
            </font>
           </property>
+          <property name="styleSheet">
+           <string notr="true">QPlainTextEdit {
+	border:0px solid rgb(85, 170, 255);
+	border-bottom:1px solid rgb(85, 170, 255);
+}</string>
+          </property>
           <property name="plainText">
            <string/>
           </property>
@@ -46,6 +54,12 @@
             <family>Times New Roman</family>
             <pointsize>16</pointsize>
            </font>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QPlainTextEdit {
+	border:0px solid rgb(85, 170, 255);
+	border-bottom:1px solid rgb(85, 170, 255);
+}</string>
           </property>
           <property name="plainText">
            <string/>
@@ -69,8 +83,8 @@
         </property>
         <property name="styleSheet">
          <string notr="true">QTableWidget {
-	border:0px solid rgb(255,0,0);
-	border-bottom:1px solid rgb(255,0,0);
+	border:0px solid rgb(85, 170, 255);
+	border-bottom:1px solid rgb(85, 170, 255);
 }</string>
         </property>
         <attribute name="horizontalHeaderCascadingSectionResizes">
@@ -106,7 +120,7 @@ QSlider::groove:horizontal {
 QSlider::handle:horizontal {                               
      border: 0px ;                           
      border-image: url(:/icon/icon/playing.png);
-     width: 15px;                                           
+     width: 16px;
      margin: -7px -7px -7px -7px;                  
 }
 QSlider::add-page:horizontal{
@@ -126,56 +140,6 @@ QSlider::sub-page:horizontal{
     </item>
     <item row="1" column="0" rowspan="2" colspan="2">
      <layout class="QGridLayout" name="gridLayout">
-      <item row="1" column="3">
-       <widget class="QPushButton" name="button_clear_end_point">
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>30</height>
-         </size>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">QPushButton{
-	background-color:rgba(100,225,100,30);
-	border-style:outset;
-	border-width:4px;           
-	border-radius:10px;
-	border-color:rgba(255,255,255,30);
-	font:Time New Roams bold 10px;
-	color:rgba(0,0,0,100);
-	padding:6px;
-}    
-QPushButton:pressed{     
-	background-color:rgba(100,255,100,200);    
-	border-color:rgba(255,255,255,30);   
-	border-style:inset;    
-	color:rgba(0,0,0,100);    
-}    
-
-QPushButton:hover{    
-	background-color:rgba(100,255,100,100);    
-	border-color:rgba(255,255,255,200);    
-	color:rgba(0,0,0,200);    
-}</string>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="icon">
-         <iconset resource="icon.qrc">
-          <normaloff>:/icon/icon/clear.png</normaloff>:/icon/icon/clear.png</iconset>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>24</width>
-          <height>24</height>
-         </size>
-        </property>
-        <property name="shortcut">
-         <string>}</string>
-        </property>
-       </widget>
-      </item>
       <item row="1" column="1">
        <widget class="QPushButton" name="button_forward">
         <property name="minimumSize">
@@ -212,7 +176,7 @@ QPushButton:hover{
          <string/>
         </property>
         <property name="icon">
-         <iconset resource="icon.qrc">
+         <iconset>
           <normaloff>:/icon/icon/forward.png</normaloff>:/icon/icon/forward.png</iconset>
         </property>
         <property name="iconSize">
@@ -222,7 +186,7 @@ QPushButton:hover{
          </size>
         </property>
         <property name="shortcut">
-         <string>Right</string>
+         <string>F3</string>
         </property>
        </widget>
       </item>
@@ -262,7 +226,7 @@ QPushButton:hover{
          <string/>
         </property>
         <property name="icon">
-         <iconset resource="icon.qrc">
+         <iconset>
           <normaloff>:/icon/icon/backward.png</normaloff>:/icon/icon/backward.png</iconset>
         </property>
         <property name="iconSize">
@@ -272,57 +236,7 @@ QPushButton:hover{
          </size>
         </property>
         <property name="shortcut">
-         <string>Left</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="3">
-       <widget class="QPushButton" name="button_set_end">
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>30</height>
-         </size>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">QPushButton{
-	background-color:rgba(100,225,100,30);
-	border-style:outset;
-	border-width:4px;           
-	border-radius:10px;
-	border-color:rgba(255,255,255,30);
-	font:Time New Roams bold 10px;
-	color:rgba(0,0,0,100);
-	padding:6px;
-}    
-QPushButton:pressed{     
-	background-color:rgba(100,255,100,200);    
-	border-color:rgba(255,255,255,30);   
-	border-style:inset;    
-	color:rgba(0,0,0,100);    
-}    
-
-QPushButton:hover{    
-	background-color:rgba(100,255,100,100);    
-	border-color:rgba(255,255,255,200);    
-	color:rgba(0,0,0,200);    
-}</string>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="icon">
-         <iconset resource="icon.qrc">
-          <normaloff>:/icon/icon/start_point.png</normaloff>:/icon/icon/start_point.png</iconset>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>21</width>
-          <height>21</height>
-         </size>
-        </property>
-        <property name="shortcut">
-         <string>]</string>
+         <string>F2</string>
         </property>
        </widget>
       </item>
@@ -362,7 +276,7 @@ QPushButton:hover{
          <string/>
         </property>
         <property name="icon">
-         <iconset resource="icon.qrc">
+         <iconset>
           <normaloff>:/icon/icon/play.png</normaloff>:/icon/icon/play.png</iconset>
         </property>
         <property name="iconSize">
@@ -412,7 +326,7 @@ QPushButton:hover{
          <string/>
         </property>
         <property name="icon">
-         <iconset resource="icon.qrc">
+         <iconset>
           <normaloff>:/icon/icon/stop.png</normaloff>:/icon/icon/stop.png</iconset>
         </property>
         <property name="iconSize">
@@ -459,7 +373,7 @@ QPushButton:hover{
          <string/>
         </property>
         <property name="icon">
-         <iconset resource="icon.qrc">
+         <iconset>
           <normaloff>:/icon/icon/end_point.png</normaloff>:/icon/icon/end_point.png</iconset>
         </property>
         <property name="iconSize">
@@ -473,71 +387,8 @@ QPushButton:hover{
         </property>
        </widget>
       </item>
-      <item row="1" column="2">
-       <widget class="QPushButton" name="button_clear_beg_point">
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>30</height>
-         </size>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">QPushButton{
-	background-color:rgba(100,225,100,30);
-	border-style:outset;
-	border-width:4px;           
-	border-radius:10px;
-	border-color:rgba(255,255,255,30);
-	font:Time New Roams bold 10px;
-	color:rgba(0,0,0,100);
-	padding:6px;
-}    
-QPushButton:pressed{     
-	background-color:rgba(100,255,100,200);    
-	border-color:rgba(255,255,255,30);   
-	border-style:inset;    
-	color:rgba(0,0,0,100);    
-}    
-
-QPushButton:hover{    
-	background-color:rgba(100,255,100,100);    
-	border-color:rgba(255,255,255,200);    
-	color:rgba(0,0,0,200);    
-}</string>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="icon">
-         <iconset resource="icon.qrc">
-          <normaloff>:/icon/icon/clear.png</normaloff>:/icon/icon/clear.png</iconset>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>24</width>
-          <height>24</height>
-         </size>
-        </property>
-        <property name="shortcut">
-         <string>{</string>
-        </property>
-       </widget>
-      </item>
       <item row="0" column="4">
        <layout class="QHBoxLayout" name="horizontalLayout_8">
-        <item>
-         <widget class="QLabel" name="label_info">
-          <property name="maximumSize">
-           <size>
-            <width>150</width>
-            <height>16777215</height>
-           </size>
-          </property>
-          <property name="text">
-           <string/>
-          </property>
-         </widget>
-        </item>
         <item>
          <widget class="QComboBox" name="combox_level">
           <property name="sizePolicy">
@@ -624,7 +475,7 @@ QPushButton:hover{
            <string/>
           </property>
           <property name="icon">
-           <iconset resource="icon.qrc">
+           <iconset>
             <normaloff>:/icon/icon/save.png</normaloff>:/icon/icon/save.png</iconset>
           </property>
           <property name="iconSize">
@@ -643,37 +494,20 @@ QPushButton:hover{
       <item row="1" column="4">
        <layout class="QHBoxLayout" name="horizontalLayout_6">
         <item>
-         <widget class="QLabel" name="label_beg_point">
-          <property name="styleSheet">
-           <string notr="true">QLabel  {
-	border:1px solid yellow;
-}</string>
-          </property>
-          <property name="text">
-           <string/>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLabel" name="label_end_point">
-          <property name="styleSheet">
-           <string notr="true">QLabel  {
-	border:1px solid yellow;
-}</string>
-          </property>
-          <property name="text">
-           <string/>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item>
          <layout class="QHBoxLayout" name="horizontalLayout_5">
+          <item>
+           <widget class="QLabel" name="label_info">
+            <property name="maximumSize">
+             <size>
+              <width>150</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+           </widget>
+          </item>
           <item>
            <widget class="QLabel" name="label_elapse_time">
             <property name="text">
@@ -694,6 +528,56 @@ QPushButton:hover{
          </layout>
         </item>
        </layout>
+      </item>
+      <item row="1" column="2">
+       <widget class="QPushButton" name="button_set_end">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>30</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton{
+	background-color:rgba(100,225,100,30);
+	border-style:outset;
+	border-width:4px;           
+	border-radius:10px;
+	border-color:rgba(255,255,255,30);
+	font:Time New Roams bold 10px;
+	color:rgba(0,0,0,100);
+	padding:6px;
+}    
+QPushButton:pressed{     
+	background-color:rgba(100,255,100,200);    
+	border-color:rgba(255,255,255,30);   
+	border-style:inset;    
+	color:rgba(0,0,0,100);    
+}    
+
+QPushButton:hover{    
+	background-color:rgba(100,255,100,100);    
+	border-color:rgba(255,255,255,200);    
+	color:rgba(0,0,0,200);    
+}</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset>
+          <normaloff>:/icon/icon/start_point.png</normaloff>:/icon/icon/start_point.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>21</width>
+          <height>21</height>
+         </size>
+        </property>
+        <property name="shortcut">
+         <string>]</string>
+        </property>
+       </widget>
       </item>
      </layout>
     </item>
@@ -737,7 +621,7 @@ QPushButton:hover{
   <widget class="QStatusBar" name="statusBar"/>
   <action name="localFile">
    <property name="icon">
-    <iconset resource="icon.qrc">
+    <iconset>
      <normaloff>:/icon/icon/file_local.png</normaloff>:/icon/icon/file_local.png</iconset>
    </property>
    <property name="text">
@@ -749,7 +633,7 @@ QPushButton:hover{
   </action>
   <action name="howToUse">
    <property name="icon">
-    <iconset resource="icon.qrc">
+    <iconset>
      <normaloff>:/icon/icon/how.png</normaloff>:/icon/icon/how.png</iconset>
    </property>
    <property name="text">
@@ -761,7 +645,7 @@ QPushButton:hover{
   </action>
   <action name="about">
    <property name="icon">
-    <iconset resource="icon.qrc">
+    <iconset>
      <normaloff>:/icon/icon/about.png</normaloff>:/icon/icon/about.png</iconset>
    </property>
    <property name="text">
@@ -770,7 +654,7 @@ QPushButton:hover{
   </action>
   <action name="exit">
    <property name="icon">
-    <iconset resource="icon.qrc">
+    <iconset>
      <normaloff>:/icon/icon/exit.png</normaloff>:/icon/icon/exit.png</iconset>
    </property>
    <property name="text">
@@ -782,7 +666,7 @@ QPushButton:hover{
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="icon.qrc">
+    <iconset>
      <normaloff>:/icon/icon/file_online.png</normaloff>:/icon/icon/file_online.png</iconset>
    </property>
    <property name="text">
@@ -791,8 +675,6 @@ QPushButton:hover{
   </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources>
-  <include location="icon.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

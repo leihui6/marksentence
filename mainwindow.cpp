@@ -1,6 +1,5 @@
 ﻿#include "mainwindow.h"
 #include "ui_mainwindow.h"
-//#include "ui_loaddialog.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -167,6 +166,7 @@ void MainWindow::on_deleteItem()
     qDebug() <<"delete:"<<m_click_row;
     if (m_click_row == -1){
         qDebug() << "No Target";
+        return ;
     }
 
     logWrite(QString("Deleting:Index:%1 MarksSize:%2").arg(m_click_row).arg(m_mark_vec.size()));
@@ -274,6 +274,8 @@ void MainWindow::loadConstant()
 
     // 初始化标记数据
     m_click_row = -1;
+    m_clicked_btn_end = false;
+    m_clicked_btn_beg = false;
     m_mark_vec.clear();
     ui->tableWidget->clear();
 
@@ -312,8 +314,6 @@ void MainWindow::loadControl(bool status)
         ui->button_forward->setEnabled(false);
         ui->button_set_end->setEnabled(false);
         ui->button_set_start->setEnabled(false);
-        ui->button_clear_beg_point->setEnabled(false);
-        ui->button_clear_end_point->setEnabled(false);
         ui->button_save->setEnabled(false);
         ui->horizon_music->setEnabled(false);
     }
@@ -324,8 +324,6 @@ void MainWindow::loadControl(bool status)
         ui->button_forward->setEnabled(true);
         ui->button_set_end->setEnabled(true);
         ui->button_set_start->setEnabled(true);
-        ui->button_clear_beg_point->setEnabled(true);
-        ui->button_clear_end_point->setEnabled(true);
         ui->button_save->setEnabled(true);
         ui->horizon_music->setEnabled(true);
     }
@@ -429,8 +427,8 @@ void MainWindow::musicAfterStop()
 {
     m_play = false;
     m_music.setPosition(0);
-    ui->label_beg_point->clear();
-    ui->label_end_point->clear();
+    ui->button_set_start->setText("");
+    ui->button_set_end->setText("");
     ui->button_play->setIcon(QIcon(":/icon/icon/play.png"));
 }
 
@@ -469,8 +467,8 @@ void MainWindow::on_localFile_triggered()
     // 4. 刷新界面
 
     // 1
-    ui->label_beg_point->clear();
-    ui->label_end_point->clear();
+    ui->button_set_start->setText("");
+    ui->button_set_end->setText("");
     ui->combox_level->setCurrentIndex(0);
     ui->combox_sort->setCurrentIndex(0);
 
@@ -594,32 +592,35 @@ void MainWindow::on_button_forward_clicked()
 
 void MainWindow::on_button_set_start_clicked()
 {
-    m_beg_point = m_music.position();
-    ui->label_beg_point->setText(getFormatTime(m_beg_point));
-    // 设置开始的时候要清空结束点
-    m_end_point = m_total_time;
-    ui->label_end_point->clear();
+    // 取消断点
+    if (m_clicked_btn_beg){
+        m_beg_point = 0;
+        ui->button_set_start->setText("");
+        m_clicked_btn_beg = false;
+     }
+    // 记录断点
+    else{
+        m_beg_point = m_music.position();
+        ui->button_set_start->setText(getFormatTime(m_beg_point));
+        m_clicked_btn_beg = true;
+    }
 }
 
 void MainWindow::on_button_set_end_clicked()
 {
-    m_end_point = m_music.position();
-    ui->label_end_point->setText(getFormatTime(m_end_point));
-    // 回到最开始的位置播放
-    m_music.setPosition(m_beg_point);
-
-}
-
-void MainWindow::on_button_clear_beg_point_clicked()
-{
-    m_beg_point = 0;
-    ui->label_beg_point->clear();
-}
-
-void MainWindow::on_button_clear_end_point_clicked()
-{
-    m_end_point = m_total_time;
-    ui->label_end_point->clear();
+    // 取消断点
+    if (m_clicked_btn_end){
+        m_end_point = m_total_time;
+        ui->button_set_end->setText("");
+        m_clicked_btn_end = false;
+     }
+    // 记录断点
+    else{
+        m_end_point = m_music.position();
+        ui->button_set_end->setText(getFormatTime(m_end_point));
+        m_clicked_btn_end = true;
+        m_music.setPosition(m_beg_point);
+    }
 }
 
 void MainWindow::musicPlay(qint64 point){
@@ -684,8 +685,8 @@ void MainWindow::on_tableWidget_cellDoubleClicked(int row, int column)
     m_sort_index= select_json["sort_index"].toInt();
 
     // 设置断点信息
-    ui->label_beg_point->setText(getFormatTime(m_beg_point));
-    ui->label_end_point->setText(getFormatTime(m_end_point));
+    ui->button_set_start->setText(getFormatTime(m_beg_point));
+    ui->button_set_end->setText(getFormatTime(m_end_point));
 
     // 设置难度以及种类
     ui->combox_level->setCurrentIndex(m_level_index);
@@ -697,4 +698,3 @@ void MainWindow::on_tableWidget_cellDoubleClicked(int row, int column)
     // 开始在断点起点播放
     musicPlay(m_beg_point);
 }
-

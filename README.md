@@ -7,8 +7,8 @@
 
 ## Getting Started 
 - Windows
-	- [MarkSentenceV0.9.1.zip](https://github.com/Gltina/MarkSencent/releases/download/V1.0/MarkSentence.V0.9.1.zip)
-	- [(阿里服务器)MarkSentence V0.9.1.zip](http://39.97.115.128:8000/SHATOEFL/MarkSentenceV0.9.1.zip)
+	- [MarkSentenceV0.9.2](https://github.com/Gltina/marksencent/releases/tag/V0.9.2)
+	- [(阿里服务器)MarkSentenceV0.9.2.zip](http://39.97.115.128:8000/SHATOEFL/marksentenceV0.9.2.zip)
 
 ## Compiling from source
 ### Prerequisites
@@ -17,11 +17,10 @@
 
 ## Usage
 - 快捷键
-	- 后退与快进：`←`, `→` （默认是3s）
-	- 设置断点：`[` , `]`
-	- 取消断点：`shift` + `[` , `]`
-	- 保存当前标记： `Enter`
 	- 播放：`F1`
+	- 后退与快进：`F2`, `F3` （默认是3s）
+	- 保存当前标记： `Enter`
+	- 断点的选定和取消：单击`始`以及`终`
 - 使用示例
 	- ![在线下载](./samples/download.gif)
 	- ![精听的基本操作](./samples/listening.gif)

@@ -56,10 +56,6 @@ private slots:
 
     void on_button_set_end_clicked();
 
-    void on_button_clear_beg_point_clicked();
-
-    void on_button_clear_end_point_clicked();
-
     void on_howToUse_triggered();
 
     void on_about_triggered();
@@ -131,6 +127,8 @@ private: // 参数
     QString m_filepath;
     QString m_filebase;
     int m_click_row;
+    bool m_clicked_btn_beg;
+    bool m_clicked_btn_end;
 
     // 用于标记
     QVector<QJsonObject> m_mark_vec;
