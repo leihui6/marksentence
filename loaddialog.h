@@ -37,11 +37,11 @@ private slots:
 
     void on_btn_cancel_clicked();
 
-    void on_downloadBeg();
-
-    void on_downloadIng(qint64 bytesRead, qint64 bytesTotal);
-
-    void on_downloadFin();
+    void on_loadBeg();
+    void on_audioIng(qint64 bytesRead, qint64 bytesTotal);
+    void on_audioFin();
+    void on_lyricIng(qint64 bytesRead, qint64 bytesTotal);
+    void on_lyricFin();
 private:
     void closeEvent(QCloseEvent * event);
 
@@ -60,6 +60,7 @@ private:
     QStringList m_section_list;
     QStringList m_detail_list;
     QString m_filename;
+    QString m_lyric_filename;
     QString m_remotepath;
     QString m_savePath;
 
@@ -67,9 +68,13 @@ private:
     int m_section_index;
     int m_detail_index;
 
-    QNetworkAccessManager * m_download_object;
-    QNetworkReply * m_download_reply; // 临时创建
-    QFile * m_save_object;
+    QNetworkAccessManager * m_audio_load;
+    QNetworkReply * m_audio_reply; // 临时创建
+    QNetworkAccessManager * m_lyric_load;
+    QNetworkReply * m_lyric_reply; // 临时创建
+
+    QFile * m_audio_file;
+    QFile * m_lyric_file;
     QString m_saveDir;
 private:
     Ui::loadDialog * ui;

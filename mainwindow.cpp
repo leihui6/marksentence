@@ -46,6 +46,11 @@ void MainWindow::clearText(){
     ui->text_note->setPlainText("");
 }
 
+void MainWindow::showLyric()
+{
+
+}
+
 void MainWindow::on_button_save_clicked()
 {
     logWrite(QString("Saving:Segment ["+getFormatTime(m_beg_point)+"-"+getFormatTime(m_end_point)+"] NoteLength:%1 TypeLength:%2 Selected %3,%4").
@@ -545,6 +550,7 @@ void MainWindow::on_media_updatePosition(qint64 position)
     if (m_music.position() >= m_end_point+1/*+1防止在结束时返回的技巧*/){
         m_music.setPosition(m_beg_point);
     }
+    showLyric();
 }
 
 void MainWindow::on_media_updateDuration(qint64 duration)

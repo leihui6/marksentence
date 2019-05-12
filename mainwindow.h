@@ -104,6 +104,7 @@ private:
     void fileOpenIsFailed(QString title,QString content);
     void setPlainContent();
     void clearText();
+    void showLyric();
     QString getPlainContent(QPlainTextEdit * plainText);
     QString getFormatTime(qint64 time);
     QString getFormatMark(const QJsonObject & json);
@@ -116,6 +117,12 @@ private: // 参数
     qint64 m_beg_point;
     qint64 m_end_point;
     qint64 m_step_millSecond;
+
+    // 用于歌词文件
+    QFile  m_lyric_object;
+    QString m_lyric_name;
+    QString m_lyric_saveDir;
+    QMap<int,QString> m_lyric_vec;
 
     // 用于界面内容
     QString m_type_content;
