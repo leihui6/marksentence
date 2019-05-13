@@ -104,6 +104,8 @@ private:
     void fileOpenIsFailed(QString title,QString content);
     void setPlainContent();
     void clearText();
+    bool generateLyricFileName();
+    void loadLyric2Map();
     void showLyric();
     QString getPlainContent(QPlainTextEdit * plainText);
     QString getFormatTime(qint64 time);
@@ -122,7 +124,7 @@ private: // 参数
     QFile  m_lyric_object;
     QString m_lyric_name;
     QString m_lyric_saveDir;
-    QMap<int,QString> m_lyric_vec;
+    QMap<int,QString> m_lyric_map;
 
     // 用于界面内容
     QString m_type_content;

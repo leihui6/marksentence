@@ -46,6 +46,59 @@ void MainWindow::clearText(){
     ui->text_note->setPlainText("");
 }
 
+bool MainWindow::generateLyricFileName()
+{
+    // 目前只针对听力文件有用
+    if (m_filebase.contains("Listening",Qt::CaseSensitive)){
+        // 获取"_"的索引
+        QVector<int>indexvec;
+        for (int i=0;i<m_filebase.size();i++) {
+            if (m_filebase[i] == '_')
+                indexvec.push_back(i);
+        }
+        // 正确的是三个
+        if(indexvec.size() == 3){
+            int id = m_filebase.mid(indexvec[0]+1,indexvec[1]-indexvec[0]-1).toInt();
+            QString detail = m_filebase.mid(indexvec[2]+1);
+            //qDebug() << id << " "<<detail;
+            m_lyric_name = QString("TPO%1%2.txt").arg(id,2,10,QChar('0')).arg(detail);
+            qDebug()<< m_lyric_name;
+        }
+        return true;
+    }
+    return false;
+}
+
+void MainWindow::loadLyric2Map()
+{
+    qDebug() << QDir::currentPath();
+
+    m_lyric_object.setFileName(m_lyric_name);
+    m_lyric_object.open(QIODevice::ReadOnly);
+    if (!m_lyric_object.isOpen())
+        return ;
+    QByteArray t ;
+    double sentence_time;
+    QString thisSentence;
+    while(!m_lyric_object.atEnd())
+    {
+        t = m_lyric_object.readLine();
+        thisSentence = QString(t);
+
+        for (int i=0;i<thisSentence.size();i++){
+            if (thisSentence[i] == ' '){
+                qDebug() << thisSentence.mid(0,i);
+                sentence_time = thisSentence.mid(0,i).toDouble() * 1000;
+                m_lyric_map.insert(sentence_time,thisSentence.mid(i+1).replace("\r\n",""));
+                break;
+            }// end if
+        }// end for
+    }// end while
+    //ui->text_r->setText(QString(t));
+    qDebug() << m_lyric_map;
+    m_lyric_object.close();
+}
+
 void MainWindow::showLyric()
 {
 
@@ -493,6 +546,11 @@ void MainWindow::on_localFile_triggered()
     // 4
     updateTableWidget();
     loadControl(true);
+    // Done
+    // 如果是listening部分的歌词请求
+    if (generateLyricFileName()){
+        loadLyric2Map();
+    }
 
     logWrite(QString("Loaded[%1]").arg(m_beg_point));
 }
