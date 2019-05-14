@@ -12,6 +12,7 @@
 #include <QDir>
 #include <QFile>
 #include <QVector>
+#include <QCloseEvent>
 
 class QNetworkReply;
 
@@ -24,7 +25,7 @@ class loadDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit loadDialog(QWidget *parent = 0);
+    explicit loadDialog(QFile & log_file,QWidget *parent = 0);
     ~loadDialog();
 private slots:
     void on_combox_section_activated(int index);
@@ -43,8 +44,6 @@ private slots:
     void on_lyricIng(qint64 bytesRead, qint64 bytesTotal);
     void on_lyricFin();
 private:
-    void closeEvent(QCloseEvent * event);
-
     void loadConnect();
 
     void loadCombox();
@@ -55,7 +54,9 @@ private:
 
     void loadRemotePath();
 
-    void createDir(QString dir);
+    bool createDir(QString dir);
+
+    void logWrite(QString info);
 private:
     QStringList m_section_list;
     QStringList m_detail_list;
@@ -72,10 +73,15 @@ private:
     QNetworkReply * m_audio_reply; // 临时创建
     QNetworkAccessManager * m_lyric_load;
     QNetworkReply * m_lyric_reply; // 临时创建
+    qint64 m_audio_total;
+    qint64 m_lyric_total;
 
-    QFile * m_audio_file;
-    QFile * m_lyric_file;
-    QString m_saveDir;
+    QFile m_audio_file;
+    QFile m_lyric_file;
+    QFile &m_log_file;
+    QString m_audio_dir;
+    QString m_lyric_dir;
+    
 private:
     Ui::loadDialog * ui;
 };

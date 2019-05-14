@@ -91,7 +91,8 @@ private:
     void loadControl(bool status);
     void loadJsonFile();
     void loadFileDir();
-    void loadFileLog();
+    bool createDir(QString dirname);
+    void createLogFile();
     void loadTableWidget();
     void createOneMark();
     void saveMarkIntoFile();
@@ -123,7 +124,7 @@ private: // 参数
     // 用于歌词文件
     QFile  m_lyric_object;
     QString m_lyric_name;
-    QString m_lyric_saveDir;
+    QString m_lyric_dir;
     QMap<int,QString> m_lyric_map;
 
     // 用于界面内容
@@ -140,14 +141,18 @@ private: // 参数
     bool m_clicked_btn_end;
 
     // 用于标记
-    QVector<QJsonObject> m_mark_vec;
-    QFile m_file_object;
-    QString m_file_name;
-    QString m_file_saveDir;
+    QVector<QJsonObject> m_json_vec;
+    QFile m_json_object;
+    QString m_json_name;
+    QString m_json_dir;
 
     // 用于文件记录
     QFile m_log_object;
     QString m_log_name;
+    QString m_log_dir;
+
+    // TPO文件相关
+    QString m_tpo_dir;
 
 private: //新打开的窗口
     loadDialog * m_loadDialog;

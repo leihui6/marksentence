@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>638</width>
-    <height>460</height>
+    <width>900</width>
+    <height>556</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -24,313 +24,121 @@
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout_2">
-    <item row="1" column="0">
-     <layout class="QGridLayout" name="gridLayout">
-      <item row="1" column="1">
-       <widget class="QPushButton" name="button_forward">
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>30</height>
-         </size>
+    <item row="0" column="0">
+     <layout class="QVBoxLayout" name="verticalLayout_2">
+      <property name="spacing">
+       <number>0</number>
+      </property>
+      <item>
+       <widget class="QTableWidget" name="tableWidget">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
         </property>
-        <property name="styleSheet">
-         <string notr="true">QPushButton{
-	background-color:rgba(100,225,100,30);
-	border-style:outset;
-	border-width:4px;           
-	border-radius:10px;
-	border-color:rgba(255,255,255,30);
-	font:Time New Roams bold 10px;
-	color:rgba(0,0,0,100);
-	padding:6px;
-}    
-QPushButton:pressed{     
-	background-color:rgba(100,255,100,200);    
-	border-color:rgba(255,255,255,30);   
-	border-style:inset;    
-	color:rgba(0,0,0,100);    
-}    
-
-QPushButton:hover{    
-	background-color:rgba(100,255,100,100);    
-	border-color:rgba(255,255,255,200);    
-	color:rgba(0,0,0,200);    
-}</string>
+        <property name="font">
+         <font>
+          <family>Times New Roman</family>
+         </font>
         </property>
-        <property name="text">
+        <property name="contextMenuPolicy">
+         <enum>Qt::CustomContextMenu</enum>
+        </property>
+        <property name="toolTip">
          <string/>
         </property>
-        <property name="icon">
-         <iconset resource="icon.qrc">
-          <normaloff>:/icon/icon/forward.png</normaloff>:/icon/icon/forward.png</iconset>
+        <property name="styleSheet">
+         <string notr="true">QTableWidget {
+	border:1px solid rgb(85, 170, 255);
+}</string>
         </property>
-        <property name="iconSize">
-         <size>
-          <width>21</width>
-          <height>21</height>
-         </size>
-        </property>
-        <property name="shortcut">
-         <string>F3</string>
+        <attribute name="horizontalHeaderCascadingSectionResizes">
+         <bool>true</bool>
+        </attribute>
+        <attribute name="horizontalHeaderStretchLastSection">
+         <bool>true</bool>
+        </attribute>
+        <attribute name="verticalHeaderVisible">
+         <bool>false</bool>
+        </attribute>
+        <attribute name="verticalHeaderCascadingSectionResizes">
+         <bool>false</bool>
+        </attribute>
+        <attribute name="verticalHeaderStretchLastSection">
+         <bool>false</bool>
+        </attribute>
+       </widget>
+      </item>
+      <item>
+       <widget class="Line" name="line_2">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
         </property>
        </widget>
       </item>
-      <item row="1" column="0">
-       <widget class="QPushButton" name="button_back">
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>30</height>
-         </size>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout">
+        <property name="spacing">
+         <number>0</number>
         </property>
-        <property name="styleSheet">
-         <string notr="true">QPushButton{
-	background-color:rgba(100,225,100,30);
-	border-style:outset;
-	border-width:4px;           
-	border-radius:10px;
-	border-color:rgba(255,255,255,30);
-	font:Time New Roams bold 10px;
-	color:rgba(0,0,0,100);
-	padding:6px;
-}    
-QPushButton:pressed{     
-	background-color:rgba(100,255,100,200);    
-	border-color:rgba(255,255,255,30);   
-	border-style:inset;    
-	color:rgba(0,0,0,100);    
-}    
-
-QPushButton:hover{    
-	background-color:rgba(100,255,100,100);    
-	border-color:rgba(255,255,255,200);    
-	color:rgba(0,0,0,200);    
-}</string>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="icon">
-         <iconset resource="icon.qrc">
-          <normaloff>:/icon/icon/backward.png</normaloff>:/icon/icon/backward.png</iconset>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>21</width>
-          <height>21</height>
-         </size>
-        </property>
-        <property name="shortcut">
-         <string>F2</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="0">
-       <widget class="QPushButton" name="button_play">
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>30</height>
-         </size>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">QPushButton{
-	background-color:rgba(100,225,100,30);
-	border-style:outset;
-	border-width:4px;           
-	border-radius:10px;
-	border-color:rgba(255,255,255,30);
-	font:Time New Roams bold 10px;
-	color:rgba(0,0,0,100);
-	padding:6px;
-}    
-QPushButton:pressed{     
-	background-color:rgba(100,255,100,200);    
-	border-color:rgba(255,255,255,30);   
-	border-style:inset;    
-	color:rgba(0,0,0,100);    
-}    
-
-QPushButton:hover{    
-	background-color:rgba(100,255,100,100);    
-	border-color:rgba(255,255,255,200);    
-	color:rgba(0,0,0,200);    
-}</string>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="icon">
-         <iconset resource="icon.qrc">
-          <normaloff>:/icon/icon/play.png</normaloff>:/icon/icon/play.png</iconset>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>21</width>
-          <height>21</height>
-         </size>
-        </property>
-        <property name="shortcut">
-         <string>F1</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="1">
-       <widget class="QPushButton" name="button_stop">
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>30</height>
-         </size>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">QPushButton{
-	background-color:rgba(100,225,100,30);
-	border-style:outset;
-	border-width:4px;           
-	border-radius:10px;
-	border-color:rgba(255,255,255,30);
-	font:Time New Roams bold 10px;
-	color:rgba(0,0,0,100);
-	padding:6px;
-}    
-QPushButton:pressed{     
-	background-color:rgba(100,255,100,200);    
-	border-color:rgba(255,255,255,30);   
-	border-style:inset;    
-	color:rgba(0,0,0,100);    
-}    
-
-QPushButton:hover{    
-	background-color:rgba(100,255,100,100);    
-	border-color:rgba(255,255,255,200);    
-	color:rgba(0,0,0,200);    
-}</string>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="icon">
-         <iconset resource="icon.qrc">
-          <normaloff>:/icon/icon/stop.png</normaloff>:/icon/icon/stop.png</iconset>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>21</width>
-          <height>21</height>
-         </size>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="2">
-       <widget class="QPushButton" name="button_set_start">
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>30</height>
-         </size>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">QPushButton{
-	background-color:rgba(100,225,100,30);
-	border-style:outset;
-	border-width:4px;           
-	border-radius:10px;
-	border-color:rgba(255,255,255,30);
-	font:Time New Roams bold 10px;
-	color:rgba(0,0,0,100);
-	padding:6px;
-}    
-QPushButton:pressed{     
-	background-color:rgba(100,255,100,200);    
-	border-color:rgba(255,255,255,30);   
-	border-style:inset;    
-	color:rgba(0,0,0,100);    
-}    
-
-QPushButton:hover{    
-	background-color:rgba(100,255,100,100);    
-	border-color:rgba(255,255,255,200);    
-	color:rgba(0,0,0,200);    
-}</string>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="icon">
-         <iconset resource="icon.qrc">
-          <normaloff>:/icon/icon/end_point.png</normaloff>:/icon/icon/end_point.png</iconset>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>21</width>
-          <height>21</height>
-         </size>
-        </property>
-        <property name="shortcut">
-         <string>[</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="4">
-       <layout class="QHBoxLayout" name="horizontalLayout_8">
         <item>
-         <widget class="QComboBox" name="combox_level">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="minimumSize">
-           <size>
-            <width>0</width>
-            <height>0</height>
-           </size>
-          </property>
+         <widget class="QPlainTextEdit" name="text_type">
           <property name="font">
            <font>
             <family>Times New Roman</family>
-            <pointsize>12</pointsize>
-           </font>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QComboBox" name="combox_sort">
-          <property name="minimumSize">
-           <size>
-            <width>0</width>
-            <height>25</height>
-           </size>
-          </property>
-          <property name="font">
-           <font>
-            <family>Times New Roman</family>
-            <pointsize>12</pointsize>
+            <pointsize>16</pointsize>
            </font>
           </property>
           <property name="styleSheet">
-           <string notr="true">QCombox_sort{
-	border: 1px;solid;#999999;
-	border-radius: 5px;
+           <string notr="true">QPlainTextEdit {
+	border:1px solid rgb(85, 170, 255);
+	border-right:1px dashed rgb(85, 170, 255);
 }</string>
           </property>
-          <property name="iconSize">
-           <size>
-            <width>16</width>
-            <height>16</height>
-           </size>
+          <property name="plainText">
+           <string/>
+          </property>
+          <property name="placeholderText">
+           <string>Typing what you are listening ...</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="button_save">
+         <widget class="QPlainTextEdit" name="text_note">
+          <property name="font">
+           <font>
+            <family>Times New Roman</family>
+            <pointsize>16</pointsize>
+           </font>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QPlainTextEdit {
+	border:1px solid rgb(85, 170, 255);
+	border-left:1px dashed rgb(85, 170, 255);
+}</string>
+          </property>
+          <property name="plainText">
+           <string/>
+          </property>
+          <property name="placeholderText">
+           <string>Taking Notes ...</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QGridLayout" name="gridLayout">
+        <property name="spacing">
+         <number>0</number>
+        </property>
+        <item row="2" column="0">
+         <widget class="QPushButton" name="button_back">
           <property name="minimumSize">
            <size>
             <width>0</width>
-            <height>23</height>
+            <height>30</height>
            </size>
           </property>
           <property name="styleSheet">
@@ -362,7 +170,7 @@ QPushButton:hover{
           </property>
           <property name="icon">
            <iconset resource="icon.qrc">
-            <normaloff>:/icon/icon/save.png</normaloff>:/icon/icon/save.png</iconset>
+            <normaloff>:/icon/icon/backward.png</normaloff>:/icon/icon/backward.png</iconset>
           </property>
           <property name="iconSize">
            <size>
@@ -371,60 +179,20 @@ QPushButton:hover{
            </size>
           </property>
           <property name="shortcut">
-           <string>Return</string>
+           <string>F2</string>
           </property>
          </widget>
         </item>
-       </layout>
-      </item>
-      <item row="1" column="4">
-       <layout class="QHBoxLayout" name="horizontalLayout_6">
-        <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_5">
-          <item>
-           <widget class="QLabel" name="label_info">
-            <property name="maximumSize">
-             <size>
-              <width>150</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="text">
-             <string/>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLabel" name="label_elapse_time">
-            <property name="text">
-             <string/>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLabel" name="label_totle_time">
-            <property name="text">
-             <string/>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </item>
-       </layout>
-      </item>
-      <item row="1" column="2">
-       <widget class="QPushButton" name="button_set_end">
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>30</height>
-         </size>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">QPushButton{
+        <item row="2" column="1">
+         <widget class="QPushButton" name="button_forward">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>30</height>
+           </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QPushButton{
 	background-color:rgba(100,225,100,30);
 	border-style:outset;
 	border-width:4px;           
@@ -446,113 +214,454 @@ QPushButton:hover{
 	border-color:rgba(255,255,255,200);    
 	color:rgba(0,0,0,200);    
 }</string>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="icon">
-         <iconset resource="icon.qrc">
-          <normaloff>:/icon/icon/start_point.png</normaloff>:/icon/icon/start_point.png</iconset>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>21</width>
-          <height>21</height>
-         </size>
-        </property>
-        <property name="shortcut">
-         <string>]</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </item>
-    <item row="0" column="0">
-     <layout class="QHBoxLayout" name="horizontalLayout_3">
-      <item>
-       <layout class="QVBoxLayout" name="verticalLayout_2">
-        <item>
-         <widget class="QPlainTextEdit" name="text_type">
-          <property name="font">
-           <font>
-            <family>Times New Roman</family>
-            <pointsize>16</pointsize>
-           </font>
           </property>
-          <property name="styleSheet">
-           <string notr="true">QPlainTextEdit {
-	border:0px solid rgb(85, 170, 255);
-	border-bottom:1px solid rgb(85, 170, 255);
-}</string>
-          </property>
-          <property name="plainText">
+          <property name="text">
            <string/>
+          </property>
+          <property name="icon">
+           <iconset resource="icon.qrc">
+            <normaloff>:/icon/icon/forward.png</normaloff>:/icon/icon/forward.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>21</width>
+            <height>21</height>
+           </size>
+          </property>
+          <property name="shortcut">
+           <string>F3</string>
           </property>
          </widget>
         </item>
-        <item>
-         <widget class="QPlainTextEdit" name="text_note">
-          <property name="font">
-           <font>
-            <family>Times New Roman</family>
-            <pointsize>16</pointsize>
-           </font>
+        <item row="1" column="0">
+         <widget class="QPushButton" name="button_play">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>30</height>
+           </size>
           </property>
           <property name="styleSheet">
-           <string notr="true">QPlainTextEdit {
-	border:0px solid rgb(85, 170, 255);
-	border-bottom:1px solid rgb(85, 170, 255);
+           <string notr="true">QPushButton{
+	background-color:rgba(100,225,100,30);
+	border-style:outset;
+	border-width:4px;           
+	border-radius:10px;
+	border-color:rgba(255,255,255,30);
+	font:Time New Roams bold 10px;
+	color:rgba(0,0,0,100);
+	padding:6px;
+}    
+QPushButton:pressed{     
+	background-color:rgba(100,255,100,200);    
+	border-color:rgba(255,255,255,30);   
+	border-style:inset;    
+	color:rgba(0,0,0,100);    
+}    
+
+QPushButton:hover{    
+	background-color:rgba(100,255,100,100);    
+	border-color:rgba(255,255,255,200);    
+	color:rgba(0,0,0,200);    
 }</string>
           </property>
-          <property name="plainText">
+          <property name="text">
            <string/>
+          </property>
+          <property name="icon">
+           <iconset resource="icon.qrc">
+            <normaloff>:/icon/icon/play.png</normaloff>:/icon/icon/play.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>21</width>
+            <height>21</height>
+           </size>
+          </property>
+          <property name="shortcut">
+           <string>F1</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="2">
+         <widget class="QPushButton" name="button_set_start">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>30</height>
+           </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QPushButton{
+	background-color:rgba(100,225,100,30);
+	border-style:outset;
+	border-width:4px;           
+	border-radius:10px;
+	border-color:rgba(255,255,255,30);
+	font:Time New Roams bold 10px;
+	color:rgba(0,0,0,100);
+	padding:6px;
+}    
+QPushButton:pressed{     
+	background-color:rgba(100,255,100,200);    
+	border-color:rgba(255,255,255,30);   
+	border-style:inset;    
+	color:rgba(0,0,0,100);    
+}    
+
+QPushButton:hover{    
+	background-color:rgba(100,255,100,100);    
+	border-color:rgba(255,255,255,200);    
+	color:rgba(0,0,0,200);    
+}</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset resource="icon.qrc">
+            <normaloff>:/icon/icon/end_point.png</normaloff>:/icon/icon/end_point.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>21</width>
+            <height>21</height>
+           </size>
+          </property>
+          <property name="shortcut">
+           <string>[</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QPushButton" name="button_stop">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>30</height>
+           </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QPushButton{
+	background-color:rgba(100,225,100,30);
+	border-style:outset;
+	border-width:4px;           
+	border-radius:10px;
+	border-color:rgba(255,255,255,30);
+	font:Time New Roams bold 10px;
+	color:rgba(0,0,0,100);
+	padding:6px;
+}    
+QPushButton:pressed{     
+	background-color:rgba(100,255,100,200);    
+	border-color:rgba(255,255,255,30);   
+	border-style:inset;    
+	color:rgba(0,0,0,100);    
+}    
+
+QPushButton:hover{    
+	background-color:rgba(100,255,100,100);    
+	border-color:rgba(255,255,255,200);    
+	color:rgba(0,0,0,200);    
+}</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset resource="icon.qrc">
+            <normaloff>:/icon/icon/stop.png</normaloff>:/icon/icon/stop.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>21</width>
+            <height>21</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="4">
+         <layout class="QHBoxLayout" name="horizontalLayout_8">
+          <property name="spacing">
+           <number>0</number>
+          </property>
+          <item>
+           <widget class="QComboBox" name="combox_level">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <family>Times New Roman</family>
+              <pointsize>12</pointsize>
+             </font>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QComboBox" name="combox_sort">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>25</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <family>Times New Roman</family>
+              <pointsize>12</pointsize>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QCombox_sort{
+	border: 1px;solid;#999999;
+	border-radius: 5px;
+}</string>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>16</width>
+              <height>16</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="button_save">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>23</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QPushButton{
+	background-color:rgba(100,225,100,30);
+	border-style:outset;
+	border-width:4px;           
+	border-radius:10px;
+	border-color:rgba(255,255,255,30);
+	font:Time New Roams bold 10px;
+	color:rgba(0,0,0,100);
+	padding:6px;
+}    
+QPushButton:pressed{     
+	background-color:rgba(100,255,100,200);    
+	border-color:rgba(255,255,255,30);   
+	border-style:inset;    
+	color:rgba(0,0,0,100);    
+}    
+
+QPushButton:hover{    
+	background-color:rgba(100,255,100,100);    
+	border-color:rgba(255,255,255,200);    
+	color:rgba(0,0,0,200);    
+}</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="icon.qrc">
+              <normaloff>:/icon/icon/save.png</normaloff>:/icon/icon/save.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>21</width>
+              <height>21</height>
+             </size>
+            </property>
+            <property name="shortcut">
+             <string>Return</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item row="2" column="4">
+         <layout class="QHBoxLayout" name="horizontalLayout_6">
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_5">
+            <property name="spacing">
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="QLabel" name="label_info">
+              <property name="maximumSize">
+               <size>
+                <width>150</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="label_elapse_time">
+              <property name="text">
+               <string/>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="label_totle_time">
+              <property name="text">
+               <string/>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </item>
+        <item row="2" column="2">
+         <widget class="QPushButton" name="button_set_end">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>30</height>
+           </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QPushButton{
+	background-color:rgba(100,225,100,30);
+	border-style:outset;
+	border-width:4px;           
+	border-radius:10px;
+	border-color:rgba(255,255,255,30);
+	font:Time New Roams bold 10px;
+	color:rgba(0,0,0,100);
+	padding:6px;
+}    
+QPushButton:pressed{     
+	background-color:rgba(100,255,100,200);    
+	border-color:rgba(255,255,255,30);   
+	border-style:inset;    
+	color:rgba(0,0,0,100);    
+}    
+
+QPushButton:hover{    
+	background-color:rgba(100,255,100,100);    
+	border-color:rgba(255,255,255,200);    
+	color:rgba(0,0,0,200);    
+}</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset resource="icon.qrc">
+            <normaloff>:/icon/icon/start_point.png</normaloff>:/icon/icon/start_point.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>21</width>
+            <height>21</height>
+           </size>
+          </property>
+          <property name="shortcut">
+           <string>]</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="0">
+         <widget class="Line" name="line">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
           </property>
          </widget>
         </item>
        </layout>
       </item>
+     </layout>
+    </item>
+    <item row="0" column="1" rowspan="2">
+     <layout class="QVBoxLayout" name="verticalLayout_3">
+      <property name="spacing">
+       <number>0</number>
+      </property>
       <item>
-       <widget class="QTableWidget" name="tableWidget">
+       <widget class="QTextBrowser" name="textBrowser_1">
         <property name="font">
          <font>
           <family>Times New Roman</family>
+          <pointsize>12</pointsize>
          </font>
         </property>
-        <property name="contextMenuPolicy">
-         <enum>Qt::CustomContextMenu</enum>
+        <property name="styleSheet">
+         <string notr="true">QTextBrowser {
+	border:1px solid rgb(85, 170, 255);
+	border-bottom:0px solid rgb(85, 170, 255);
+}</string>
         </property>
-        <property name="toolTip">
-         <string/>
+       </widget>
+      </item>
+      <item>
+       <widget class="QTextBrowser" name="textBrowser_2">
+        <property name="font">
+         <font>
+          <family>Times New Roman</family>
+          <pointsize>12</pointsize>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
         </property>
         <property name="styleSheet">
-         <string notr="true">QTableWidget {
+         <string notr="true">QTextBrowser {
 	border:0px solid rgb(85, 170, 255);
+	border-left:1px solid rgb(85, 170, 255);
+	border-right:1px solid rgb(85, 170, 255);
+}</string>
+        </property>
+        <property name="placeholderText">
+         <string>Show lyric...</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QTextBrowser" name="textBrowser_3">
+        <property name="font">
+         <font>
+          <family>Times New Roman</family>
+          <pointsize>12</pointsize>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QTextBrowser {
+	border:0px solid rgb(85, 170, 255);
+	border-left:1px solid rgb(85, 170, 255);
+	border-right:1px solid rgb(85, 170, 255);
 	border-bottom:1px solid rgb(85, 170, 255);
 }</string>
         </property>
-        <attribute name="horizontalHeaderCascadingSectionResizes">
-         <bool>true</bool>
-        </attribute>
-        <attribute name="horizontalHeaderStretchLastSection">
-         <bool>true</bool>
-        </attribute>
-        <attribute name="verticalHeaderCascadingSectionResizes">
-         <bool>false</bool>
-        </attribute>
-        <attribute name="verticalHeaderStretchLastSection">
-         <bool>false</bool>
-        </attribute>
        </widget>
       </item>
      </layout>
     </item>
-    <item row="2" column="0">
+    <item row="2" column="0" colspan="2">
      <layout class="QVBoxLayout" name="verticalLayout">
+      <property name="spacing">
+       <number>0</number>
+      </property>
       <item>
        <widget class="QSlider" name="horizon_music">
         <property name="styleSheet">
          <string notr="true">QSlider{
-border-color: #bcbcbc;
+	border-color: #bcbcbc;
 }
 QSlider::groove:horizontal {                                
      border: 1px solid #999999;                             
@@ -579,55 +688,18 @@ QSlider::sub-page:horizontal{
         </property>
        </widget>
       </item>
-      <item>
-       <widget class="QLabel" name="label_lyric1">
-        <property name="font">
-         <font>
-          <family>Times New Roman</family>
-          <pointsize>10</pointsize>
-         </font>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLabel" name="label_lyric2">
-        <property name="font">
-         <font>
-          <family>Times New Roman</family>
-          <pointsize>10</pointsize>
-         </font>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLabel" name="label_lyric3">
-        <property name="font">
-         <font>
-          <family>Times New Roman</family>
-          <pointsize>10</pointsize>
-         </font>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-       </widget>
-      </item>
      </layout>
     </item>
    </layout>
+   <zorder>verticalLayoutWidget</zorder>
+   <zorder>horizon_music</zorder>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>638</width>
+     <width>900</width>
      <height>21</height>
     </rect>
    </property>
