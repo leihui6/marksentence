@@ -347,6 +347,7 @@ void MainWindow::loadConstant()
     m_sort_index = 0;
 
     // 初始化音频播放相关数据
+    m_music.setNotifyInterval(100);
     m_play = false;
     m_beg_point = 0;
     m_end_point = 0;
@@ -812,6 +813,7 @@ void MainWindow::on_onlineFile_triggered()
 
 void MainWindow::on_tableWidget_cellDoubleClicked(int row, int column)
 {
+    column=column;
     m_click_row = row;
     m_clicked_btn_beg = true;
     m_clicked_btn_end = true;
