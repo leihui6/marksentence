@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>277</width>
-    <height>160</height>
+    <width>290</width>
+    <height>179</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,8 +17,11 @@
    <iconset resource="icon.qrc">
     <normaloff>:/icon/icon/tool_title.png</normaloff>:/icon/icon/tool_title.png</iconset>
   </property>
-  <layout class="QGridLayout" name="gridLayout_3">
-   <item row="0" column="0">
+  <layout class="QGridLayout" name="gridLayout_3" rowstretch="0,0,0,0,0">
+   <property name="spacing">
+    <number>0</number>
+   </property>
+   <item row="1" column="0">
     <layout class="QGridLayout" name="gridLayout_2">
      <item row="0" column="0">
       <widget class="QLabel" name="label_TPO">
@@ -70,70 +73,16 @@
      </item>
     </layout>
    </item>
-   <item row="1" column="0">
-    <layout class="QVBoxLayout" name="verticalLayout_3" stretch="2,2,2">
-     <item>
-      <layout class="QGridLayout" name="gridLayout">
-       <item row="0" column="0">
-        <widget class="QComboBox" name="combox_TPO">
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>30</height>
-          </size>
-         </property>
-         <property name="font">
-          <font>
-           <family>Times New Roman</family>
-           <pointsize>12</pointsize>
-          </font>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="1">
-        <widget class="QComboBox" name="combox_section">
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>30</height>
-          </size>
-         </property>
-         <property name="font">
-          <font>
-           <family>Times New Roman</family>
-           <pointsize>12</pointsize>
-          </font>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="2">
-        <widget class="QComboBox" name="combox_detail">
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>30</height>
-          </size>
-         </property>
-         <property name="font">
-          <font>
-           <family>Times New Roman</family>
-           <pointsize>12</pointsize>
-          </font>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
-     <item>
-      <widget class="QProgressBar" name="progressBar">
-       <property name="font">
-        <font>
-         <family>Times New Roman</family>
-         <pointsize>12</pointsize>
-        </font>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">QProgressBar{
+   <item row="4" column="0">
+    <widget class="QProgressBar" name="progressBar">
+     <property name="font">
+      <font>
+       <family>Times New Roman</family>
+       <pointsize>12</pointsize>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QProgressBar{
         border: none;  
         text-align: center;
         background: rgb(255, 255, 255);
@@ -143,24 +92,89 @@ QProgressBar::chunk {
         background: rgb(30,144,255); 
         border-radius:6px;
 }</string>
+     </property>
+     <property name="value">
+      <number>24</number>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="0">
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <property name="spacing">
+      <number>0</number>
+     </property>
+     <property name="sizeConstraint">
+      <enum>QLayout::SetDefaultConstraint</enum>
+     </property>
+     <item>
+      <widget class="QPushButton" name="btn_comfirm">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>37</verstretch>
+        </sizepolicy>
        </property>
-       <property name="value">
-        <number>24</number>
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>13</height>
+        </size>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton{
+	background-color:rgba(100,225,100,30);
+	border-style:outset;
+	border-width:4px;           
+	border-radius:10px;
+	border-color:rgba(255,255,255,30);
+	font:Time New Roams bold 10px;
+	color:rgba(0,0,0,100);
+	padding:6px;
+}    
+QPushButton:pressed{     
+	background-color:rgba(100,255,100,200);    
+	border-color:rgba(255,255,255,30);   
+	border-style:inset;    
+	color:rgba(0,0,0,100);    
+}    
+
+QPushButton:hover{    
+	background-color:rgba(100,255,100,100);    
+	border-color:rgba(255,255,255,200);    
+	color:rgba(0,0,0,200);    
+}</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="icon.qrc">
+         <normaloff>:/icon/icon/confirm.png</normaloff>:/icon/icon/confirm.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>32</width>
+         <height>32</height>
+        </size>
        </property>
       </widget>
      </item>
      <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_2">
-       <item>
-        <widget class="QPushButton" name="btn_comfirm">
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>40</height>
-          </size>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">QPushButton{
+      <widget class="QPushButton" name="btn_cancel">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>25</height>
+        </size>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton{
 	background-color:rgba(100,225,100,30);
 	border-style:outset;
 	border-width:4px;           
@@ -182,74 +196,86 @@ QPushButton:hover{
 	border-color:rgba(255,255,255,200);    
 	color:rgba(0,0,0,200);    
 }</string>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-         <property name="icon">
-          <iconset resource="icon.qrc">
-           <normaloff>:/icon/icon/confirm.png</normaloff>:/icon/icon/confirm.png</iconset>
-         </property>
-         <property name="iconSize">
-          <size>
-           <width>32</width>
-           <height>32</height>
-          </size>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="btn_cancel">
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>40</height>
-          </size>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">QPushButton{
-	background-color:rgba(100,225,100,30);
-	border-style:outset;
-	border-width:4px;           
-	border-radius:10px;
-	border-color:rgba(255,255,255,30);
-	font:Time New Roams bold 10px;
-	color:rgba(0,0,0,100);
-	padding:6px;
-}    
-QPushButton:pressed{     
-	background-color:rgba(100,255,100,200);    
-	border-color:rgba(255,255,255,30);   
-	border-style:inset;    
-	color:rgba(0,0,0,100);    
-}    
-
-QPushButton:hover{    
-	background-color:rgba(100,255,100,100);    
-	border-color:rgba(255,255,255,200);    
-	color:rgba(0,0,0,200);    
-}</string>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-         <property name="icon">
-          <iconset resource="icon.qrc">
-           <normaloff>:/icon/icon/cancel.png</normaloff>:/icon/icon/cancel.png</iconset>
-         </property>
-         <property name="iconSize">
-          <size>
-           <width>32</width>
-           <height>32</height>
-          </size>
-         </property>
-        </widget>
-       </item>
-      </layout>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="icon.qrc">
+         <normaloff>:/icon/icon/cancel.png</normaloff>:/icon/icon/cancel.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>32</width>
+         <height>32</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item row="2" column="0">
+    <layout class="QGridLayout" name="gridLayout">
+     <property name="spacing">
+      <number>0</number>
+     </property>
+     <item row="0" column="1">
+      <widget class="QComboBox" name="combox_section">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>30</height>
+        </size>
+       </property>
+       <property name="font">
+        <font>
+         <family>Times New Roman</family>
+         <pointsize>12</pointsize>
+        </font>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="2">
+      <widget class="QComboBox" name="combox_detail">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>30</height>
+        </size>
+       </property>
+       <property name="font">
+        <font>
+         <family>Times New Roman</family>
+         <pointsize>12</pointsize>
+        </font>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="0">
+      <widget class="QComboBox" name="combox_TPO">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>30</height>
+        </size>
+       </property>
+       <property name="font">
+        <font>
+         <family>Times New Roman</family>
+         <pointsize>12</pointsize>
+        </font>
+       </property>
+      </widget>
      </item>
     </layout>
    </item>
   </layout>
+  <zorder></zorder>
+  <zorder></zorder>
+  <zorder></zorder>
+  <zorder>progressBar</zorder>
+  <zorder>btn_cancel</zorder>
+  <zorder>btn_comfirm</zorder>
  </widget>
  <resources>
   <include location="icon.qrc"/>

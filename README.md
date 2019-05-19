@@ -7,18 +7,18 @@
 
 ## Getting Started 
 - Windows
-	- [MarkSentenceV0.9.3](https://github.com/Gltina/marksencent/releases/download/V0.9.3/marksentenceV0.9.3.zip)
-	- [(阿里服务器)MarkSentenceV0.9.3.zip](http://39.97.115.128:8000/SHATOEFL/marksentenceV0.9.3.zip)
+	- [MarkSentenceV0.9.4](https://github.com/Gltina/marksencent/releases/download/V0.9.4/marksentenceV0.9.4.zip)
+	- [(阿里服务器)MarkSentenceV0.9.4.zip](http://39.97.115.128:8000/SHATOEFL/marksentenceV0.9.4.zip)
 - 解压`zip`文件，运行`marksentence.exe`即可
 
 ## Compiling from source
 
 ### Prerequisites
 
-- [Visual Studio 2015](ed2k://|file|en_visual_studio_professional_2015_x86_x64_dvd_6846629.iso|4070930432|A40FEC08A6758EEF5957D565EF27F2AD|/)
-- [Qt 5.9.0 with MSVC2015](https://mirrors.tuna.tsinghua.edu.cn/qt/official_releases/qt/5.9/5.9.0/qt-opensource-windows-x86-5.9.0.exe)
+- Visual Studio 2015
+- Qt 5.9.0 with MSVC2015
 
-###  Dir Discription  
+###  Dir Content  
 这些是程序运行的时自动生成的目录:
 
 - `Json/*.json`:保存你的标签内容
@@ -55,14 +55,18 @@
 ## Usage
 - 快捷键
 	- 播放与暂停：`F1`
-	- 后退与快进：`F2`, `F3` （默认是3s）
+	- <sup>*</sup>后退与快进：`F2`, `F3` （默认是3s）
 	- 保存当前标记： `Enter`
 	- 断点的选定和取消：单击`始`以及`终`
+> [*] 有`Lyric`则是下一句和上一句
+
 - 使用示例
 	- ![在线下载](./samples/download.gif)
 	- ![开始精听](./samples/listening.gif)
 	- ![做标记](./samples/marking.gif)
 	- ![点击标记返回](./samples/clickmark.gif)
+
+
 
 ## Project status
 ![](https://img.shields.io/appveyor/ci/gruntjs/grunt.svg)

@@ -100,7 +100,7 @@
            <string/>
           </property>
           <property name="placeholderText">
-           <string>Typing what you are listening ...</string>
+           <string>记录你听到的</string>
           </property>
          </widget>
         </item>
@@ -122,7 +122,7 @@
            <string/>
           </property>
           <property name="placeholderText">
-           <string>Taking Notes ...</string>
+           <string>记录你不熟悉的</string>
           </property>
          </widget>
         </item>
@@ -691,8 +691,6 @@ QSlider::sub-page:horizontal{
      </layout>
     </item>
    </layout>
-   <zorder>verticalLayoutWidget</zorder>
-   <zorder>horizon_music</zorder>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">

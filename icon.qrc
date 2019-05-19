@@ -20,5 +20,6 @@
         <file>icon/stop.png</file>
         <file>icon/cancel.png</file>
         <file>icon/confirm.png</file>
+        <file>icon/main_title.ico</file>
     </qresource>
 </RCC>

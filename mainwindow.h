@@ -139,6 +139,7 @@ private: // 参数
     int m_click_row;
     bool m_clicked_btn_beg;
     bool m_clicked_btn_end;
+    bool m_exist_lyric;
 
     // 用于标记
     QVector<QJsonObject> m_json_vec;
@@ -151,7 +152,7 @@ private: // 参数
     QString m_log_name;
     QString m_log_dir;
 
-    // TPO文件相关
+    // TPO音频文件相关
     QString m_tpo_dir;
 
 private: //新打开的窗口

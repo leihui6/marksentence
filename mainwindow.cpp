@@ -40,6 +40,9 @@ void MainWindow::clearText(){
     ui->text_type->setPlainText("");
     ui->text_note->clear();
     ui->text_note->setPlainText("");
+    ui->combox_level->setCurrentIndex(0);
+    ui->combox_sort->setCurrentIndex(0);
+
 }
 
 bool MainWindow::generateLyricFileName()
@@ -71,9 +74,20 @@ void MainWindow::loadLyric2Map()
     // qDebug() << QDir::currentPath();
 
     m_lyric_object.setFileName(m_lyric_dir + m_lyric_name);
+
+    if (!m_lyric_object.exists()){
+         logWrite(QString("No lyric file:%1").arg(m_lyric_object.fileName()));
+        m_exist_lyric = false;
+        return;
+    }
     m_lyric_object.open(QIODevice::ReadOnly);
-    if (!m_lyric_object.isOpen())
+    if (!m_lyric_object.isOpen()){
+        m_exist_lyric = false;
+        logWrite(QString("Cannot Load lyric file:%1").arg(m_lyric_object.fileName()));
         return ;
+    }
+    logWrite(QString("Loaded lyric file:%1").arg(m_lyric_object.fileName()));
+    m_exist_lyric = true;
     QByteArray t ;
     double sentence_time;
     QString thisSentence;
@@ -100,7 +114,7 @@ void MainWindow::loadLyric2Map()
 void MainWindow::showLyric()
 {
     if (m_lyric_map.isEmpty()) {
-        if(m_music.state() == QMediaPlayer::State::PlayingState){
+        if (m_exist_lyric == false){
             ui->textBrowser_2->setText("No Lyric");
         }
         return ;
@@ -148,6 +162,7 @@ void MainWindow::on_button_save_clicked()
 
     // 刷新界面
     updateTableWidget();
+
     logWrite("Saved");
 }
 
@@ -358,6 +373,7 @@ void MainWindow::loadConstant()
     m_click_row = -1;
     m_clicked_btn_end = false;
     m_clicked_btn_beg = false;
+    m_exist_lyric = false;
     m_json_vec.clear();
     ui->tableWidget->clear();
 
@@ -550,11 +566,11 @@ void MainWindow::on_localFile_triggered()
 
     // 1. 清除与设置界面显示信息
     // 2. 清除之前文件信息
-    // 3. 载入音频文件的json文件
-    // 4. 刷新界面
-    // 5. [optional]加载"歌词"
+    // 3. 刷新界面
+    // 4. [optional]加载"歌词"
+    // 5. 载入音频文件以及json文件
 
-    // 1
+    // 1. 清除与设置界面显示信息
     ui->button_set_start->setText("");
     ui->button_set_end->setText("");
     ui->combox_level->setCurrentIndex(0);
@@ -563,7 +579,7 @@ void MainWindow::on_localFile_triggered()
     ui->textBrowser_2->clear();
     ui->textBrowser_3->clear();
 
-    // 2
+    // 2. 清除之前文件信息
     m_json_vec.clear();
     m_filepath = temp;
     m_beg_point = 0;
@@ -574,18 +590,22 @@ void MainWindow::on_localFile_triggered()
     m_lyric_map.clear();
     m_lyric_name.clear();
 
-    // 3
-    m_music.setMedia(QUrl::fromLocalFile(m_filepath));
-    loadJsonFile();
-
-    // 4
+    // 3. 刷新界面
     updateTableWidget();
     loadControl(true);
 
-    // 5. 如果是listening部分的歌词请求
+    // 4. [optional]加载"歌词"
+    // 如果是listening部分的歌词请求
     if (generateLyricFileName()){
         loadLyric2Map();
     }
+    else {
+        m_exist_lyric = false;
+    }
+
+    // 5. 载入音频文件以及json文件
+    m_music.setMedia(QUrl::fromLocalFile(m_filepath));
+    loadJsonFile();
 
     logWrite(QString("Loaded"));
 }
@@ -707,12 +727,46 @@ void MainWindow::loadConnect()
 
 void MainWindow::on_button_back_clicked()
 {
-    m_music.setPosition(m_music.position() - m_step_millSecond > 0 ? m_music.position() - m_step_millSecond:0);
+    if (m_exist_lyric == false){
+        m_music.setPosition(m_music.position() - m_step_millSecond > 0 ? m_music.position() - m_step_millSecond:0);
+    }
+    else {
+        int index = 0;
+        qint64 curr_pos = m_music.position();
+        for (QMap<int,QString>::iterator it = m_lyric_map.begin();
+             it != m_lyric_map.end(); ++it,++index) {
+                if (curr_pos < it.key()){
+                    m_music.setPosition((index-2 >= 0)?(it-2).key():0);
+                    break;
+                }
+                if (it + 1 == m_lyric_map.end()) {
+                    m_music.setPosition((index-2 >= 0)?(it-2).key():0);
+                    break;
+                }
+        }
+    }
 }
 
 void MainWindow::on_button_forward_clicked()
 {
-    m_music.setPosition(m_music.position() + m_step_millSecond < m_total_time ? m_music.position() + m_step_millSecond:m_total_time);
+    if (m_exist_lyric == false){
+        m_music.setPosition(m_music.position() + m_step_millSecond < m_total_time ? m_music.position() + m_step_millSecond:m_total_time);
+    }
+    else {
+        int index = 0;
+        qint64 curr_pos = m_music.position();
+        for (QMap<int,QString>::iterator it = m_lyric_map.begin();
+             it != m_lyric_map.end(); ++it,++index) {
+                if (curr_pos < it.key()){
+                    m_music.setPosition(it.key());
+                    break;
+                }
+                if (it + 1 == m_lyric_map.end()) {
+                    m_music.setPosition(it.key());
+                    break;
+                }
+        }
+    }
 }
 
 void MainWindow::on_button_set_start_clicked()
