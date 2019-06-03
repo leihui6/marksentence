@@ -1,4 +1,6 @@
 # MarkSentence 
+![](https://img.shields.io/badge/-pause-red.svg)
+
 一个在可以文本对照的听力句子的标记工具，即精听工具，目前专门针对于`TOEFL`
 
 - 可以下载`TPO1-54`的所有听力(包括**口语**和**写作**部分)
@@ -6,15 +8,11 @@
 - 所做的标签会被保存, 在下次打开音频的时候会载入
 
 ## Getting Started 
-- Windows
-	- [MarkSentenceV0.9.4](https://github.com/Gltina/marksencent/releases/download/V0.9.4/marksentenceV0.9.4.zip)
-	- [(阿里服务器)MarkSentenceV0.9.4.zip](http://39.97.115.128:8000/SHATOEFL/marksentenceV0.9.4.zip)
-- 解压`zip`文件，运行`marksentence.exe`即可
+更多请查看[项目日志](log/README.md) 
 
 ## Compiling from source
 
 ### Prerequisites
-
 - Visual Studio 2015
 - Qt 5.9.0 with MSVC2015
 
@@ -25,32 +23,6 @@
 - `Log/log`:操作日志
 - `Lyric/*.txt`:与`TPO`音频对应的"歌词"文件
 - `TPO/TPO[1-54]/*.mp3`:下载的`TPO`音频文件
-
-展开的结构如下：
-
-```
-├─Json
-│      TPO_4_Listening_C1.json
-│      TPO_54_Listening_L1.json
-│
-├─Log
-│      log
-│
-├─Lyric
-│      TPO04C1.txt
-│      TPO54L1.txt
-│      ...
-│
-└─TPO
-    ├─TPO4
-    │      TPO_4_Listening_C1.mp3
-    │
-    ├─TPO54
-    │      TPO_54_Listening_L1.mp3
-   	│
-    └─ ...
-		   ...
-```
 
 ## Usage
 - 快捷键
@@ -66,11 +38,7 @@
 	- ![做标记](./samples/marking.gif)
 	- ![点击标记返回](./samples/clickmark.gif)
 
-
-
 ## Project status
-![](https://img.shields.io/appveyor/ci/gruntjs/grunt.svg)
-
 更多请查看[项目日志](log/README.md) 
 
 ## Q&A
@@ -91,6 +59,10 @@ ptsph\*foxmail.com(*->@)
 
 ## Thanks 
 [iconfont](https://www.iconfont.cn/home/index)
+
+[威学托福](http://t.weixue100.com/toefl)
+
+[小站托福](http://toefl.zhan.com/)
 
 ## License
 [GNU GPL3.0](https://github.com/Gltina/MarkSencent/blob/master/LICENSE)
