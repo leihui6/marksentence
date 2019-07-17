@@ -6,16 +6,16 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>900</width>
-    <height>556</height>
+    <width>1120</width>
+    <height>692</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="icon.qrc">
-    <normaloff>:/icon/icon/main_title.png</normaloff>:/icon/icon/main_title.png</iconset>
+   <iconset resource="appicon/icon.qrc">
+    <normaloff>:/appicon/main_title.png</normaloff>:/appicon/main_title.png</iconset>
   </property>
   <property name="styleSheet">
    <string notr="true">QMainWindow {
@@ -23,12 +23,9 @@
 }</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <layout class="QGridLayout" name="gridLayout_2">
+   <layout class="QGridLayout" name="gridLayout">
     <item row="0" column="0">
-     <layout class="QVBoxLayout" name="verticalLayout_2">
-      <property name="spacing">
-       <number>0</number>
-      </property>
+     <layout class="QHBoxLayout" name="horizontalLayout" stretch="2,6">
       <item>
        <widget class="QTableWidget" name="tableWidget">
         <property name="sizePolicy">
@@ -40,6 +37,7 @@
         <property name="font">
          <font>
           <family>Times New Roman</family>
+          <pointsize>12</pointsize>
          </font>
         </property>
         <property name="contextMenuPolicy">
@@ -49,9 +47,7 @@
          <string/>
         </property>
         <property name="styleSheet">
-         <string notr="true">QTableWidget {
-	border:1px solid rgb(85, 170, 255);
-}</string>
+         <string notr="true"/>
         </property>
         <attribute name="horizontalHeaderCascadingSectionResizes">
          <bool>true</bool>
@@ -71,408 +67,124 @@
        </widget>
       </item>
       <item>
-       <widget class="Line" name="line_2">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <layout class="QHBoxLayout" name="horizontalLayout">
-        <property name="spacing">
-         <number>0</number>
-        </property>
+       <layout class="QVBoxLayout" name="verticalLayout">
         <item>
-         <widget class="QPlainTextEdit" name="text_type">
-          <property name="font">
-           <font>
-            <family>Times New Roman</family>
-            <pointsize>16</pointsize>
-           </font>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">QPlainTextEdit {
-	border:1px solid rgb(85, 170, 255);
-	border-right:1px dashed rgb(85, 170, 255);
-}</string>
-          </property>
-          <property name="plainText">
+         <widget class="QLabel" name="label_info">
+          <property name="text">
            <string/>
           </property>
-          <property name="placeholderText">
-           <string>记录你听到的</string>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QPlainTextEdit" name="text_note">
+         <widget class="QTextEdit" name="textEdit">
           <property name="font">
            <font>
             <family>Times New Roman</family>
-            <pointsize>16</pointsize>
+            <pointsize>14</pointsize>
            </font>
           </property>
-          <property name="styleSheet">
-           <string notr="true">QPlainTextEdit {
-	border:1px solid rgb(85, 170, 255);
-	border-left:1px dashed rgb(85, 170, 255);
-}</string>
-          </property>
-          <property name="plainText">
-           <string/>
-          </property>
-          <property name="placeholderText">
-           <string>记录你不熟悉的</string>
+          <property name="contextMenuPolicy">
+           <enum>Qt::CustomContextMenu</enum>
           </property>
          </widget>
         </item>
-       </layout>
-      </item>
-      <item>
-       <layout class="QGridLayout" name="gridLayout">
-        <property name="spacing">
-         <number>0</number>
-        </property>
-        <item row="2" column="0">
-         <widget class="QPushButton" name="button_back">
-          <property name="minimumSize">
-           <size>
-            <width>0</width>
-            <height>30</height>
-           </size>
-          </property>
+        <item>
+         <widget class="QSlider" name="horizon_music">
           <property name="styleSheet">
-           <string notr="true">QPushButton{
-	background-color:rgba(100,225,100,30);
-	border-style:outset;
-	border-width:4px;           
-	border-radius:10px;
-	border-color:rgba(255,255,255,30);
-	font:Time New Roams bold 10px;
-	color:rgba(0,0,0,100);
-	padding:6px;
-}    
-QPushButton:pressed{     
-	background-color:rgba(100,255,100,200);    
-	border-color:rgba(255,255,255,30);   
-	border-style:inset;    
-	color:rgba(0,0,0,100);    
-}    
-
-QPushButton:hover{    
-	background-color:rgba(100,255,100,100);    
-	border-color:rgba(255,255,255,200);    
-	color:rgba(0,0,0,200);    
-}</string>
+           <string notr="true"/>
           </property>
-          <property name="text">
-           <string/>
-          </property>
-          <property name="icon">
-           <iconset resource="icon.qrc">
-            <normaloff>:/icon/icon/backward.png</normaloff>:/icon/icon/backward.png</iconset>
-          </property>
-          <property name="iconSize">
-           <size>
-            <width>21</width>
-            <height>21</height>
-           </size>
-          </property>
-          <property name="shortcut">
-           <string>F2</string>
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
           </property>
          </widget>
         </item>
-        <item row="2" column="1">
-         <widget class="QPushButton" name="button_forward">
-          <property name="minimumSize">
-           <size>
-            <width>0</width>
-            <height>30</height>
-           </size>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">QPushButton{
-	background-color:rgba(100,225,100,30);
-	border-style:outset;
-	border-width:4px;           
-	border-radius:10px;
-	border-color:rgba(255,255,255,30);
-	font:Time New Roams bold 10px;
-	color:rgba(0,0,0,100);
-	padding:6px;
-}    
-QPushButton:pressed{     
-	background-color:rgba(100,255,100,200);    
-	border-color:rgba(255,255,255,30);   
-	border-style:inset;    
-	color:rgba(0,0,0,100);    
-}    
-
-QPushButton:hover{    
-	background-color:rgba(100,255,100,100);    
-	border-color:rgba(255,255,255,200);    
-	color:rgba(0,0,0,200);    
-}</string>
-          </property>
-          <property name="text">
-           <string/>
-          </property>
-          <property name="icon">
-           <iconset resource="icon.qrc">
-            <normaloff>:/icon/icon/forward.png</normaloff>:/icon/icon/forward.png</iconset>
-          </property>
-          <property name="iconSize">
-           <size>
-            <width>21</width>
-            <height>21</height>
-           </size>
-          </property>
-          <property name="shortcut">
-           <string>F3</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="0">
-         <widget class="QPushButton" name="button_play">
-          <property name="minimumSize">
-           <size>
-            <width>0</width>
-            <height>30</height>
-           </size>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">QPushButton{
-	background-color:rgba(100,225,100,30);
-	border-style:outset;
-	border-width:4px;           
-	border-radius:10px;
-	border-color:rgba(255,255,255,30);
-	font:Time New Roams bold 10px;
-	color:rgba(0,0,0,100);
-	padding:6px;
-}    
-QPushButton:pressed{     
-	background-color:rgba(100,255,100,200);    
-	border-color:rgba(255,255,255,30);   
-	border-style:inset;    
-	color:rgba(0,0,0,100);    
-}    
-
-QPushButton:hover{    
-	background-color:rgba(100,255,100,100);    
-	border-color:rgba(255,255,255,200);    
-	color:rgba(0,0,0,200);    
-}</string>
-          </property>
-          <property name="text">
-           <string/>
-          </property>
-          <property name="icon">
-           <iconset resource="icon.qrc">
-            <normaloff>:/icon/icon/play.png</normaloff>:/icon/icon/play.png</iconset>
-          </property>
-          <property name="iconSize">
-           <size>
-            <width>21</width>
-            <height>21</height>
-           </size>
-          </property>
-          <property name="shortcut">
-           <string>F1</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="2">
-         <widget class="QPushButton" name="button_set_start">
-          <property name="minimumSize">
-           <size>
-            <width>0</width>
-            <height>30</height>
-           </size>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">QPushButton{
-	background-color:rgba(100,225,100,30);
-	border-style:outset;
-	border-width:4px;           
-	border-radius:10px;
-	border-color:rgba(255,255,255,30);
-	font:Time New Roams bold 10px;
-	color:rgba(0,0,0,100);
-	padding:6px;
-}    
-QPushButton:pressed{     
-	background-color:rgba(100,255,100,200);    
-	border-color:rgba(255,255,255,30);   
-	border-style:inset;    
-	color:rgba(0,0,0,100);    
-}    
-
-QPushButton:hover{    
-	background-color:rgba(100,255,100,100);    
-	border-color:rgba(255,255,255,200);    
-	color:rgba(0,0,0,200);    
-}</string>
-          </property>
-          <property name="text">
-           <string/>
-          </property>
-          <property name="icon">
-           <iconset resource="icon.qrc">
-            <normaloff>:/icon/icon/end_point.png</normaloff>:/icon/icon/end_point.png</iconset>
-          </property>
-          <property name="iconSize">
-           <size>
-            <width>21</width>
-            <height>21</height>
-           </size>
-          </property>
-          <property name="shortcut">
-           <string>[</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="1">
-         <widget class="QPushButton" name="button_stop">
-          <property name="minimumSize">
-           <size>
-            <width>0</width>
-            <height>30</height>
-           </size>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">QPushButton{
-	background-color:rgba(100,225,100,30);
-	border-style:outset;
-	border-width:4px;           
-	border-radius:10px;
-	border-color:rgba(255,255,255,30);
-	font:Time New Roams bold 10px;
-	color:rgba(0,0,0,100);
-	padding:6px;
-}    
-QPushButton:pressed{     
-	background-color:rgba(100,255,100,200);    
-	border-color:rgba(255,255,255,30);   
-	border-style:inset;    
-	color:rgba(0,0,0,100);    
-}    
-
-QPushButton:hover{    
-	background-color:rgba(100,255,100,100);    
-	border-color:rgba(255,255,255,200);    
-	color:rgba(0,0,0,200);    
-}</string>
-          </property>
-          <property name="text">
-           <string/>
-          </property>
-          <property name="icon">
-           <iconset resource="icon.qrc">
-            <normaloff>:/icon/icon/stop.png</normaloff>:/icon/icon/stop.png</iconset>
-          </property>
-          <property name="iconSize">
-           <size>
-            <width>21</width>
-            <height>21</height>
-           </size>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="4">
-         <layout class="QHBoxLayout" name="horizontalLayout_8">
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_3">
           <property name="spacing">
            <number>0</number>
           </property>
           <item>
-           <widget class="QComboBox" name="combox_level">
+           <widget class="QLabel" name="label_elapse_time">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>0</height>
-             </size>
-            </property>
             <property name="font">
              <font>
               <family>Times New Roman</family>
-              <pointsize>12</pointsize>
              </font>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignRight|Qt::AlignTop|Qt::AlignTrailing</set>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QComboBox" name="combox_sort">
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>25</height>
-             </size>
+           <widget class="QLabel" name="label_totle_time">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
             </property>
             <property name="font">
              <font>
               <family>Times New Roman</family>
-              <pointsize>12</pointsize>
              </font>
             </property>
-            <property name="styleSheet">
-             <string notr="true">QCombox_sort{
-	border: 1px;solid;#999999;
-	border-radius: 5px;
-}</string>
+            <property name="text">
+             <string/>
             </property>
-            <property name="iconSize">
-             <size>
-              <width>16</width>
-              <height>16</height>
-             </size>
+            <property name="alignment">
+             <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
             </property>
            </widget>
           </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="2,1,1,1,2">
+          <property name="spacing">
+           <number>6</number>
+          </property>
           <item>
-           <widget class="QPushButton" name="button_save">
+           <spacer name="horizontalSpacer">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QPushButton" name="button_back">
             <property name="minimumSize">
              <size>
               <width>0</width>
-              <height>23</height>
+              <height>30</height>
              </size>
             </property>
             <property name="styleSheet">
-             <string notr="true">QPushButton{
-	background-color:rgba(100,225,100,30);
-	border-style:outset;
-	border-width:4px;           
-	border-radius:10px;
-	border-color:rgba(255,255,255,30);
-	font:Time New Roams bold 10px;
-	color:rgba(0,0,0,100);
-	padding:6px;
-}    
-QPushButton:pressed{     
-	background-color:rgba(100,255,100,200);    
-	border-color:rgba(255,255,255,30);   
-	border-style:inset;    
-	color:rgba(0,0,0,100);    
-}    
-
-QPushButton:hover{    
-	background-color:rgba(100,255,100,100);    
-	border-color:rgba(255,255,255,200);    
-	color:rgba(0,0,0,200);    
-}</string>
+             <string notr="true"/>
             </property>
             <property name="text">
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="icon.qrc">
-              <normaloff>:/icon/icon/save.png</normaloff>:/icon/icon/save.png</iconset>
+             <iconset resource="appicon/icon.qrc">
+              <normaloff>:/appicon/backward.png</normaloff>:/appicon/backward.png</iconset>
             </property>
             <property name="iconSize">
              <size>
@@ -481,212 +193,84 @@ QPushButton:hover{
              </size>
             </property>
             <property name="shortcut">
-             <string>Return</string>
+             <string>F2</string>
             </property>
            </widget>
           </item>
-         </layout>
-        </item>
-        <item row="2" column="4">
-         <layout class="QHBoxLayout" name="horizontalLayout_6">
           <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_5">
-            <property name="spacing">
-             <number>0</number>
+           <widget class="QPushButton" name="button_play">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>30</height>
+             </size>
             </property>
-            <item>
-             <widget class="QLabel" name="label_info">
-              <property name="maximumSize">
-               <size>
-                <width>150</width>
-                <height>16777215</height>
-               </size>
-              </property>
-              <property name="text">
-               <string/>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLabel" name="label_elapse_time">
-              <property name="text">
-               <string/>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLabel" name="label_totle_time">
-              <property name="text">
-               <string/>
-              </property>
-             </widget>
-            </item>
-           </layout>
+            <property name="styleSheet">
+             <string notr="true"/>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="appicon/icon.qrc">
+              <normaloff>:/appicon/play.png</normaloff>:/appicon/play.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>21</width>
+              <height>21</height>
+             </size>
+            </property>
+            <property name="shortcut">
+             <string>F1</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="button_forward">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>30</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true"/>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="appicon/icon.qrc">
+              <normaloff>:/appicon/forward.png</normaloff>:/appicon/forward.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>21</width>
+              <height>21</height>
+             </size>
+            </property>
+            <property name="shortcut">
+             <string>F3</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_2">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
           </item>
          </layout>
         </item>
-        <item row="2" column="2">
-         <widget class="QPushButton" name="button_set_end">
-          <property name="minimumSize">
-           <size>
-            <width>0</width>
-            <height>30</height>
-           </size>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">QPushButton{
-	background-color:rgba(100,225,100,30);
-	border-style:outset;
-	border-width:4px;           
-	border-radius:10px;
-	border-color:rgba(255,255,255,30);
-	font:Time New Roams bold 10px;
-	color:rgba(0,0,0,100);
-	padding:6px;
-}    
-QPushButton:pressed{     
-	background-color:rgba(100,255,100,200);    
-	border-color:rgba(255,255,255,30);   
-	border-style:inset;    
-	color:rgba(0,0,0,100);    
-}    
-
-QPushButton:hover{    
-	background-color:rgba(100,255,100,100);    
-	border-color:rgba(255,255,255,200);    
-	color:rgba(0,0,0,200);    
-}</string>
-          </property>
-          <property name="text">
-           <string/>
-          </property>
-          <property name="icon">
-           <iconset resource="icon.qrc">
-            <normaloff>:/icon/icon/start_point.png</normaloff>:/icon/icon/start_point.png</iconset>
-          </property>
-          <property name="iconSize">
-           <size>
-            <width>21</width>
-            <height>21</height>
-           </size>
-          </property>
-          <property name="shortcut">
-           <string>]</string>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="0">
-         <widget class="Line" name="line">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-         </widget>
-        </item>
        </layout>
-      </item>
-     </layout>
-    </item>
-    <item row="0" column="1" rowspan="2">
-     <layout class="QVBoxLayout" name="verticalLayout_3">
-      <property name="spacing">
-       <number>0</number>
-      </property>
-      <item>
-       <widget class="QTextBrowser" name="textBrowser_1">
-        <property name="font">
-         <font>
-          <family>Times New Roman</family>
-          <pointsize>12</pointsize>
-         </font>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">QTextBrowser {
-	border:1px solid rgb(85, 170, 255);
-	border-bottom:0px solid rgb(85, 170, 255);
-}</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QTextBrowser" name="textBrowser_2">
-        <property name="font">
-         <font>
-          <family>Times New Roman</family>
-          <pointsize>12</pointsize>
-          <weight>75</weight>
-          <bold>true</bold>
-         </font>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">QTextBrowser {
-	border:0px solid rgb(85, 170, 255);
-	border-left:1px solid rgb(85, 170, 255);
-	border-right:1px solid rgb(85, 170, 255);
-}</string>
-        </property>
-        <property name="placeholderText">
-         <string>Show lyric...</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QTextBrowser" name="textBrowser_3">
-        <property name="font">
-         <font>
-          <family>Times New Roman</family>
-          <pointsize>12</pointsize>
-         </font>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">QTextBrowser {
-	border:0px solid rgb(85, 170, 255);
-	border-left:1px solid rgb(85, 170, 255);
-	border-right:1px solid rgb(85, 170, 255);
-	border-bottom:1px solid rgb(85, 170, 255);
-}</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </item>
-    <item row="2" column="0" colspan="2">
-     <layout class="QVBoxLayout" name="verticalLayout">
-      <property name="spacing">
-       <number>0</number>
-      </property>
-      <item>
-       <widget class="QSlider" name="horizon_music">
-        <property name="styleSheet">
-         <string notr="true">QSlider{
-	border-color: #bcbcbc;
-}
-QSlider::groove:horizontal {                                
-     border: 1px solid #999999;                             
-     height: 1px;                                           
-     margin: 0px 0;                                         
-     left: 5px; right: 5px; 
- }
-QSlider::handle:horizontal {                               
-     border: 0px ;                           
-     border-image: url(:/icon/icon/playing.png);
-     width: 16px;
-     margin: -7px -7px -7px -7px;                  
-}
-QSlider::add-page:horizontal{
-background: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 #bcbcbc, stop:0.25 #bcbcbc, stop:0.5 #bcbcbc, stop:1 #bcbcbc); 
-
-}
-QSlider::sub-page:horizontal{                               
- background: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 #439cf3, stop:0.25 #439cf3, stop:0.5 #439cf3, stop:1 #439cf3);                     
-}</string>
-        </property>
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-       </widget>
       </item>
      </layout>
     </item>
@@ -697,8 +281,8 @@ QSlider::sub-page:horizontal{
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>900</width>
-     <height>21</height>
+     <width>1120</width>
+     <height>26</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -707,6 +291,7 @@ QSlider::sub-page:horizontal{
     </property>
     <addaction name="onlineFile"/>
     <addaction name="localFile"/>
+    <addaction name="setting"/>
    </widget>
    <widget class="QMenu" name="menu">
     <property name="title">
@@ -719,19 +304,11 @@ QSlider::sub-page:horizontal{
    <addaction name="menuFile"/>
    <addaction name="menu"/>
   </widget>
-  <widget class="QToolBar" name="mainToolBar">
-   <attribute name="toolBarArea">
-    <enum>TopToolBarArea</enum>
-   </attribute>
-   <attribute name="toolBarBreak">
-    <bool>false</bool>
-   </attribute>
-  </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="localFile">
    <property name="icon">
-    <iconset resource="icon.qrc">
-     <normaloff>:/icon/icon/file_local.png</normaloff>:/icon/icon/file_local.png</iconset>
+    <iconset resource="appicon/icon.qrc">
+     <normaloff>:/appicon/file_local.png</normaloff>:/appicon/file_local.png</iconset>
    </property>
    <property name="text">
     <string>打开本地文件</string>
@@ -742,8 +319,8 @@ QSlider::sub-page:horizontal{
   </action>
   <action name="howToUse">
    <property name="icon">
-    <iconset resource="icon.qrc">
-     <normaloff>:/icon/icon/how.png</normaloff>:/icon/icon/how.png</iconset>
+    <iconset resource="appicon/icon.qrc">
+     <normaloff>:/appicon/how.png</normaloff>:/appicon/how.png</iconset>
    </property>
    <property name="text">
     <string>使用说明</string>
@@ -754,8 +331,8 @@ QSlider::sub-page:horizontal{
   </action>
   <action name="about">
    <property name="icon">
-    <iconset resource="icon.qrc">
-     <normaloff>:/icon/icon/about.png</normaloff>:/icon/icon/about.png</iconset>
+    <iconset resource="appicon/icon.qrc">
+     <normaloff>:/appicon/about.png</normaloff>:/appicon/about.png</iconset>
    </property>
    <property name="text">
     <string>关于</string>
@@ -763,8 +340,8 @@ QSlider::sub-page:horizontal{
   </action>
   <action name="exit">
    <property name="icon">
-    <iconset resource="icon.qrc">
-     <normaloff>:/icon/icon/exit.png</normaloff>:/icon/icon/exit.png</iconset>
+    <iconset resource="appicon/icon.qrc">
+     <normaloff>:/appicon/exit.png</normaloff>:/appicon/exit.png</iconset>
    </property>
    <property name="text">
     <string>退出</string>
@@ -775,17 +352,26 @@ QSlider::sub-page:horizontal{
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="icon.qrc">
-     <normaloff>:/icon/icon/file_online.png</normaloff>:/icon/icon/file_online.png</iconset>
+    <iconset resource="appicon/icon.qrc">
+     <normaloff>:/appicon/file_online.png</normaloff>:/appicon/file_online.png</iconset>
    </property>
    <property name="text">
     <string>在线下载音频</string>
    </property>
   </action>
+  <action name="setting">
+   <property name="icon">
+    <iconset resource="appicon/icon.qrc">
+     <normaloff>:/appicon/setting.png</normaloff>:/appicon/setting.png</iconset>
+   </property>
+   <property name="text">
+    <string>设置</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>
-  <include location="icon.qrc"/>
+  <include location="appicon/icon.qrc"/>
  </resources>
  <connections/>
 </ui>

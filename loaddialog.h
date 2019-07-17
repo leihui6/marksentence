@@ -1,18 +1,16 @@
 ﻿#ifndef LOADDIALOG_H
 #define LOADDIALOG_H
 
-#include <QDialog>
-#include <QStringList>
-#include <QSet>
-#include <QDebug>
-#include <QProcess>
-#include <QFileDialog>
-#include <QNetworkAccessManager>
-#include <QNetworkReply>
-#include <QDir>
-#include <QFile>
-#include <QVector>
-#include <QCloseEvent>
+/*
+ * Author: ptsph@foxmail.com
+ * Date: 16/07/2019
+ * 负责下载TPO以及对应的歌词（文本）文件
+ * 音频文件会保存至./TPO/TPO[1-54]/
+ * 文本文件会保存至./Lyric/
+ *
+*/
+
+#include "globalcontrol.h"
 
 class QNetworkReply;
 
@@ -29,15 +27,10 @@ public:
     ~loadDialog();
 private slots:
     void on_combox_section_activated(int index);
-
     void on_btn_comfirm_clicked();
-
     void on_combox_TPO_activated(int index);
-
     void on_combox_detail_activated(int index);
-
     void on_btn_cancel_clicked();
-
     void on_loadBeg();
     void on_audioIng(qint64 bytesRead, qint64 bytesTotal);
     void on_audioFin();
@@ -45,18 +38,13 @@ private slots:
     void on_lyricFin();
 private:
     void loadConnect();
-
     void loadCombox();
-
     void loadConstant();
-
     void generateUrl();
-
     void loadRemotePath();
-
     bool createDir(QString dir);
-
     void logWrite(QString info);
+    void finishedOperation();
 private:
     QStringList m_section_list;
     QStringList m_detail_list;
@@ -81,7 +69,8 @@ private:
     QFile &m_log_file;
     QString m_audio_dir;
     QString m_lyric_dir;
-    
+
+    QVector<int>downloadQueue;
 private:
     Ui::loadDialog * ui;
 };

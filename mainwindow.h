@@ -1,31 +1,9 @@
 ﻿#ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include <QMainWindow>
-#include <QTextBlock>
-#include <QDebug>
-#include <QString>
-#include <QPlainTextEdit>
-#include <QFileDialog>
-#include <QtMultimedia/QMediaPlayer>
-#include <QtMultimedia/QMediaPlaylist>
-#include <QJsonObject>
-#include <QListWidget>
-#include <QListWidgetItem>
-#include <QVector>
-#include <QFile>
-#include <QDir>
-#include <QChar>
-#include <QJsonDocument>
-#include <QVariant>
-#include <QDesktopServices>
-#include <QMessageBox>
-#include <QTextCodec>
-#include <QCloseEvent>
-#include <QTableWidget>
-#include <QtAlgorithms>
-
 #include "loaddialog.h"
+#include "settingdialog.h"
+#include "globalcontrol.h"
 
 namespace Ui {
     class MainWindow;
@@ -36,57 +14,42 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit MainWindow(QWidget *parent = 0);
+    explicit MainWindow(QWidget *parent = nullptr);
+
     ~MainWindow();
 
 private slots:
-    void on_button_save_clicked();
-
     void on_button_play_clicked();
-
-    void on_button_stop_clicked();
-
     void set_media_position(qint64 duration);
-
     void on_button_back_clicked();
-
     void on_button_forward_clicked();
-
-    void on_button_set_start_clicked();
-
-    void on_button_set_end_clicked();
-
     void on_howToUse_triggered();
-
     void on_about_triggered();
-
-    void on_combox_level_activated(int index);
-
-    void on_combox_sort_activated(int index);
-
     void on_exit_triggered();
-
     void closeEvent(QCloseEvent *event);
-
     void on_onlineFile_triggered();
-
     void on_tableWidget_cellDoubleClicked(int row, int column);
-
     void on_localFile_triggered();
-
     void on_clickHeader(int col);
-
-    void on_showMenu(const QPoint pos);
+    void on_showTableMenu(const QPoint pos);
+    void on_showTextMenu(const QPoint &point);
+    void on_setting_triggered();
 
     void on_deleteItem();
+    void on_textMenuSelectedPhrase();
+    void on_textMenuSelectedLinking();
+    void on_textMenuSelectedGrammar();
+    void on_textMenuSelectedToolong();
+    void on_textMenuSelectedOthers();
 
-private:
+public:
     void on_media_updatePosition(qint64 duration);
     void on_media_updateDuration(qint64 duration);
     void on_media_stateChanged();
 
+    void openLocalFile(QString filepath = QString());
+    void saveTextMenuSelected(int index);
     void loadConnect();
-    void loadComboxItems();
     void loadConstant();
     void loadControl(bool status);
     void loadJsonFile();
@@ -94,10 +57,10 @@ private:
     bool createDir(QString dirname);
     void createLogFile();
     void loadTableWidget();
-    void createOneMark();
+    void createOneMark(qint64 pos,int index,const QString & str);
     void saveMarkIntoFile();
     void loadJsonContent();
-    void updateTableWidget(QVector<int> &index_vec = QVector<int>());
+    void updateTableWidget(QVector<int> index_vec = QVector<int>());
     void sortby(const QString sort_key,QVector<int> & result);
     void musicPlay(qint64 point);
     void musicAfterStop();
@@ -108,9 +71,13 @@ private:
     bool generateLyricFileName();
     void loadLyric2Map();
     void showLyric();
+    void goToSpecificLine(int line);
+    QString stylized(QString & str);
+    QString highLightLine(QString & str);
+    QString getSelectedWords();
     QString getPlainContent(QPlainTextEdit * plainText);
     QString getFormatTime(qint64 time);
-    QString getFormatMark(const QJsonObject & json);
+    //QString getFormatMark(const QJsonObject & json);
     QString getFormatContent(const QJsonObject & json, int index);
 private: // 参数
     // 用于音乐播放
@@ -119,27 +86,20 @@ private: // 参数
     qint64 m_total_time;
     qint64 m_beg_point;
     qint64 m_end_point;
-    qint64 m_step_millSecond;
 
     // 用于歌词文件
     QFile  m_lyric_object;
     QString m_lyric_name;
     QString m_lyric_dir;
     QMap<int,QString> m_lyric_map;
+    QVector<QString> m_lyricVec;
 
     // 用于界面内容
-    QString m_type_content;
-    QString m_note_content;
-    QStringList m_level_value;
-    int m_level_index;
-    QStringList m_sort_value;
-    int m_sort_index;
     QString m_filepath;
     QString m_filebase;
     int m_click_row;
-    bool m_clicked_btn_beg;
-    bool m_clicked_btn_end;
     bool m_exist_lyric;
+    int m_font_size;
 
     // 用于标记
     QVector<QJsonObject> m_json_vec;
@@ -154,9 +114,11 @@ private: // 参数
 
     // TPO音频文件相关
     QString m_tpo_dir;
+    QString m_remote_ip;
 
 private: //新打开的窗口
     loadDialog * m_loadDialog;
+    SettingDialog * m_settingDialog;
 
 private:
     Ui::MainWindow * ui;

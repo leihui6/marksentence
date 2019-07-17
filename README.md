@@ -1,42 +1,28 @@
 # MarkSentence 
-![](https://img.shields.io/badge/-pause-red.svg)
 
 一个在可以文本对照的听力句子的标记工具，即精听工具，目前专门针对于`TOEFL`
 
-- 可以下载`TPO1-54`的所有听力(包括**口语**和**写作**部分)
-- 对音频截断, 并且做上标记, 生成标签
-- 所做的标签会被保存, 在下次打开音频的时候会载入
+- 对`TPO1-54`的听力做标记，方便复习(目前仅支持`listening`部分的文本显示)
 
-## Getting Started 
-更多请查看[项目日志](log/README.md) 
+## 使用
 
-## Compiling from source
+### 下载安装包
 
-### Prerequisites
-- Visual Studio 2015
-- Qt 5.9.0 with MSVC2015
+[marksentence v1.0](https://github.com/Gltina/marksencent/releases/download/v1.0/marksentence.v1.0.exe)
 
-###  Dir Content  
-这些是程序运行的时自动生成的目录:
+### 从源码编译
+- Qt 5.12.3 (based on MSVC2017 64bit)
 
+###  目录结构 
+这些是程序运行的时自动生成的目录
 - `Json/*.json`:保存你的标签内容
 - `Log/log`:操作日志
 - `Lyric/*.txt`:与`TPO`音频对应的"歌词"文件
 - `TPO/TPO[1-54]/*.mp3`:下载的`TPO`音频文件
 
-## Usage
-- 快捷键
-	- 播放与暂停：`F1`
-	- <sup>*</sup>后退与快进：`F2`, `F3` （默认是3s）
-	- 保存当前标记： `Enter`
-	- 断点的选定和取消：单击`始`以及`终`
-> [*] 有`Lyric`则是下一句和上一句
-
-- 使用示例
-	- ![在线下载](./samples/download.gif)
-	- ![开始精听](./samples/listening.gif)
-	- ![做标记](./samples/marking.gif)
-	- ![点击标记返回](./samples/clickmark.gif)
+## 截图
+![](samples/sample.png)
+![](samples/sample01.png)
 
 ## Project status
 更多请查看[项目日志](log/README.md) 
@@ -58,6 +44,8 @@
 ptsph\*foxmail.com(*->@) 
 
 ## Thanks 
+[QDarkStyleSheet](https://github.com/ColinDuquesnoy/QDarkStyleSheet)
+
 [iconfont](https://www.iconfont.cn/home/index)
 
 [威学托福](http://t.weixue100.com/toefl)

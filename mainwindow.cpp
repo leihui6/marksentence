@@ -3,25 +3,22 @@
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::MainWindow),
-    m_loadDialog(Q_NULLPTR)
+    m_loadDialog(Q_NULLPTR),
+  ui(new Ui::MainWindow)
 {
     this->setWindowTitle("MarkSentence");
     ui->setupUi(this);
 
     // 初始化数据
     loadConstant();
-    loadTableWidget();
 
-    // 加载界面中的下拉菜单
-    loadComboxItems();
+    loadTableWidget();
 
     // 初始化槽连接
     loadConnect();
 
     // 初始化界面控制
     loadControl(false);
-
 }
 
 MainWindow::~MainWindow()
@@ -35,16 +32,6 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::clearText(){
-    ui->text_type->clear();
-    ui->text_type->setPlainText("");
-    ui->text_note->clear();
-    ui->text_note->setPlainText("");
-    ui->combox_level->setCurrentIndex(0);
-    ui->combox_sort->setCurrentIndex(0);
-
-}
-
 bool MainWindow::generateLyricFileName()
 {
     // 目前只针对听力文件有用
@@ -55,13 +42,16 @@ bool MainWindow::generateLyricFileName()
             if (m_filebase[i] == '_')
                 indexvec.push_back(i);
         }
-        // 正确的是三个
+        // 正确情况下的是三个
         if(indexvec.size() == 3){
             int id = m_filebase.mid(indexvec[0]+1,indexvec[1]-indexvec[0]-1).toInt();
             QString detail = m_filebase.mid(indexvec[2]+1);
-            // qDebug() << id << " "<<detail;
+            //qDebug() << id << " "<<detail;
             m_lyric_name = QString("TPO%1%2.txt").arg(id,2,10,QChar('0')).arg(detail);
-            // qDebug()<< m_lyric_name;
+#ifdef MAINDEBUG
+            qDebug()<<"[MainWindow]"<<"generateLyricFileName()"<<"m_lyric_name"<< m_lyric_name;
+#endif
+
         }
         logWrite(QString("Loading lyric file:%1").arg(m_lyric_dir+ m_lyric_name));
         return true;
@@ -76,7 +66,7 @@ void MainWindow::loadLyric2Map()
     m_lyric_object.setFileName(m_lyric_dir + m_lyric_name);
 
     if (!m_lyric_object.exists()){
-         logWrite(QString("No lyric file:%1").arg(m_lyric_object.fileName()));
+        logWrite(QString("No lyric file:%1").arg(m_lyric_object.fileName()));
         m_exist_lyric = false;
         return;
     }
@@ -107,15 +97,29 @@ void MainWindow::loadLyric2Map()
     }// end while
     //ui->text_r->setText(QString(t));
     // qDebug() << m_lyric_map;
+
+    // write into the lyricVec
+    for (auto i:m_lyric_map){
+        m_lyricVec.push_back(stylized(i));
+    }
+
     m_lyric_object.close();
     logWrite(QString("Loaded lyric file, size:%1").arg(m_lyric_map.size()));
 }
 
+void MainWindow::goToSpecificLine(int line){
+    QTextCursor tc = ui->textEdit->textCursor();
+    int toPost = ui->textEdit->document()->findBlockByNumber( line - 1).position();
+    tc.setPosition(toPost,QTextCursor::MoveAnchor);
+    ui->textEdit->setTextCursor(tc);
+}
+
 void MainWindow::showLyric()
 {
+    // --------------------
     if (m_lyric_map.isEmpty()) {
         if (m_exist_lyric == false){
-            ui->textBrowser_2->setText("No Lyric");
+            //ui->textBrowser_2->setText("No Lyric");
         }
         return ;
     }
@@ -124,51 +128,126 @@ void MainWindow::showLyric()
     for (QMap<int,QString>::iterator it = m_lyric_map.begin();
          it != m_lyric_map.end(); ++it,++index) {
 
-        if (m_music.position() < it.key()){
-            ui->textBrowser_1->setText("");
-            ui->textBrowser_2->setText("");
-            ui->textBrowser_3->setText("");
-            // 设置第一句
-            if (index-2 >= 0) {
-                ui->textBrowser_1->setText((it-2).value());
-            }
-            // 设置中间的lyric
+        if (m_music.position() < it.key()){\
             if (index-1 >= 0) {
-                ui->textBrowser_2->setText((it-1).value());
+                break;
             }
-            // 设置第三句
-            if (index < m_lyric_map.size()) {
-                ui->textBrowser_3->setText((it).value());
+        }
+    }
+    if(index-1 >= 0){
+
+#ifdef  MAINDEBUG
+  qDebug()  <<"[mainwindow]"<<"specific line is "<<index-1<<endl;
+#endif
+        ui->textEdit->clear();
+        for (int i=0;i != m_lyricVec.size();++i){
+            if (i == index-1){
+                ui->textEdit->append(highLightLine(m_lyricVec[i]));
+                continue;
             }
-            break;
-        }// end if
-    }// end for
+            ui->textEdit->append(m_lyricVec[i]);
+        }
+        goToSpecificLine(index-1);
+    }
+    else{
+        ui->textEdit->clear();
+        for (int i=0;i != m_lyricVec.size();++i){
+            ui->textEdit->append(m_lyricVec[i]);
+        }
+        goToSpecificLine(0);
+    }
 }
 
-void MainWindow::on_button_save_clicked()
-{
-    logWrite(QString("Saving:Segment ["+getFormatTime(m_beg_point)+"-"+getFormatTime(m_end_point)+"] NoteLength:%1 TypeLength:%2 Selected %3,%4").
-              arg(m_note_content.size()).arg(m_type_content.size()).
-              arg(m_level_index).arg(m_sort_index));
+QString MainWindow::stylized(QString & str){
+    return "<center>"+str + "</center>" + "\n";
+}
 
-    // 保存到内存，不是保存到文件
-    createOneMark();
+QString MainWindow::highLightLine(QString & str){
+    return "<b>"+str+"</b>";
+}
 
-    // 清除界面数据
-    clearText();
+QString MainWindow::getSelectedWords(){
+    return ui->textEdit->textCursor().selectedText() ;
+}
 
-    // 保存到文件
+void MainWindow::on_showTextMenu(const QPoint &point){
+    if (getSelectedWords().isEmpty()) return ;
+
+    QMenu *menu = new QMenu(ui->textEdit);
+    const int sub_menu_size = G_reason_list.size();
+
+    for (int i=0;i < sub_menu_size;i++){
+        switch (i) {
+        case 0:
+            menu->addAction(QIcon(":/appicon/mark.png"),G_reason_list[i],this,SLOT(on_textMenuSelectedPhrase()));
+            break;
+        case 1:
+            menu->addAction(QIcon(":/appicon/mark.png"),G_reason_list[i],this,SLOT(on_textMenuSelectedLinking()));
+            break;
+        case 2:
+            menu->addAction(QIcon(":/appicon/mark.png"),G_reason_list[i],this,SLOT(on_textMenuSelectedGrammar()));
+            break;
+        case 3:
+            menu->addAction(QIcon(":/appicon/mark.png"),G_reason_list[i],this,SLOT(on_textMenuSelectedToolong()));
+            break;
+        case 4:
+            menu->addAction(QIcon(":/appicon/mark.png"),G_reason_list[i],this,SLOT(on_textMenuSelectedOthers()));
+            break;
+        default:
+#ifdef MAINDEBUG
+            qDebug() <<"[mainwindow]"<<"on_showTextMenu"<<"please add new on_fun to reflect the operation of clicking of menu"<<endl;
+#endif
+            break;
+        }
+    }
+    menu->move (cursor().pos ());
+    menu->show ();
+#ifdef  MAINDEBUG
+  qDebug()  <<"[mainwindow]"<<"on_showTextMenu()"<<getSelectedWords()<<endl;
+#endif
+}
+
+void MainWindow::on_textMenuSelectedPhrase(){
+    saveTextMenuSelected(0);
+}
+void MainWindow::on_textMenuSelectedLinking(){
+    saveTextMenuSelected(1);
+}
+void MainWindow::on_textMenuSelectedGrammar(){
+    saveTextMenuSelected(2);
+}
+void MainWindow::on_textMenuSelectedToolong(){
+    saveTextMenuSelected(3);
+}
+void MainWindow::on_textMenuSelectedOthers(){
+    saveTextMenuSelected(4);
+}
+void MainWindow::saveTextMenuSelected(int index){
+
+#ifdef  MAINDEBUG
+  qDebug()  <<"[mainwindow]"<<"User choices the:"<<G_reason_list[index]<<endl;
+#endif
+
+    logWrite(QString("Saving:Segment ["+getFormatTime(m_music.position())));
+
+    createOneMark(m_music.position(),index,getSelectedWords());
+
     saveMarkIntoFile();
 
-    // 刷新界面
     updateTableWidget();
+
+    ui->button_play->setFocus();
 
     logWrite("Saved");
 }
 
 void MainWindow::loadTableWidget(){
     QStringList table_header;
-    table_header << "Time" <<"Level" << "Content";
+    //QTextCodec::codecForName(QByteArray("GBK"))->toUnicode("时间")
+    table_header
+            <<QTextCodec::codecForName(QByteArray("GBK"))->toUnicode("时间")
+           <<QTextCodec::codecForName(QByteArray("GBK"))->toUnicode("理由")
+          << QTextCodec::codecForName(QByteArray("GBK"))->toUnicode("文本");
     ui->tableWidget->setColumnCount(table_header.size());
     ui->tableWidget->setHorizontalHeaderLabels(table_header);
     // 设置选中整行
@@ -179,6 +258,17 @@ void MainWindow::loadTableWidget(){
     ui->tableWidget->setSelectionMode(QAbstractItemView::SingleSelection);
     // 设置表头不可选
     ui->tableWidget->horizontalHeader()->setFocusPolicy(Qt::NoFocus);
+    // 自适应列宽
+    //ui->tableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    ui->tableWidget->horizontalHeader()->setSectionResizeMode(0, QHeaderView::ResizeToContents);
+    ui->tableWidget->horizontalHeader()->setSectionResizeMode(1, QHeaderView::ResizeToContents);
+    ui->tableWidget->horizontalHeader()->setSectionResizeMode(2, QHeaderView::ResizeToContents);
+    // 水平滑动条按照像素来滑动
+    ui->tableWidget->setHorizontalScrollMode(QAbstractItemView::ScrollPerPixel);
+    // 水平滑动条按照像素来滑动
+    ui->tableWidget->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
+    // 去掉网格
+    ui->tableWidget->setShowGrid(false);
 }
 
 void MainWindow::sortby(const QString key,QVector<int> & result_vec){
@@ -186,8 +276,12 @@ void MainWindow::sortby(const QString key,QVector<int> & result_vec){
     for (int i = 0;i<m_json_vec.size();i++){
         value_seq.push_back(m_json_vec[i][key].toInt());
     }
-    //qDebug() << value_seq;
-    int num,index,j;
+
+#ifdef MAINDEBUG
+    qDebug() << value_seq ;
+#endif
+
+    int num = 0,index = 0,j = 0;
     for (int i = 0; i<value_seq.size();i++){
         // 找一个有效值当基准
         for (j=0;j <value_seq.size();j++){
@@ -215,27 +309,20 @@ void MainWindow::sortby(const QString key,QVector<int> & result_vec){
 void MainWindow::on_clickHeader(int col)
 {
     QVector<int>result_vec;
-    // 按照标记时间排序
-    // 原则： 从开始到结束
     if (col == 0){
-        sortby("beg_point",result_vec);
-        //qDebug()<<result_vec;
+        sortby("time",result_vec);
         updateTableWidget(result_vec);
-    } // end col == 0
-    // 按照难度排序
-    // 原则： 顺序依据列表
+    }
     else if (col == 1){
-        sortby("level_index",result_vec);
-        //qDebug()<<result_vec;
+        sortby("reason",result_vec);
         updateTableWidget(result_vec);
     }
-    // 按照内容排序
-    // 原则： 顺序依据列表
-    else if(col == 2){
-        sortby("sort_index",result_vec);
-        //qDebug()<<result_vec;
-        updateTableWidget(result_vec);
-    }
+
+    //else if(col == 2){
+    //    sortby("content",result_vec);
+    //    updateTableWidget(result_vec);
+    //}
+
     QVector<QJsonObject> temp_json_vec;
     for (int i = 0; i < result_vec.size() ; i++){
         temp_json_vec.push_back(m_json_vec[result_vec[i]]);
@@ -243,37 +330,48 @@ void MainWindow::on_clickHeader(int col)
     qSwap(temp_json_vec,m_json_vec);
 }
 
-void MainWindow::on_showMenu(const QPoint pos)
+void MainWindow::on_showTableMenu(const QPoint pos)
 {
+    if (m_json_vec.isEmpty()){
+        return;
+    }
     //设置菜单选项
-        QMenu *menu = new QMenu(ui->tableWidget);
-        QAction *pnew = new QAction(QIcon(":/icon/icon/delete.png"),"Delete",ui->tableWidget);\
-        connect (pnew,SIGNAL(triggered()),this,SLOT(on_deleteItem()));
+    QMenu *menu = new QMenu(ui->tableWidget);
+    QAction *pnew = new QAction(QIcon(":/appicon/delete.png"),"Delete",ui->tableWidget);\
+    connect (pnew,SIGNAL(triggered()),this,SLOT(on_deleteItem()));
 
-        menu->addAction(pnew);
-        menu->move (cursor().pos ());
-        menu->show ();
+    menu->addAction(pnew);
+    menu->move (cursor().pos ());
+    menu->show ();
 
-        //获得鼠标点击的x，y坐标点
-        int x = pos.x ();
-        int y = pos.y ();
-        QModelIndex index = ui->tableWidget->indexAt (QPoint(x,y));
-        m_click_row = index.row ();//获得QTableWidget列表点击的行数
+    //获得鼠标点击的x，y坐标点
+    int
+            x = pos.x (),
+            y = pos.y ();
+    QModelIndex index = ui->tableWidget->indexAt (QPoint(x,y));
+    //获得QTableWidget列表点击的行数
+    m_click_row = index.row ();
 }
 
 void MainWindow::on_deleteItem()
 {
-    // qDebug() <<"delete:"<<m_click_row;
     if (m_click_row == -1){
-        // qDebug() << "No Target";
+#ifdef  MAINDEBUG
+  qDebug()  <<"[mainwindow]"<<"on_deleteItem()"<<"No Target"<<endl;
+#endif
         return ;
     }
+#ifdef  MAINDEBUG
+  qDebug()  <<"[mainwindow]"<<"on_deleteItem()"<<"m_click_row:"<<m_click_row<<endl;
+#endif
 
     logWrite(QString("Deleting:Index:%1 MarksSize:%2").arg(m_click_row).arg(m_json_vec.size()));
+
     // 确保index安全
     if (m_click_row < 0 && m_click_row >= m_json_vec.size()){
         return ;
     }
+
     // 在内存中删除指定item
     m_json_vec.erase(m_json_vec.begin() + m_click_row);
 
@@ -289,24 +387,6 @@ void MainWindow::on_deleteItem()
     logWrite(QString("Deleted:MarksSize:%1").arg(m_json_vec.size()));
 }
 
-QString MainWindow::getPlainContent(QPlainTextEdit * plainText)
-{
-    QTextDocument * doc = plainText->document();
-    QTextBlock block = doc->firstBlock();
-    QString text;
-
-    for(int i = 0; i < doc->blockCount();i++,block=block.next()){
-        text = text + block.text() + '\n';
-    }
-    return text;
-}
-
-void MainWindow::setPlainContent(){
-    ui->text_type->setPlainText(m_type_content);
-    ui->text_note->setPlainText(m_note_content);
-}
-
-
 QString MainWindow::getFormatTime(qint64 time)
 {
     int h,m,s;
@@ -319,60 +399,32 @@ QString MainWindow::getFormatTime(qint64 time)
             arg(s,2,10,QChar('0'));
 }
 
-QString MainWindow::getFormatMark(const QJsonObject &json)
-{
-    QString mark;
-    // 获取起止时间
-    QString beg_point = getFormatTime(json["beg_point"].toInt()),
-            end_point = getFormatTime(json["end_point"].toInt());
-    mark = "["+beg_point +"-"+end_point+"]\t";
-    // 追加难度和种类
-    mark += m_level_value[json["level_index"].toInt()] + "\t";
-    mark += m_sort_value[json["sort_index"].toInt()];
-    return mark;
-}
-
 QString MainWindow::getFormatContent(const QJsonObject &json, int index){
-    // 获取时间的格式化数据
+
+    // 获取顺序依据Table中的Colume
     if(index == 0){
-        QString beg_point = getFormatTime(json["beg_point"].toInt()),
-                end_point = getFormatTime(json["end_point"].toInt());
-        return QString("["+beg_point +"-"+end_point+"]");
+        return getFormatTime(json["time"].toInt());
     }
-    // 获取等级的格式化数据
-    else if(index == 1) {
-        return m_level_value[json["level_index"].toInt()];
+    else if(index == 1){
+        return G_reason_list[json["reason"].toInt()];
     }
-    // 获取内容的格式化数据
-    else if(index == 2){
-        return m_sort_value[json["sort_index"].toInt()];
+    else if (index == 2){
+        return json["content"].toString();
     }
     return QString();
 }
 
 void MainWindow::loadConstant()
 {
-    // 初始化下拉菜单的选项
-    QString
-            level_value = "Easy,Midd,Hard",
-            sort_value = "None,Unfamiliar Words,Too Long,Garmmar,Speak Fast";
-    m_level_value =level_value.split(",");
-    m_sort_value = sort_value.split(",");
-    m_level_index = 0;
-    m_sort_index = 0;
-
     // 初始化音频播放相关数据
-    m_music.setNotifyInterval(100);
+    m_music.setNotifyInterval(300);
     m_play = false;
     m_beg_point = 0;
     m_end_point = 0;
     m_total_time = 0;
-    m_step_millSecond = 3000; // 3s
 
     // 初始化标记数据
     m_click_row = -1;
-    m_clicked_btn_end = false;
-    m_clicked_btn_beg = false;
     m_exist_lyric = false;
     m_json_vec.clear();
     ui->tableWidget->clear();
@@ -380,13 +432,13 @@ void MainWindow::loadConstant()
     // 创建所有需要的目录
     loadFileDir();
 
-     // 用于文件读写
+    // 创建所需文件
     m_log_name = "log";
     createLogFile();
 }
 
 void MainWindow::fileOpenIsFailed(QString title,QString content){
-    QMessageBox::about(NULL, title, content);
+    QMessageBox::about(nullptr, title, content);
 }
 
 void MainWindow::logWrite(QString info){
@@ -399,49 +451,42 @@ void MainWindow::logWrite(QString info){
 void MainWindow::createLogFile(){
     m_log_object.setFileName(m_log_dir+ m_log_name);
     if (!m_log_object.open(QIODevice::WriteOnly | QIODevice::Text)){
-        fileOpenIsFailed("文件打开失败","详细信息请查阅log文件或反馈");
+        fileOpenIsFailed(
+                    QTextCodec::codecForName(QByteArray("GBK"))->toUnicode("文件打开失败"),
+                    QTextCodec::codecForName(QByteArray("GBK"))->toUnicode(
+                        "请尝试使用管理员权限运行程序或麻烦将问题反馈至github.com/gltina/"
+                        ));
     }
 }
 void MainWindow::loadControl(bool status)
 {
-    //ui->text_type->clear();
-    //ui->text_note->clear();
     if (!status){
         ui->button_play->setEnabled(false);
-        ui->button_stop->setEnabled(false);
         ui->button_back->setEnabled(false);
         ui->button_forward->setEnabled(false);
-        ui->button_set_end->setEnabled(false);
-        ui->button_set_start->setEnabled(false);
-        ui->button_save->setEnabled(false);
         ui->horizon_music->setEnabled(false);
+        ui->textEdit->setReadOnly(true);
     }
     else{
         ui->button_play->setEnabled(true);
-        ui->button_stop->setEnabled(true);
         ui->button_back->setEnabled(true);
         ui->button_forward->setEnabled(true);
-        ui->button_set_end->setEnabled(true);
-        ui->button_set_start->setEnabled(true);
-        ui->button_save->setEnabled(true);
         ui->horizon_music->setEnabled(true);
+        ui->textEdit->setReadOnly(true);
     }
 }
 
-
-void MainWindow::createOneMark()
+void MainWindow::createOneMark(qint64 pos,int index,const QString & str)
 {
     QJsonObject curr_seg;
 
-    m_type_content = getPlainContent(ui->text_type);
-    m_note_content = getPlainContent(ui->text_note);
+    curr_seg.insert("time", pos);
+    curr_seg.insert("reason", index);
+    curr_seg.insert("content", str);
 
-    curr_seg.insert("type", m_type_content);
-    curr_seg.insert("note", m_note_content);
-    curr_seg.insert("beg_point", m_beg_point);
-    curr_seg.insert("end_point", m_end_point);
-    curr_seg.insert("level_index", m_level_index);
-    curr_seg.insert("sort_index", m_sort_index);
+#ifdef  MAINDEBUG
+  qDebug()  <<"[mainwindow]"<<"createOneMark()"<<curr_seg<<endl;
+#endif
 
     m_json_vec.push_back(curr_seg);
 }
@@ -471,52 +516,64 @@ void MainWindow::loadJsonContent()
 {
     QByteArray data = m_json_object.readAll();
 
-    // qDebug() << data;
+#ifdef  MAINDEBUG
+  qDebug()  <<"[mainwindow]"<<"loadJsonContent()"<<"data"<<data<<endl;
+#endif
+
     QJsonParseError e;
     QJsonDocument jsonDoc = QJsonDocument::fromJson(data, &e);
 
     if(e.error == QJsonParseError::NoError && !jsonDoc.isNull())
     {
-        //qDebug() <<"doc=\n"<< jsonDoc;
+#ifdef  MAINDEBUG
+  qDebug()  <<"[mainwindow]"<<"loadJsonContent()"<<"jsonDoc"<<jsonDoc<<endl;
+#endif
     }
     QJsonObject json = jsonDoc.object();
 
     QJsonObject curr_json_seg;
     for (QJsonObject::iterator it=json.begin();it != json.end();++it){
         curr_json_seg = it.value().toObject();
-        // qDebug() << it.value().toObject();
         m_json_vec.push_back(curr_json_seg);
     }
 }
 
-void MainWindow::updateTableWidget(QVector<int> &index_vec){
+void MainWindow::updateTableWidget(QVector<int> index_vec){
     ui->tableWidget->setRowCount(0);
     ui->tableWidget->clearContents();
     int rowCount = 0;
+    // Contain Time, Reason and Content
+    int colCount = 3;
+
     // 使用索引表刷新Table
     if (!index_vec.isEmpty()){
-        // qDebug() << "flashed by index_vec";
-        // qDebug() << index_vec;
+#ifdef  MAINDEBUG
+  qDebug()  <<"[mainwindow]"<<"updateTableWidget()"<<"flashed by index_vec:"<<index_vec<<endl;
+#endif
         for (int i = 0;i <index_vec.size();++i){
             rowCount = ui->tableWidget->rowCount();
             ui->tableWidget->insertRow(rowCount);
-            for (int c = 0;c<3;c++){
+            for (int c = 0;c<colCount;c++){
                 ui->tableWidget->setItem(
                             rowCount,c,
                             new QTableWidgetItem(getFormatContent(m_json_vec[index_vec[i]],c)));
+                ui->tableWidget->item(rowCount,c)->setTextAlignment(Qt::AlignCenter);
             }
         }
     }
     // 使用默认顺序刷新
     else {
-        // qDebug() << "flashed by index_default";
+#ifdef  MAINDEBUG
+  qDebug()  <<"[mainwindow]"<<"updateTableWidget()"<<"flashed by index_default"<<endl;
+#endif
         for (int r = 0;r < m_json_vec.size();r++){
             rowCount = ui->tableWidget->rowCount();
             ui->tableWidget->insertRow(rowCount);
-            for (int c = 0;c<3;c++){
+            for (int c = 0;c<colCount;c++){
                 ui->tableWidget->setItem(
                             rowCount,c,
                             new QTableWidgetItem(getFormatContent(m_json_vec[r],c)));
+                ui->tableWidget->item(rowCount,c)->setTextAlignment(Qt::AlignCenter);
             }
         }
     }
@@ -527,43 +584,34 @@ void MainWindow::musicAfterStop()
     m_play = false;
     m_music.setPosition(0);
     m_beg_point = 0;
-    m_clicked_btn_beg = false;
-    m_clicked_btn_end = false;
     m_end_point = m_total_time;
-    ui->button_set_start->setText("");
-    ui->button_set_end->setText("");
-    ui->button_play->setIcon(QIcon(":/icon/icon/play.png"));
+    ui->button_play->setIcon(QIcon(":/appicon/play.png"));
 }
 
-void MainWindow::loadComboxItems()
-{
-    // Load Current Select Value
-    for (int i = 0;i < m_level_value.size();i++){
-        ui->combox_level->addItem(m_level_value[i]);
+void MainWindow::openLocalFile(QString filepath){
+    if(filepath.isEmpty()){
+        if(m_json_object.isOpen()){
+            m_json_object.close();
+        }
+        QString temp = QFileDialog::getOpenFileName(this,"Open File",QString(),"*mp3 ");
+        if (temp.indexOf(".mp3") == -1){
+            return;
+        }
+        m_filepath = temp;
     }
-    ui->combox_level->setCurrentIndex(0);
-
-    for (int i = 0;i < m_sort_value.size();i++){
-        ui->combox_sort->addItem(m_sort_value[i]);
+    else{
+        m_filepath = filepath;
     }
-    ui->combox_sort->setCurrentIndex(0);
-
-}
-
-void MainWindow::on_localFile_triggered()
-{
-    if(m_json_object.isOpen()){
-        m_json_object.close();
-    }
-    QString temp = QFileDialog::getOpenFileName(this,"Open File",QString(),"*mp3 ");
-    if (temp.indexOf(".mp3") == -1){
-        return;
-    }
-    logWrite("Loading Audio File:"+temp);
-    m_filepath = temp;
+    logWrite("Loading Audio File:"+m_filepath);
     m_filebase = QFileInfo(m_filepath).baseName();
     ui->label_info->setText(m_filebase);
 
+#ifdef MAINDEBUG
+    qDebug()
+            <<"[MainWindow]"<<"openLocalFile()"
+           <<"m_filepath:"<<m_filepath<<endl
+          <<"m_filebase"<<m_filebase<<endl;
+#endif
     // 1. 清除与设置界面显示信息
     // 2. 清除之前文件信息
     // 3. 刷新界面
@@ -571,28 +619,16 @@ void MainWindow::on_localFile_triggered()
     // 5. 载入音频文件以及json文件
 
     // 1. 清除与设置界面显示信息
-    ui->button_set_start->setText("");
-    ui->button_set_end->setText("");
-    ui->combox_level->setCurrentIndex(0);
-    ui->combox_sort->setCurrentIndex(0);
-    ui->textBrowser_1->clear();
-    ui->textBrowser_2->clear();
-    ui->textBrowser_3->clear();
+    ui->textEdit->clear();
+    ui->tableWidget->clearContents();
 
     // 2. 清除之前文件信息
     m_json_vec.clear();
-    m_filepath = temp;
     m_beg_point = 0;
     m_play = false;
-    clearText();
-    m_level_index = 0;
-    m_sort_index = 0;
     m_lyric_map.clear();
     m_lyric_name.clear();
-
-    // 3. 刷新界面
-    updateTableWidget();
-    loadControl(true);
+    m_lyricVec.clear();
 
     // 4. [optional]加载"歌词"
     // 如果是listening部分的歌词请求
@@ -607,8 +643,18 @@ void MainWindow::on_localFile_triggered()
     m_music.setMedia(QUrl::fromLocalFile(m_filepath));
     loadJsonFile();
 
+    // 3. 刷新界面
+    updateTableWidget();
+    loadControl(true);
+
     logWrite(QString("Loaded"));
 }
+
+void MainWindow::on_localFile_triggered()
+{
+    openLocalFile();
+}
+
 void MainWindow::loadJsonFile()
 {
     m_json_name = m_json_dir+m_filebase.trimmed()+".json";
@@ -657,8 +703,6 @@ void MainWindow::loadFileDir()
     // TPO文件的保存目录
     m_tpo_dir = "TPO";
     createDir(m_tpo_dir);
-
-
 }
 
 void MainWindow::on_button_play_clicked()
@@ -666,18 +710,12 @@ void MainWindow::on_button_play_clicked()
     if (m_play == true){
         m_music.pause();
         m_play = false;
-        ui->button_play->setIcon(QIcon(":/icon/icon/play.png"));
+        ui->button_play->setIcon(QIcon(":/appicon/play.png"));
     }else{
         m_music.play();
         m_play = true;
-       ui->button_play->setIcon(QIcon(":/icon/icon/pause.png"));
+        ui->button_play->setIcon(QIcon(":/appicon/pause.png"));
     }
-}
-
-void MainWindow::on_button_stop_clicked()
-{
-    m_music.stop();
-    musicAfterStop();
 }
 
 void MainWindow::on_media_updatePosition(qint64 position)
@@ -700,7 +738,7 @@ void MainWindow::on_media_updateDuration(qint64 duration)
     ui->horizon_music->setPageStep(duration/10);
     m_total_time = duration;
     m_end_point = m_total_time;
-    ui->label_totle_time->setText("| "+getFormatTime(m_total_time));
+    ui->label_totle_time->setText(getFormatTime(m_total_time));
 }
 
 void MainWindow::on_media_stateChanged()
@@ -722,27 +760,28 @@ void MainWindow::loadConnect()
     connect(&m_music,&QMediaPlayer::stateChanged,this,&MainWindow::on_media_stateChanged);
     connect(ui->horizon_music,&QSlider::sliderMoved,this,&MainWindow::set_media_position);
     connect(ui->tableWidget->horizontalHeader(), SIGNAL(sectionClicked(int)), this, SLOT(on_clickHeader(int)));
-    connect(ui->tableWidget,SIGNAL(customContextMenuRequested(QPoint)),this,SLOT(on_showMenu(QPoint)));
+    connect(ui->tableWidget,SIGNAL(customContextMenuRequested(QPoint)),this,SLOT(on_showTableMenu(QPoint)));
+    connect(ui->textEdit,SIGNAL(customContextMenuRequested(QPoint)),this,SLOT(on_showTextMenu(QPoint)));
 }
 
 void MainWindow::on_button_back_clicked()
 {
     if (m_exist_lyric == false){
-        m_music.setPosition(m_music.position() - m_step_millSecond > 0 ? m_music.position() - m_step_millSecond:0);
+        m_music.setPosition(m_music.position() - G_stepSecond > 0 ? m_music.position() - G_stepSecond:0);
     }
     else {
         int index = 0;
         qint64 curr_pos = m_music.position();
         for (QMap<int,QString>::iterator it = m_lyric_map.begin();
              it != m_lyric_map.end(); ++it,++index) {
-                if (curr_pos < it.key()){
-                    m_music.setPosition((index-2 >= 0)?(it-2).key():0);
-                    break;
-                }
-                if (it + 1 == m_lyric_map.end()) {
-                    m_music.setPosition((index-2 >= 0)?(it-2).key():0);
-                    break;
-                }
+            if (curr_pos < it.key()){
+                m_music.setPosition((index-2 >= 0)?(it-2).key():0);
+                break;
+            }
+            if (it + 1 == m_lyric_map.end()) {
+                m_music.setPosition((index-2 >= 0)?(it-2).key():0);
+                break;
+            }
         }
     }
 }
@@ -750,55 +789,22 @@ void MainWindow::on_button_back_clicked()
 void MainWindow::on_button_forward_clicked()
 {
     if (m_exist_lyric == false){
-        m_music.setPosition(m_music.position() + m_step_millSecond < m_total_time ? m_music.position() + m_step_millSecond:m_total_time);
+        m_music.setPosition(m_music.position() + G_stepSecond < m_total_time ? m_music.position() + G_stepSecond:m_total_time);
     }
     else {
         int index = 0;
         qint64 curr_pos = m_music.position();
         for (QMap<int,QString>::iterator it = m_lyric_map.begin();
              it != m_lyric_map.end(); ++it,++index) {
-                if (curr_pos < it.key()){
-                    m_music.setPosition(it.key());
-                    break;
-                }
-                if (it + 1 == m_lyric_map.end()) {
-                    m_music.setPosition(it.key());
-                    break;
-                }
+            if (curr_pos < it.key()){
+                m_music.setPosition(it.key());
+                break;
+            }
+            if (it + 1 == m_lyric_map.end()) {
+                m_music.setPosition(it.key());
+                break;
+            }
         }
-    }
-}
-
-void MainWindow::on_button_set_start_clicked()
-{
-    // 取消断点
-    if (m_clicked_btn_beg){
-        m_beg_point = 0;
-        ui->button_set_start->setText("");
-        m_clicked_btn_beg = false;
-     }
-    // 记录断点
-    else{
-        m_beg_point = m_music.position();
-        ui->button_set_start->setText(getFormatTime(m_beg_point));
-        m_clicked_btn_beg = true;
-    }
-}
-
-void MainWindow::on_button_set_end_clicked()
-{
-    // 取消断点
-    if (m_clicked_btn_end){
-        m_end_point = m_total_time;
-        ui->button_set_end->setText("");
-        m_clicked_btn_end = false;
-     }
-    // 记录断点
-    else{
-        m_end_point = m_music.position();
-        ui->button_set_end->setText(getFormatTime(m_end_point));
-        m_clicked_btn_end = true;
-        m_music.setPosition(m_beg_point);
     }
 }
 
@@ -807,7 +813,7 @@ void MainWindow::musicPlay(qint64 point){
     m_music.setPosition(point);
     m_music.play();
     m_play = true;
-    ui->button_play->setIcon(QIcon(":/icon/icon/pause.png"));
+    ui->button_play->setIcon(QIcon(":/appicon/pause.png"));
 }
 
 void MainWindow::on_howToUse_triggered()
@@ -818,16 +824,6 @@ void MainWindow::on_howToUse_triggered()
 void MainWindow::on_about_triggered()
 {
     QDesktopServices::openUrl(QUrl("https://github.com/Gltina/MarkSencent"));
-}
-
-void MainWindow::on_combox_level_activated(int index)
-{
-    m_level_index = index;
-}
-
-void MainWindow::on_combox_sort_activated(int index)
-{
-    m_sort_index = index;
 }
 
 void MainWindow::on_exit_triggered()
@@ -843,7 +839,13 @@ void MainWindow::on_exit_triggered()
 }
 
 void MainWindow::closeEvent(QCloseEvent *event){
-    switch( QMessageBox::information(this,tr("MarkSentence"),tr("Are you sure?"),tr("YES"), tr("NO"),0,1))
+
+    switch( QMessageBox::information(this,
+                                     tr("!!!!"),
+                                     QTextCodec::codecForName(QByteArray("GBK"))->toUnicode("不再听会儿？"),
+                                     QTextCodec::codecForName(QByteArray("GBK"))->toUnicode("算了我休息一下"),
+                                     QTextCodec::codecForName(QByteArray("GBK"))->toUnicode("再听最后亿篇"),
+                                     nullptr,1))
     {
     case 0:
         event->accept();
@@ -857,39 +859,42 @@ void MainWindow::closeEvent(QCloseEvent *event){
 
 void MainWindow::on_onlineFile_triggered()
 {
-    m_loadDialog = new loadDialog(m_log_object,0);
+    m_loadDialog = new loadDialog(m_log_object,nullptr);
+    QFile qssFile(":/qdarkstyle/style.qss");
+    if(qssFile.isOpen())
+    {
+        QString qss = QLatin1String(qssFile.readAll());
+        m_loadDialog->setStyleSheet(qss);
+        qssFile.close();
+    }
     int res = m_loadDialog->exec();
+
     if (res == QDialog::Accepted)
     {
-        delete m_loadDialog;
+        if(G_playAfterDownload){
+            openLocalFile(G_audioFilename);
+        }
+        // delete m_loadDialog;
     }
 }
 
 void MainWindow::on_tableWidget_cellDoubleClicked(int row, int column)
 {
-    column=column;
     m_click_row = row;
-    m_clicked_btn_beg = true;
-    m_clicked_btn_end = true;
     QJsonObject &select_json = m_json_vec[m_click_row];
-    m_beg_point = select_json["beg_point"].toInt();
-    m_end_point = select_json["end_point"].toInt();
-    m_type_content = select_json["type"].toString();
-    m_note_content = select_json["note"].toString();
-    m_level_index= select_json["level_index"].toInt();
-    m_sort_index= select_json["sort_index"].toInt();
+    m_beg_point = select_json["time"].toInt();
 
-    // 设置断点信息
-    ui->button_set_start->setText(getFormatTime(m_beg_point));
-    ui->button_set_end->setText(getFormatTime(m_end_point));
-
-    // 设置难度以及种类
-    ui->combox_level->setCurrentIndex(m_level_index);
-    ui->combox_sort->setCurrentIndex(m_sort_index);
-
-    // 填充Text内容
-    setPlainContent();
-
+    m_beg_point = m_beg_point-G_stepSecond >0?m_beg_point-G_stepSecond:0;
     // 开始在断点起点播放
     musicPlay(m_beg_point);
+}
+
+void MainWindow::on_setting_triggered()
+{
+    m_settingDialog = new SettingDialog();
+    int res = m_settingDialog->exec();
+    if (res == QDialog::Accepted)
+    {
+        //delete m_settingDialog;
+    }
 }

@@ -13,8 +13,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = marksentence
 TEMPLATE = app
-RC_ICONS = ./icon/main_title.ico
-
+RC_ICONS = ./appicon/main_title.ico
 
 # The following define makes your compiler emit warnings if you use
 # any feature of Qt which as been marked as deprecated (the exact warnings
@@ -27,19 +26,26 @@ DEFINES += QT_DEPRECATED_WARNINGS
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
+CONFIG += C++11
 
 SOURCES += \
     loaddialog.cpp \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    settingdialog.cpp \
+    globalcontrol.cpp
 
 HEADERS += \
     loaddialog.h \
-    mainwindow.h
+    mainwindow.h \
+    settingdialog.h \
+    globalcontrol.h
 
 FORMS += \
         mainwindow.ui \
-    loaddialog.ui
+    loaddialog.ui \
+    settingdialog.ui
 
 RESOURCES += \
-    icon.qrc
+    qdarkstyle/style.qrc \
+    appicon/icon.qrc \

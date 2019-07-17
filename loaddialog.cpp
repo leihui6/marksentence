@@ -1,7 +1,7 @@
 ﻿#include "loaddialog.h"
 #include "ui_loaddialog.h"
 
-loadDialog::loadDialog(QFile & log_file, QWidget * parent) :
+loadDialog::loadDialog(QFile & log_file,QWidget * parent) :
     QDialog(parent),
     ui(new Ui::loadDialog),
     m_audio_file(new QFile),
@@ -59,7 +59,7 @@ void loadDialog::loadCombox()
     }
     ui->combox_section->setCurrentIndex(0);
 
-    // 加载听力section中得detail
+    // 加载听力section中的detail
     // 在选择的时候还会更进一步判断当前section有哪些detail
     QString detail = "C1,L1,L2,C2,L3,L4";
     m_detail_list = detail.split(",");
@@ -71,7 +71,7 @@ void loadDialog::loadCombox()
 
 void loadDialog::loadConstant(){
     ui->progressBar->setValue(0);
-    ui->progressBar->setVisible(false);
+    //ui->progressBar->setVisible(false);
 
     // 设置TPO音频文件下载目录
     // 这两个在MainWindow也有过设置
@@ -125,19 +125,20 @@ void loadDialog::generateUrl()
        else{
            m_lyric_filename = "";
        }
-       //qDebug() <<"m_lyric_filename:"<< m_lyric_filename;
+
+#ifdef DLDEBUG
+       qDebug() <<"[loaddialog]"<<"generateUrl()"<<"m_lyric_filename:"<< m_lyric_filename;
+#endif
        logWrite(QString("[DW]Lyric Filename: %1").arg(m_lyric_filename));
 }
 
 void loadDialog::loadRemotePath()
 {
     //  服务器IP
-    // 防止IP被爬
-    QString ip = "h#t#t#p:/#/3#9.#9#7.1#15.1#2#8";
-    QString port = "8000";
-    QString path = "/TPO/";
-    ip.replace(QString("#"),QString(""));
-    m_remotepath = ip+":"+port+path;
+    QString
+            port = "8000",
+            path = "/TPO/";
+    m_remotepath = "http://"+G_remote_ip+":"+port+path;
 }
 
 void loadDialog::on_combox_section_activated(int index)
@@ -183,12 +184,15 @@ void loadDialog::loadConnect(){
 
 void loadDialog::on_loadBeg()
 {
-    ui->progressBar->setVisible(true);
+    //ui->progressBar->setVisible(true);
 }
 
 void loadDialog::on_audioIng(qint64 bytesRead, qint64 bytesTotal)
 {
-    // qDebug() << bytesRead << ":"<<bytesTotal;
+#ifdef  DLDEBUG
+    qDebug()
+    <<"[loadDialog]"<< bytesRead << ":"<<bytesTotal;
+#endif
     m_audio_total = bytesTotal;
     m_audio_file.write(m_audio_reply->readAll());
     ui->progressBar->setMaximum(bytesTotal);
@@ -197,19 +201,26 @@ void loadDialog::on_audioIng(qint64 bytesRead, qint64 bytesTotal)
 
 void loadDialog::on_audioFin()
 {
-    //qDebug() << "download finished";
-    ui->progressBar->setVisible(true);
+#ifdef  DLDEBUG
+    qDebug()  <<"[loadDialog]"<<"Download Finished"<<endl;
+#endif
     m_audio_reply->deleteLater();
     m_audio_load->deleteLater();
     if (m_audio_file.isOpen()){
         m_audio_file.close();
     }
+
+    downloadQueue.pop_back();
+    finishedOperation();
+
     logWrite(QString("[DW]Audio File(size:%1) Download Done").arg(m_audio_total));
 }
 
 void loadDialog::on_lyricIng(qint64 bytesRead, qint64 bytesTotal)
 {
-    // qDebug() << bytesRead << ":"<<bytesTotal;
+#ifdef  DLDEBUG
+    qDebug()  <<"[loadDialog]"<<bytesRead << ":"<<bytesTotal;
+#endif
     m_lyric_total = bytesTotal;
     m_lyric_file.write(m_lyric_reply->readAll());
     ui->progressBar->setMaximum(bytesTotal);
@@ -218,13 +229,35 @@ void loadDialog::on_lyricIng(qint64 bytesRead, qint64 bytesTotal)
 
 void loadDialog::on_lyricFin()
 {
-    ui->progressBar->setVisible(true);
+#ifdef  DLDEBUG
+    qDebug()  <<"[loadDialog]"<<"Lyric Download Finished"<<endl;
+#endif
     m_lyric_reply->deleteLater();
     m_lyric_load->deleteLater();
     if (m_lyric_file.isOpen()){
         m_lyric_file.close();
     }
+    downloadQueue.pop_back();
+    finishedOperation();
+
     logWrite(QString("[DW]Lyric File(size:%1) Download Done").arg(m_lyric_total));
+}
+
+void loadDialog::finishedOperation(){
+    if (downloadQueue.isEmpty() && G_playAfterDownload){
+#ifdef DLDEBUG
+        // 播放在MainWindow里操作
+        qDebug() << "[loadDialog]" << "Try to open (Audio)"<<m_savePath<<endl;
+        qDebug() << "[loadDialog]" << "Try to open (Lyric)"<<m_lyric_dir+m_lyric_filename<<endl;
+#endif
+        G_audioFilename = m_savePath;
+    }
+    if(downloadQueue.isEmpty() && G_closeAfterDownload){
+        this->accept();
+    }
+    else if (downloadQueue.isEmpty()){
+        QMessageBox::about(this,QString("Done"),QString("Download Finished"));
+    }
 }
 
 void loadDialog::on_btn_comfirm_clicked()
@@ -235,11 +268,18 @@ void loadDialog::on_btn_comfirm_clicked()
 
     // 根据所选项生成远程获取url
     generateUrl();
-    QString lyric_url = m_remotepath+ "tpo_lyric/" + m_lyric_filename;
-    QString pathstr = m_remotepath+m_filename+".mp3";
 
-    //qDebug()<<"audio's url:\t"<<pathstr;
-    //qDebug()<<"lyric's url:\t"<<lyric_url;
+    QString
+            lyric_url = m_remotepath+ "tpo_lyric/" + m_lyric_filename,
+            pathstr = m_remotepath+m_filename+".mp3";
+
+#ifdef DLDEBUG
+    qDebug()
+            <<"[loadDialog]"
+           <<"Audio's URL:"<< pathstr<<endl
+          <<"Lyric's URL:"<<lyric_url<<endl;
+#endif
+
     logWrite(QString("[DW]Remote URL: (audio)%1; (lyric)%2").arg(pathstr).arg(lyric_url));
 
     /*
@@ -253,8 +293,17 @@ void loadDialog::on_btn_comfirm_clicked()
             .arg(m_audio_dir).arg(m_tpo_index+1).arg(m_tpo_index+1).
             arg(m_section_list[m_section_index]).arg(m_detail_list[m_detail_index]);
 
-    m_savePath = QFileDialog::getSaveFileName(this,("Save"),local_save,tr("*.mp3"));
-
+    if(G_downloadWithoutNotifiction){
+        m_savePath = local_save;
+    }
+    else {
+        m_savePath = QFileDialog::getSaveFileName(this,("Save"),local_save,tr("*.mp3"));
+    }
+#ifdef DLDEBUG
+    qDebug()
+            <<"[loadDialog]"
+           <<"Local Save Path:"<< m_savePath<<endl;
+#endif
     // 用户没有选择路径
     if(m_savePath.isEmpty()){
         return;
@@ -266,17 +315,38 @@ void loadDialog::on_btn_comfirm_clicked()
     // 1. 音频文件
     m_audio_file.setFileName(m_savePath);
     m_audio_file.open(QIODevice::WriteOnly | QIODevice::Truncate);
+    if(!m_audio_file.isOpen()){
+#ifdef DLDEBUG
+    qDebug()
+            <<"[loadDialog]"
+           <<"Audio File Open Failed"<<endl;
+#endif
+    }
     // 2. 文本文件
     m_lyric_file.setFileName(m_lyric_dir+m_lyric_filename);
     m_lyric_file.open(QIODevice::WriteOnly | QIODevice::Truncate);
+    if(!m_audio_file.isOpen()){
+#ifdef DLDEBUG
+    qDebug()
+            <<"[loadDialog]"
+           <<"Lyric File Open Failed"<<endl;
+#endif
+    }
 
+#ifdef DLDEBUG
+    qDebug()
+            <<"[loadDialog]"
+           <<"Begin with downloading"<<endl;
+#endif
     // 开始下载
     // 1. 下载音频文件
     QUrl url = QUrl(pathstr);
+    downloadQueue.push_back(1);
     m_audio_load = new QNetworkAccessManager(this);
     m_audio_reply=m_audio_load->get(QNetworkRequest(url));
     // 2. 下载文本文件
     url = QUrl(lyric_url);
+     downloadQueue.push_back(2);
     m_lyric_load = new QNetworkAccessManager(this);
     m_lyric_reply=m_lyric_load->get(QNetworkRequest(url));
 
@@ -302,6 +372,6 @@ void loadDialog::on_btn_cancel_clicked()
     if (m_lyric_file.isOpen()){
         m_lyric_file.close();
     }
-    this->hide();
+    this->reject();
 }
 
