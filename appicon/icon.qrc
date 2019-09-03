@@ -23,5 +23,11 @@
         <file>main_title.ico</file>
         <file>setting.png</file>
         <file>mark.png</file>
+        <file>continuous.png</file>
+        <file>grammar.png</file>
+        <file>icon.qrc</file>
+        <file>other.png</file>
+        <file>phrase.png</file>
+        <file>toolong.png</file>
     </qresource>
 </RCC>

@@ -1,14 +1,13 @@
 # MarkSentence 
 
 一个在可以文本对照的听力句子的标记工具，即精听工具，目前专门针对于`TOEFL`
-
-- 对`TPO1-54`的听力做标记，方便复习(目前仅支持`listening`部分的文本显示)
+对`TPO1-54`的听力做标记，方便复习(支持`listening`部分的文本显示)
 
 ## 使用
 
 ### 下载安装包
 
-[marksentence v1.0](https://github.com/Gltina/marksencent/releases/download/v1.0/marksentence.v1.0.exe)
+- [marksentence v1.1](https://github.com/Gltina/marksentence/releases/download/v1.1/marksentence.v1.1.exe)
 
 ### 从源码编译
 - Qt 5.12.3 (based on MSVC2017 64bit)
@@ -23,6 +22,7 @@
 ## 截图
 ![](samples/sample.png)
 ![](samples/sample01.png)
+![](samples/listeningv1.1.gif)
 
 ## Project status
 更多请查看[项目日志](log/README.md) 

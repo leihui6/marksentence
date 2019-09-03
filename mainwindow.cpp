@@ -179,19 +179,19 @@ void MainWindow::on_showTextMenu(const QPoint &point){
     for (int i=0;i < sub_menu_size;i++){
         switch (i) {
         case 0:
-            menu->addAction(QIcon(":/appicon/mark.png"),G_reason_list[i],this,SLOT(on_textMenuSelectedPhrase()));
+            menu->addAction(QIcon(":/appicon/phrase.png"),G_reason_list[i],this,SLOT(on_textMenuSelectedPhrase()));
             break;
         case 1:
-            menu->addAction(QIcon(":/appicon/mark.png"),G_reason_list[i],this,SLOT(on_textMenuSelectedLinking()));
+            menu->addAction(QIcon(":/appicon/continuous.png"),G_reason_list[i],this,SLOT(on_textMenuSelectedLinking()));
             break;
         case 2:
-            menu->addAction(QIcon(":/appicon/mark.png"),G_reason_list[i],this,SLOT(on_textMenuSelectedGrammar()));
+            menu->addAction(QIcon(":/appicon/grammar.png"),G_reason_list[i],this,SLOT(on_textMenuSelectedGrammar()));
             break;
         case 3:
-            menu->addAction(QIcon(":/appicon/mark.png"),G_reason_list[i],this,SLOT(on_textMenuSelectedToolong()));
+            menu->addAction(QIcon(":/appicon/toolong.png"),G_reason_list[i],this,SLOT(on_textMenuSelectedToolong()));
             break;
         case 4:
-            menu->addAction(QIcon(":/appicon/mark.png"),G_reason_list[i],this,SLOT(on_textMenuSelectedOthers()));
+            menu->addAction(QIcon(":/appicon/other.png"),G_reason_list[i],this,SLOT(on_textMenuSelectedOthers()));
             break;
         default:
 #ifdef MAINDEBUG
@@ -278,7 +278,7 @@ void MainWindow::sortby(const QString key,QVector<int> & result_vec){
     }
 
 #ifdef MAINDEBUG
-    qDebug() << value_seq ;
+    qDebug() <<"[MainWindow]"<<"sortby() " <<"value_seq:"<<value_seq ;
 #endif
 
     int num = 0,index = 0,j = 0;
@@ -317,11 +317,12 @@ void MainWindow::on_clickHeader(int col)
         sortby("reason",result_vec);
         updateTableWidget(result_vec);
     }
-
-    //else if(col == 2){
-    //    sortby("content",result_vec);
-    //    updateTableWidget(result_vec);
-    //}
+    else if(col == 2){
+        //sortby("content",result_vec);
+        //updateTableWidget(result_vec);
+        for (int i=0;i<m_json_vec.size();i++)
+            result_vec.push_back(i);
+    }
 
     QVector<QJsonObject> temp_json_vec;
     for (int i = 0; i < result_vec.size() ; i++){
@@ -818,12 +819,12 @@ void MainWindow::musicPlay(qint64 point){
 
 void MainWindow::on_howToUse_triggered()
 {
-    QDesktopServices::openUrl(QUrl("https://github.com/Gltina/MarkSencent"));
+    QDesktopServices::openUrl(QUrl("https://github.com/gltina/marksentence"));
 }
 
 void MainWindow::on_about_triggered()
 {
-    QDesktopServices::openUrl(QUrl("https://github.com/Gltina/MarkSencent"));
+    QDesktopServices::openUrl(QUrl("https://github.com/gltina/marksentence"));
 }
 
 void MainWindow::on_exit_triggered()
