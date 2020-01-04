@@ -1,10 +1,9 @@
-﻿#include "mainwindow.h"
+﻿#include "inc/mainwindow.h"
 #include <QApplication>
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-
 
     QFile f(":qdarkstyle/style.qss");
     if (!f.exists())

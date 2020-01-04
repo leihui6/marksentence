@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>340</width>
-    <height>216</height>
+    <width>376</width>
+    <height>255</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -20,46 +20,43 @@
   <layout class="QGridLayout" name="gridLayout_2">
    <item row="0" column="0">
     <layout class="QGridLayout" name="gridLayout">
-     <item row="1" column="1">
-      <widget class="QSpinBox" name="spinBox_preSecond">
+     <item row="3" column="2">
+      <layout class="QHBoxLayout" name="horizontalLayout_3">
+       <item>
+        <widget class="QLineEdit" name="lineEdit_textPath"/>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_2">
+         <property name="text">
+          <string>打开</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item row="3" column="0">
+      <widget class="QLabel" name="label_5">
+       <property name="text">
+        <string>文本文件</string>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="0">
+      <widget class="QLabel" name="label_3">
+       <property name="text">
+        <string>播放提前秒数(s)</string>
+       </property>
        <property name="alignment">
         <set>Qt::AlignCenter</set>
        </property>
       </widget>
      </item>
-     <item row="2" column="1">
-      <widget class="QSpinBox" name="spinBox_stepSecond">
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
-       </property>
-      </widget>
-     </item>
-     <item row="3" column="1">
-      <widget class="QCheckBox" name="checkBox_playAfterdl">
-       <property name="text">
-        <string>下载完播放</string>
-       </property>
-      </widget>
-     </item>
-     <item row="4" column="1">
-      <widget class="QCheckBox" name="checkBox_closeAfterdl">
-       <property name="text">
-        <string>下载完关闭下载窗口</string>
-       </property>
-       <property name="checked">
-        <bool>false</bool>
-       </property>
-       <property name="tristate">
-        <bool>false</bool>
-       </property>
-      </widget>
-     </item>
-     <item row="6" column="1">
+     <item row="6" column="2">
       <layout class="QHBoxLayout" name="horizontalLayout">
        <item>
         <widget class="QPushButton" name="btn_save">
          <property name="text">
-          <string>保存</string>
+          <string>开始</string>
          </property>
         </widget>
        </item>
@@ -72,27 +69,35 @@
        </item>
       </layout>
      </item>
-     <item row="1" column="0">
-      <widget class="QLabel" name="label_3">
-       <property name="text">
-        <string>播放提前秒数(s)</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="0">
-      <widget class="QLabel" name="label">
-       <property name="text">
-        <string>远程IP</string>
-       </property>
+     <item row="4" column="2">
+      <widget class="QSpinBox" name="spinBox_preSecond">
        <property name="alignment">
         <set>Qt::AlignCenter</set>
        </property>
       </widget>
      </item>
      <item row="2" column="0">
+      <widget class="QLabel" name="label_4">
+       <property name="text">
+        <string>音频文件</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="2">
+      <layout class="QHBoxLayout" name="horizontalLayout_2">
+       <item>
+        <widget class="QLineEdit" name="lineEdit_audioPath"/>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton">
+         <property name="text">
+          <string>打开</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item row="5" column="0">
       <widget class="QLabel" name="label_2">
        <property name="text">
         <string>快进步长秒数(s)</string>
@@ -102,23 +107,10 @@
        </property>
       </widget>
      </item>
-     <item row="0" column="1">
-      <widget class="QLineEdit" name="lineEdit_remoteIP">
-       <property name="text">
-        <string/>
-       </property>
+     <item row="5" column="2">
+      <widget class="QSpinBox" name="spinBox_stepSecond">
        <property name="alignment">
         <set>Qt::AlignCenter</set>
-       </property>
-       <property name="placeholderText">
-        <string>Remote Service ip</string>
-       </property>
-      </widget>
-     </item>
-     <item row="5" column="1">
-      <widget class="QCheckBox" name="checkBox_dowloadWithoutN">
-       <property name="text">
-        <string>下载时默认保存地址</string>
        </property>
       </widget>
      </item>
@@ -127,6 +119,8 @@
   </layout>
  </widget>
  <resources>
+  <include location="appicon/icon.qrc"/>
+  <include location="appicon/icon.qrc"/>
   <include location="appicon/icon.qrc"/>
  </resources>
  <connections/>

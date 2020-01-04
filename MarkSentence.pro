@@ -29,23 +29,23 @@ DEFINES += QT_DEPRECATED_WARNINGS
 CONFIG += C++11
 
 SOURCES += \
-    loaddialog.cpp \
-    main.cpp \
-    mainwindow.cpp \
-    settingdialog.cpp \
-    globalcontrol.cpp
+    src/globalcontrol.cpp \
+    src/loaddialog.cpp \
+    src/main.cpp \
+    src/mainwindow.cpp \
+    src/settingdialog.cpp
 
 HEADERS += \
-    loaddialog.h \
-    mainwindow.h \
-    settingdialog.h \
-    globalcontrol.h
+    inc/globalcontrol.h \
+    inc/loaddialog.h \
+    inc/mainwindow.h \
+    inc/settingdialog.h \
 
 FORMS += \
-        mainwindow.ui \
-    loaddialog.ui \
-    settingdialog.ui
+    ui/loaddialog.ui \
+    ui/mainwindow.ui \
+    ui/settingdialog.ui
 
 RESOURCES += \
     qdarkstyle/style.qrc \
-    appicon/icon.qrc \
+    ui/appicon/icon.qrc

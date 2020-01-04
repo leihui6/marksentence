@@ -1,4 +1,4 @@
-﻿#include "globalcontrol.h"
+﻿#include "inc/globalcontrol.h"
 
 QString G_remote_ip = "149.129.78.144";
 
@@ -13,6 +13,8 @@ bool G_playAfterDownload = true;
 bool G_downloadWithoutNotifiction = true;
 
 QString G_audioFilename = QString();
+
+QString G_textFilename = QString();
 
 QStringList G_reason_list = {
     QTextCodec::codecForName(QByteArray("GBK"))->toUnicode("短语"),

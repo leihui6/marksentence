@@ -27,9 +27,9 @@ private slots:
     void on_about_triggered();
     void on_exit_triggered();
     void closeEvent(QCloseEvent *event);
-    void on_onlineFile_triggered();
+    //void on_onlineFile_triggered();
     void on_tableWidget_cellDoubleClicked(int row, int column);
-    void on_localFile_triggered();
+    //void on_localFile_triggered();
     void on_clickHeader(int col);
     void on_showTableMenu(const QPoint pos);
     void on_showTextMenu(const QPoint &point);
@@ -42,12 +42,18 @@ private slots:
     void on_textMenuSelectedToolong();
     void on_textMenuSelectedOthers();
 
+    void on_localAudio_triggered();
+
+    void on_localText_triggered();
+
 public:
     void on_media_updatePosition(qint64 duration);
     void on_media_updateDuration(qint64 duration);
     void on_media_stateChanged();
 
-    void openLocalFile(QString filepath = QString());
+    void openLocalAudio(QString filepath = QString());
+    void openLocalText(QString filepath = QString());
+
     void saveTextMenuSelected(int index);
     void loadConnect();
     void loadConstant();

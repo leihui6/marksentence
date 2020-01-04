@@ -1,5 +1,7 @@
-﻿#include "loaddialog.h"
+﻿#include "inc/loaddialog.h"
 #include "ui_loaddialog.h"
+
+//#define DLDEBUG
 
 loadDialog::loadDialog(QFile & log_file,QWidget * parent) :
     QDialog(parent),
@@ -78,7 +80,7 @@ void loadDialog::loadConstant(){
     // 【注意】文件夹名称要保持一致
     m_audio_dir = "TPO/";
     createDir(m_audio_dir);
-    // 设置lyric下载目录
+    // 设置lyric下载目录, 在选择文本文件后被修改了
     m_lyric_dir = "Lyric/";
     createDir(m_lyric_dir);
 }
@@ -99,7 +101,7 @@ bool loadDialog::createDir(QString dir){
 void loadDialog::generateUrl()
 {
        // 因为服务器上的tpo是按照序号划分的
-        // 也就是说 /TPO/tpo序号/内容.mp3
+       // 也就是说 /TPO/tpo序号/内容.mp3
        QString publicTitle = QString("tpo%1/tpo%2_").arg(m_tpo_index+1).arg(m_tpo_index+1);
        QString postfix;
 
@@ -119,10 +121,12 @@ void loadDialog::generateUrl()
        // 如果是Listeing部分，就下载听力文本
        QString detail = "C1,L1,L2,C2,L3,L4";
        m_detail_list = detail.split(",");
-       if (m_section_index == 0){
+       if (m_section_index == 0)
+       {
            m_lyric_filename = QString("TPO%1%2").arg(m_tpo_index+1,2,10,QChar('0')).arg(m_detail_list[m_detail_index])+".txt";
        }
-       else{
+       else
+       {
            m_lyric_filename = "";
        }
 

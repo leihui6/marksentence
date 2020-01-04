@@ -52,7 +52,9 @@ extern bool G_playAfterDownload; //= true;
 
 extern bool G_downloadWithoutNotifiction; // = true;
 
-extern QString G_audioFilename;// created by "loaddialog"
+extern QString G_audioFilename;
+
+extern QString G_textFilename;
 
 extern QStringList G_reason_list; // phrase,linking,grammar,toolong,others
 

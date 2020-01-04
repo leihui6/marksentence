@@ -1,5 +1,7 @@
-﻿#include "mainwindow.h"
+﻿#include "inc/mainwindow.h"
 #include "ui_mainwindow.h"
+
+//#define MAINDEBUG
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -65,13 +67,15 @@ void MainWindow::loadLyric2Map()
 
     m_lyric_object.setFileName(m_lyric_dir + m_lyric_name);
 
-    if (!m_lyric_object.exists()){
+    if (!m_lyric_object.exists())
+    {
         logWrite(QString("No lyric file:%1").arg(m_lyric_object.fileName()));
         m_exist_lyric = false;
         return;
     }
     m_lyric_object.open(QIODevice::ReadOnly);
-    if (!m_lyric_object.isOpen()){
+    if (!m_lyric_object.isOpen())
+    {
         m_exist_lyric = false;
         logWrite(QString("Cannot Load lyric file:%1").arg(m_lyric_object.fileName()));
         return ;
@@ -589,18 +593,22 @@ void MainWindow::musicAfterStop()
     ui->button_play->setIcon(QIcon(":/appicon/play.png"));
 }
 
-void MainWindow::openLocalFile(QString filepath){
-    if(filepath.isEmpty()){
-        if(m_json_object.isOpen()){
+void MainWindow::openLocalAudio(QString filepath){
+    if(filepath.isEmpty())
+    {
+        if(m_json_object.isOpen())
+        {
             m_json_object.close();
         }
         QString temp = QFileDialog::getOpenFileName(this,"Open File",QString(),"*mp3 ");
-        if (temp.indexOf(".mp3") == -1){
+        if (temp.indexOf(".mp3") == -1)
+        {
             return;
         }
         m_filepath = temp;
     }
-    else{
+    else
+    {
         m_filepath = filepath;
     }
     logWrite("Loading Audio File:"+m_filepath);
@@ -627,37 +635,35 @@ void MainWindow::openLocalFile(QString filepath){
     m_json_vec.clear();
     m_beg_point = 0;
     m_play = false;
-    m_lyric_map.clear();
-    m_lyric_name.clear();
-    m_lyricVec.clear();
+    //m_lyric_map.clear();
+    //m_lyric_name.clear();
+    //m_lyricVec.clear();
 
     // 4. [optional]加载"歌词"
     // 如果是listening部分的歌词请求
-    if (generateLyricFileName()){
-        loadLyric2Map();
-    }
-    else {
-        m_exist_lyric = false;
-    }
+    //if (generateLyricFileName())
+    //{
+    //    loadLyric2Map();
+    //}
+    // else
+    //{
+    //    m_exist_lyric = false;
+    //}
 
     // 5. 载入音频文件以及json文件
     m_music.setMedia(QUrl::fromLocalFile(m_filepath));
     loadJsonFile();
 
     // 3. 刷新界面
-    updateTableWidget();
-    loadControl(true);
+   // updateTableWidget();
+    //loadControl(true);
 
     logWrite(QString("Loaded"));
 }
 
-void MainWindow::on_localFile_triggered()
-{
-    openLocalFile();
-}
-
 void MainWindow::loadJsonFile()
 {
+    m_json_object.close();
     m_json_name = m_json_dir+m_filebase.trimmed()+".json";
     m_json_object.setFileName(m_json_name);
 
@@ -686,6 +692,48 @@ bool MainWindow::createDir(QString dirname){
     return true;
 }
 
+void MainWindow::openLocalText(QString filepath)
+{
+    m_lyric_object.close();
+    m_lyric_map.clear();
+    m_lyric_name.clear();
+    m_lyricVec.clear();
+
+    if(filepath.isEmpty())
+    {
+        if(m_json_object.isOpen())
+        {
+            m_json_object.close();
+        }
+        QString temp = QFileDialog::getOpenFileName(this,"Open File",QString(),"*txt ");
+
+        if (temp.indexOf(".txt") == -1)
+        {
+            return;
+        }
+        m_lyric_name = temp;
+    }
+    else
+    {
+        m_lyric_name = filepath;
+    }
+    logWrite("Loading Audio File:"+m_lyric_name);
+
+    m_lyric_dir = QFileInfo(m_lyric_name).path() + "/";
+    //qDebug() << m_lyric_dir<<endl;
+
+    m_lyric_name = QFileInfo(m_lyric_name).baseName() + ".txt";
+
+    //qDebug() << m_lyric_dir <<endl<< m_lyric_name <<endl;
+
+    loadLyric2Map();
+
+    updateTableWidget();
+
+    showLyric();
+
+    loadControl(true);
+}
 
 void MainWindow::loadFileDir()
 {
@@ -829,10 +877,12 @@ void MainWindow::on_about_triggered()
 
 void MainWindow::on_exit_triggered()
 {
-    if (m_json_object.isOpen()){
+    if (m_json_object.isOpen())
+    {
         m_json_object.close();
     }
-    if(m_log_object.isOpen()){
+    if(m_log_object.isOpen())
+    {
         m_log_object.close();
     }
     m_music.stop();
@@ -842,10 +892,10 @@ void MainWindow::on_exit_triggered()
 void MainWindow::closeEvent(QCloseEvent *event){
 
     switch( QMessageBox::information(this,
-                                     tr("!!!!"),
-                                     QTextCodec::codecForName(QByteArray("GBK"))->toUnicode("不再听会儿？"),
-                                     QTextCodec::codecForName(QByteArray("GBK"))->toUnicode("算了我休息一下"),
-                                     QTextCodec::codecForName(QByteArray("GBK"))->toUnicode("再听最后亿篇"),
+                                     tr("EXIT"),
+                                     QTextCodec::codecForName(QByteArray("GBK"))->toUnicode("Are you sure?"),
+                                     QTextCodec::codecForName(QByteArray("GBK"))->toUnicode("YES"),
+                                     QTextCodec::codecForName(QByteArray("GBK"))->toUnicode("NO"),
                                      nullptr,1))
     {
     case 0:
@@ -855,27 +905,6 @@ void MainWindow::closeEvent(QCloseEvent *event){
     default:
         event->ignore();
         break;
-    }
-}
-
-void MainWindow::on_onlineFile_triggered()
-{
-    m_loadDialog = new loadDialog(m_log_object,nullptr);
-    QFile qssFile(":/qdarkstyle/style.qss");
-    if(qssFile.isOpen())
-    {
-        QString qss = QLatin1String(qssFile.readAll());
-        m_loadDialog->setStyleSheet(qss);
-        qssFile.close();
-    }
-    int res = m_loadDialog->exec();
-
-    if (res == QDialog::Accepted)
-    {
-        if(G_playAfterDownload){
-            openLocalFile(G_audioFilename);
-        }
-        // delete m_loadDialog;
     }
 }
 
@@ -897,5 +926,24 @@ void MainWindow::on_setting_triggered()
     if (res == QDialog::Accepted)
     {
         //delete m_settingDialog;
+        if(!G_audioFilename.isEmpty())
+        {
+            openLocalAudio(G_audioFilename);
+        }
+        if(!G_textFilename.isEmpty())
+        {
+            openLocalText(G_textFilename);
+        }
     }
+
+}
+
+void MainWindow::on_localAudio_triggered()
+{
+    openLocalAudio();
+}
+
+void MainWindow::on_localText_triggered()
+{
+    openLocalText();
 }

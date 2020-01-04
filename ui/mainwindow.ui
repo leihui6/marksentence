@@ -14,7 +14,7 @@
    <string>MainWindow</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="appicon/icon.qrc">
+   <iconset resource="../appicon/icon.qrc">
     <normaloff>:/appicon/main_title.png</normaloff>:/appicon/main_title.png</iconset>
   </property>
   <property name="styleSheet">
@@ -196,7 +196,7 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="appicon/icon.qrc">
+             <iconset resource="../appicon/icon.qrc">
               <normaloff>:/appicon/backward.png</normaloff>:/appicon/backward.png</iconset>
             </property>
             <property name="iconSize">
@@ -225,7 +225,7 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="appicon/icon.qrc">
+             <iconset resource="../appicon/icon.qrc">
               <normaloff>:/appicon/play.png</normaloff>:/appicon/play.png</iconset>
             </property>
             <property name="iconSize">
@@ -254,7 +254,7 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="appicon/icon.qrc">
+             <iconset resource="../appicon/icon.qrc">
               <normaloff>:/appicon/forward.png</normaloff>:/appicon/forward.png</iconset>
             </property>
             <property name="iconSize">
@@ -302,8 +302,6 @@
     <property name="title">
      <string>文件</string>
     </property>
-    <addaction name="onlineFile"/>
-    <addaction name="localFile"/>
     <addaction name="setting"/>
    </widget>
    <widget class="QMenu" name="menu">
@@ -311,20 +309,19 @@
      <string>关于</string>
     </property>
     <addaction name="howToUse"/>
-    <addaction name="about"/>
     <addaction name="exit"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menu"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
-  <action name="localFile">
+  <action name="localAudio">
    <property name="icon">
-    <iconset resource="appicon/icon.qrc">
+    <iconset resource="../appicon/icon.qrc">
      <normaloff>:/appicon/file_local.png</normaloff>:/appicon/file_local.png</iconset>
    </property>
    <property name="text">
-    <string>打开本地文件</string>
+    <string>加载音频</string>
    </property>
    <property name="iconVisibleInMenu">
     <bool>true</bool>
@@ -332,7 +329,7 @@
   </action>
   <action name="howToUse">
    <property name="icon">
-    <iconset resource="appicon/icon.qrc">
+    <iconset resource="../appicon/icon.qrc">
      <normaloff>:/appicon/how.png</normaloff>:/appicon/how.png</iconset>
    </property>
    <property name="text">
@@ -344,7 +341,7 @@
   </action>
   <action name="about">
    <property name="icon">
-    <iconset resource="appicon/icon.qrc">
+    <iconset resource="../appicon/icon.qrc">
      <normaloff>:/appicon/about.png</normaloff>:/appicon/about.png</iconset>
    </property>
    <property name="text">
@@ -353,39 +350,43 @@
   </action>
   <action name="exit">
    <property name="icon">
-    <iconset resource="appicon/icon.qrc">
+    <iconset resource="../appicon/icon.qrc">
      <normaloff>:/appicon/exit.png</normaloff>:/appicon/exit.png</iconset>
    </property>
    <property name="text">
     <string>退出</string>
    </property>
   </action>
-  <action name="onlineFile">
+  <action name="localText">
    <property name="checkable">
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="appicon/icon.qrc">
+    <iconset resource="../appicon/icon.qrc">
      <normaloff>:/appicon/file_online.png</normaloff>:/appicon/file_online.png</iconset>
    </property>
    <property name="text">
-    <string>在线下载音频</string>
+    <string>加载文本</string>
    </property>
   </action>
   <action name="setting">
    <property name="icon">
-    <iconset resource="appicon/icon.qrc">
+    <iconset resource="../appicon/icon.qrc">
      <normaloff>:/appicon/setting.png</normaloff>:/appicon/setting.png</iconset>
    </property>
    <property name="text">
-    <string>设置</string>
+    <string>开始学习</string>
+   </property>
+   <property name="toolTip">
+    <string>开始学习</string>
    </property>
   </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>
-  <include location="appicon/icon.qrc"/>
-  <include location="appicon/icon.qrc"/>
+  <include location="../appicon/icon.qrc"/>
+  <include location="../appicon/icon.qrc"/>
+  <include location="../appicon/icon.qrc"/>
  </resources>
  <connections/>
 </ui>
