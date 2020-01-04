@@ -6,23 +6,25 @@
 ## 使用
 
 ### 下载安装包
-
-- [marksentence v1.1](https://github.com/Gltina/marksentence/releases/download/v1.1/marksentence.v1.1.exe)
+- [marksentence v1.2](https://github.com/Gltina/marksentence/releases/download/V1.2/marksentence.exe)
 
 ### 从源码编译
 - Qt 5.12.3 (based on MSVC2017 64bit)
+
+### 使用TPO1-TPO54的资源
+- 从[这里](https://pan.baidu.com/s/1wlWVfvdSkorc04DWji6-uA)下载，建议阅读`readme.txt`
 
 ###  目录结构 
 这些是程序运行的时自动生成的目录
 - `Json/*.json`:保存你的标签内容
 - `Log/log`:操作日志
-- `Lyric/*.txt`:与`TPO`音频对应的"歌词"文件
+- `Lyric/*.txt`:与`TPO`音频对应的文本文件 [建议存放所有文本文件]
 - `TPO/TPO[1-54]/*.mp3`:下载的`TPO`音频文件
 
-## 截图
-![](samples/sample.png)
-![](samples/sample01.png)
+## 案例
+![](samples/loadfile.gif)
 ![](samples/listeningv1.1.gif)
+![](samples/sample.png)
 
 ## Project status
 更多请查看[项目日志](log/README.md) 
@@ -41,7 +43,7 @@
 关于英语精听有什么方法，如何有计划的复习英语的听力... 所有的这些问题欢迎讨论
 
 ## Support
-ptsph\*foxmail.com(*->@) 
+`ptsph\*foxmail.com(*->@) `
 
 ## Thanks 
 [QDarkStyleSheet](https://github.com/ColinDuquesnoy/QDarkStyleSheet)
