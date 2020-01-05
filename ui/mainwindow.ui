@@ -14,7 +14,7 @@
    <string>MainWindow</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../appicon/icon.qrc">
+   <iconset resource="appicon/icon.qrc">
     <normaloff>:/appicon/main_title.png</normaloff>:/appicon/main_title.png</iconset>
   </property>
   <property name="styleSheet">
@@ -25,46 +25,50 @@
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout">
     <item row="0" column="0">
-     <layout class="QHBoxLayout" name="horizontalLayout" stretch="2,6">
+     <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,0">
       <item>
-       <widget class="QTableWidget" name="tableWidget">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="font">
-         <font>
-          <family>Times New Roman</family>
-          <pointsize>12</pointsize>
-         </font>
-        </property>
-        <property name="contextMenuPolicy">
-         <enum>Qt::CustomContextMenu</enum>
-        </property>
-        <property name="toolTip">
-         <string/>
-        </property>
-        <property name="styleSheet">
-         <string notr="true"/>
-        </property>
-        <attribute name="horizontalHeaderCascadingSectionResizes">
-         <bool>true</bool>
-        </attribute>
-        <attribute name="horizontalHeaderStretchLastSection">
-         <bool>true</bool>
-        </attribute>
-        <attribute name="verticalHeaderVisible">
-         <bool>false</bool>
-        </attribute>
-        <attribute name="verticalHeaderCascadingSectionResizes">
-         <bool>false</bool>
-        </attribute>
-        <attribute name="verticalHeaderStretchLastSection">
-         <bool>false</bool>
-        </attribute>
-       </widget>
+       <layout class="QVBoxLayout" name="verticalLayout_3" stretch="9">
+        <item>
+         <widget class="QTableWidget" name="tableWidget">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="font">
+           <font>
+            <family>Times New Roman</family>
+            <pointsize>12</pointsize>
+           </font>
+          </property>
+          <property name="contextMenuPolicy">
+           <enum>Qt::CustomContextMenu</enum>
+          </property>
+          <property name="toolTip">
+           <string/>
+          </property>
+          <property name="styleSheet">
+           <string notr="true"/>
+          </property>
+          <attribute name="horizontalHeaderCascadingSectionResizes">
+           <bool>true</bool>
+          </attribute>
+          <attribute name="horizontalHeaderStretchLastSection">
+           <bool>true</bool>
+          </attribute>
+          <attribute name="verticalHeaderVisible">
+           <bool>false</bool>
+          </attribute>
+          <attribute name="verticalHeaderCascadingSectionResizes">
+           <bool>false</bool>
+          </attribute>
+          <attribute name="verticalHeaderStretchLastSection">
+           <bool>false</bool>
+          </attribute>
+         </widget>
+        </item>
+       </layout>
       </item>
       <item>
        <layout class="QVBoxLayout" name="verticalLayout">
@@ -196,7 +200,7 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="../appicon/icon.qrc">
+             <iconset resource="appicon/icon.qrc">
               <normaloff>:/appicon/backward.png</normaloff>:/appicon/backward.png</iconset>
             </property>
             <property name="iconSize">
@@ -225,7 +229,7 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="../appicon/icon.qrc">
+             <iconset resource="appicon/icon.qrc">
               <normaloff>:/appicon/play.png</normaloff>:/appicon/play.png</iconset>
             </property>
             <property name="iconSize">
@@ -254,7 +258,7 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="../appicon/icon.qrc">
+             <iconset resource="appicon/icon.qrc">
               <normaloff>:/appicon/forward.png</normaloff>:/appicon/forward.png</iconset>
             </property>
             <property name="iconSize">
@@ -317,7 +321,7 @@
   <widget class="QStatusBar" name="statusBar"/>
   <action name="localAudio">
    <property name="icon">
-    <iconset resource="../appicon/icon.qrc">
+    <iconset resource="appicon/icon.qrc">
      <normaloff>:/appicon/file_local.png</normaloff>:/appicon/file_local.png</iconset>
    </property>
    <property name="text">
@@ -329,7 +333,7 @@
   </action>
   <action name="howToUse">
    <property name="icon">
-    <iconset resource="../appicon/icon.qrc">
+    <iconset resource="appicon/icon.qrc">
      <normaloff>:/appicon/how.png</normaloff>:/appicon/how.png</iconset>
    </property>
    <property name="text">
@@ -341,7 +345,7 @@
   </action>
   <action name="about">
    <property name="icon">
-    <iconset resource="../appicon/icon.qrc">
+    <iconset resource="appicon/icon.qrc">
      <normaloff>:/appicon/about.png</normaloff>:/appicon/about.png</iconset>
    </property>
    <property name="text">
@@ -350,7 +354,7 @@
   </action>
   <action name="exit">
    <property name="icon">
-    <iconset resource="../appicon/icon.qrc">
+    <iconset resource="appicon/icon.qrc">
      <normaloff>:/appicon/exit.png</normaloff>:/appicon/exit.png</iconset>
    </property>
    <property name="text">
@@ -362,7 +366,7 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="../appicon/icon.qrc">
+    <iconset resource="appicon/icon.qrc">
      <normaloff>:/appicon/file_online.png</normaloff>:/appicon/file_online.png</iconset>
    </property>
    <property name="text">
@@ -371,7 +375,7 @@
   </action>
   <action name="setting">
    <property name="icon">
-    <iconset resource="../appicon/icon.qrc">
+    <iconset resource="appicon/icon.qrc">
      <normaloff>:/appicon/setting.png</normaloff>:/appicon/setting.png</iconset>
    </property>
    <property name="text">
@@ -384,9 +388,9 @@
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>
-  <include location="../appicon/icon.qrc"/>
-  <include location="../appicon/icon.qrc"/>
-  <include location="../appicon/icon.qrc"/>
+  <include location="appicon/icon.qrc"/>
+  <include location="appicon/icon.qrc"/>
+  <include location="appicon/icon.qrc"/>
  </resources>
  <connections/>
 </ui>
