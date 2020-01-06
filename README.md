@@ -24,12 +24,12 @@
 - `TPO/TPO[1-54]/*.mp3`:下载的`TPO`音频文件
 
 ## 案例
-![](samples/loadfile.gif)
-![](samples/listeningv1.1.gif)
-![](samples/sample.png)
+![](others/samples/loadfile.gif)
+![](others/samples/listeningv1.1.gif)
+![](others/samples/sample.png)
 
 ## Project status
-更多请查看[项目日志](log/README.md) 
+更多请查看[项目日志](others/log/README.md) 
 
 ## Q&A
 - 有些听力播放不了？:worried:
@@ -42,7 +42,7 @@ sudo apt-get install clementine
 ```
 
 ## Contribute
-如果想了解项目中的小细节，可以查看[sparkSpot](./log/sparkSpot.md)
+如果想了解项目中的小细节，可以查看[sparkSpot](others/log/sparkSpot.md)
 
 关于英语精听有什么方法，如何有计划的复习英语的听力... 所有的这些问题欢迎讨论
 
