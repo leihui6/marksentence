@@ -17,10 +17,10 @@ QString G_audioFilename = QString();
 QString G_textFilename = QString();
 
 QStringList G_reason_list = {
-    QTextCodec::codecForName(QByteArray("GBK"))->toUnicode("短语"),
-    QTextCodec::codecForName(QByteArray("GBK"))->toUnicode("连读"),
-    QTextCodec::codecForName(QByteArray("GBK"))->toUnicode("语法"),
-    QTextCodec::codecForName(QByteArray("GBK"))->toUnicode("太长"),
-   QTextCodec::codecForName(QByteArray("GBK"))->toUnicode("其它")
+    QStringLiteral("短语"),
+    QStringLiteral("连读"),
+    QStringLiteral("语法"),
+    QStringLiteral("太长"),
+    QStringLiteral("其它")
 };
 

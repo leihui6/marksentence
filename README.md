@@ -32,10 +32,12 @@
 ## Q&A
 - 有些听力播放不了？:worried:
 	- 可以尝试下载[LAVFilters](https://github.com/Nevcairiel/LAVFilters/releases/download/0.74.1/LAVFilters-0.74.1-Installer.exe)，再添加`LAV Filters\x86`至环境变量。我已意识到了这个问题:smirk:，会在程序中添加相关的`dll`的，如果你还是遇到了这个问题，请联系我:fries:
-- 不能播放自己的音频？
-	- 是的，所以这里推荐使用下载音频文件。（其实用自己的也不是不可以，只是你需要更改文件名，修改的规则有点麻烦）
-- 界面这么丑，你蒸菜！！！！
-	- 做一个好看的`UI`真的不容易呢:stuck_out_tongue:
+- 在`Linux(Ubuntu)`下编译遇到了 `[error] your Gstreamer installation is missing a plug-in` 错误
+- 输入
+``` bash
+sudo apt-get update
+sudo apt-get install clementine
+```
 
 ## Contribute
 如果想了解项目中的小细节，可以查看[sparkSpot](./log/sparkSpot.md)

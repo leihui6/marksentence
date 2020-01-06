@@ -248,10 +248,9 @@ void MainWindow::saveTextMenuSelected(int index){
 void MainWindow::loadTableWidget(){
     QStringList table_header;
     //QTextCodec::codecForName(QByteArray("GBK"))->toUnicode("时间")
-    table_header
-            <<QTextCodec::codecForName(QByteArray("GBK"))->toUnicode("时间")
-           <<QTextCodec::codecForName(QByteArray("GBK"))->toUnicode("理由")
-          << QTextCodec::codecForName(QByteArray("GBK"))->toUnicode("文本");
+
+    table_header<<QStringLiteral("时间")<<QStringLiteral("原因")<< QStringLiteral("文本");
+
     ui->tableWidget->setColumnCount(table_header.size());
     ui->tableWidget->setHorizontalHeaderLabels(table_header);
     // 设置选中整行
@@ -891,17 +890,16 @@ void MainWindow::on_exit_triggered()
 
 void MainWindow::closeEvent(QCloseEvent *event){
 
-    switch( QMessageBox::information(this,
-                                     tr("EXIT"),
-                                     QTextCodec::codecForName(QByteArray("GBK"))->toUnicode("Are you sure?"),
-                                     QTextCodec::codecForName(QByteArray("GBK"))->toUnicode("YES"),
-                                     QTextCodec::codecForName(QByteArray("GBK"))->toUnicode("NO"),
-                                     nullptr,1))
+    int ret = QMessageBox::information(this,tr("EXIT"),tr("Are you sure?"),QMessageBox::Yes, QMessageBox::No);
+
+    // qDebug() << ret<<endl;
+
+    switch(ret)
     {
-    case 0:
+    case QMessageBox::Yes:
         event->accept();
         break;
-    case 1:
+    case QMessageBox::No:
     default:
         event->ignore();
         break;

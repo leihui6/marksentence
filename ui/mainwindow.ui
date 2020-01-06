@@ -337,7 +337,7 @@
      <normaloff>:/appicon/how.png</normaloff>:/appicon/how.png</iconset>
    </property>
    <property name="text">
-    <string>使用说明</string>
+    <string>使用</string>
    </property>
    <property name="iconVisibleInMenu">
     <bool>true</bool>
