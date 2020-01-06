@@ -1,7 +1,8 @@
 # MarkSentence 
 
-一个在可以文本对照的听力句子的标记工具，即精听工具，目前专门针对于`TOEFL`
-对`TPO1-54`的听力做标记，方便复习(支持`listening`部分的文本显示)
+一个在可以文本对照的听力句子的标记工具，即精听工具
+
+目前提供了`TOEFL`的`TPO1-54`的听力资源
 
 ## 使用
 
@@ -9,7 +10,8 @@
 - [marksentence v1.2](https://github.com/Gltina/marksentence/releases/download/V1.2/marksentence.exe)
 
 ### 从源码编译
-- Qt 5.12.3 (based on MSVC2017 64bit)
+- `[OK] Qt 5.12.3 MSVC2017 64bit`
+- `[OK] Qt 5.12.3 GCC5.4.0 64bit`
 
 ### 使用TPO1-TPO54的资源
 - 从[这里](https://pan.baidu.com/s/1wlWVfvdSkorc04DWji6-uA)下载，建议阅读`readme.txt`
@@ -32,7 +34,7 @@
 ## Q&A
 - 有些听力播放不了？:worried:
 	- 可以尝试下载[LAVFilters](https://github.com/Nevcairiel/LAVFilters/releases/download/0.74.1/LAVFilters-0.74.1-Installer.exe)，再添加`LAV Filters\x86`至环境变量。我已意识到了这个问题:smirk:，会在程序中添加相关的`dll`的，如果你还是遇到了这个问题，请联系我:fries:
-- 在`Linux(Ubuntu)`下编译遇到了 `[error] your Gstreamer installation is missing a plug-in` 错误
+- 在`Linux(Ubuntu)`下运行遇到 `[error] your Gstreamer installation is missing a plug-in` 错误
 - 输入
 ``` bash
 sudo apt-get update
